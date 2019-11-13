@@ -15,7 +15,7 @@
 				<c:choose>
 					<c:when test="${sessionScope.id != 'dog'}">
 						<li class="nav-item" role="presentation"><a class="nav-link" href="login">Login</a></li>
-						<li class="nav-item" role="presentation"><a class="nav-link" href="#">Signup</a></li>
+						<li class="nav-item" role="presentation"><a class="nav-link" href="register">Signup</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item" role="presentation"><a class="nav-link" href="logout">Logout</a></li>

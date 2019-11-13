@@ -14,7 +14,6 @@
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
     </bean> 
 	
-	<!-- Root Context: defines shared resources visible to all other web components --> 
     <bean id="tilesconfigurer"  
         class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"> 
         <property name="definitions"> 
@@ -37,12 +36,13 @@
     <bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
+		<!-- 
 		<property name="url" value="jdbc:mariadb://localhost:33061/travlan_db" />
-		 
+		-->
 		
 		<!-- 이 부분은 집에서 사용할 때 쓰세요
-		<property name="url" value="jdbc:mariadb://travlan.tk:33061/travlan_db" />
 		-->
+		<property name="url" value="jdbc:mariadb://travlan.tk:33061/travlan_db" />
 		<property name="username" value="travlan" />
 		<property name="password" value="travlan34!@" />
 	</bean>

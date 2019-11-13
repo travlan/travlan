@@ -10,6 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES('U', ()now, #{id}, #{password}, #{nickname}, #{email} )
 	</insert>
 	
+	<insert id="create_member_info" parameterType="Member_InfoDTO">
+		CREATE INTO member_info(num, age, TYPE, gender, region_num)
+		VALUES(#{num}, #{age}, #{TYPE}, #{gender}, #{region_num})
+	</insert>
+	
 	<select id="login" parameterType="Map" resultType="int">
 		SELECT COUNT(password)
 		FROM member

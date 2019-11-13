@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.model.mapper.MemberMapper;
+import com.model.member.MemberDTO;
 
 @Controller
 public class MemberController {
@@ -23,7 +24,7 @@ public class MemberController {
 	private MemberMapper mapper;
 	
 	@GetMapping("/login")
-	public String login(HttpServletRequest request) {
+	public String login() {
 
 		return "/login";
 	}
@@ -39,5 +40,17 @@ public class MemberController {
 			}else {
 				return "/babo";
 			}
+	}
+	
+	@GetMapping("/register")
+	public String register() {
+		return "/register";
+	}
+	
+	@PostMapping("/register")
+	public String register(@RequestParam MemberDTO dto) {
+		
+		
+		return "/home";
 	}
 }

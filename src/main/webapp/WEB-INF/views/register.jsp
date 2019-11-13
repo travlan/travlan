@@ -1,5 +1,9 @@
+<%@ page contentType="text/html; charset=UTF-8" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="login-dark">
-	<form method="post">
+    <form method="post"
+        action="${pageContext.request.contextPath}/signup"></form>>
 		<img src="assets/image/logo.png" width="100%">
 		<h2 class="sr-only">Login Form</h2>
 		<div class="illustration">
@@ -61,6 +65,6 @@
 			</select>
 		</div>
 		<div class="form-group"><button class="btn btn-primary btn-block" type="button">회원가입</button></div>
-		<div class="form-group"><button class="btn btn-primary btn-block" type="button">취소</button></div>
+		<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="history.back()">취소</button></div>
 	</form>
 </div>
