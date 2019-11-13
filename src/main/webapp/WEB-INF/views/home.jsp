@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>
-	Babo  
+	Jenkins Auto Build Test!
 </h1>
 </body>
 </html>
