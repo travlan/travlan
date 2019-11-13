@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE  tiles-definitions PUBLIC 
+    "-//Aapche Software Foundation//DTD Tiles Configuration 2.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+ 
+<tiles-definitions>     
+	<definition name="main" template="/WEB-INF/views/template/template.jsp"> 
+        <put-attribute name="style" value="/WEB-INF/views/template/style.jsp" />
+        <put-attribute name="topnav" value="/WEB-INF/views/template/topnav.jsp" /> 
+        <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" /> 
+    </definition> 
+    <definition name="/home" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp" /> 
+    </definition>
+</tiles-definitions>
