@@ -29,5 +29,10 @@
         <put-attribute name="title" value="Reguster" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/register.jsp" /> 
     </definition>
+
+    <definition name="/register2" extends="single"> 
+        <put-attribute name="title" value="Reguster" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/register_additional_info.jsp" /> 
+    </definition>
     
 </tiles-definitions>

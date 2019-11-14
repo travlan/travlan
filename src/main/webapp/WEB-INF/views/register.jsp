@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="login-dark">
-    <form method="post"
-        action="${pageContext.request.contextPath}/signup"></form>>
+    <form method="post" action="${pageContext.request.contextPath}/signup">
 		<img src="assets/image/logo.png" width="100%">
 		<h2 class="sr-only">Login Form</h2>
 		<div class="illustration">

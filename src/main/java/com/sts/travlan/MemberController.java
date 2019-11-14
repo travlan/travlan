@@ -53,4 +53,9 @@ public class MemberController {
 		
 		return "/home";
 	}
+	
+	@GetMapping("/register2")
+	public String register2() {
+		return "/register2";
+	}
 }
