@@ -9,4 +9,6 @@ public interface MemberMapper {
 	public int create(MemberDTO dto);
 	public int create_member_info(Member_InfoDTO dto);
 	public int login(Map map);
+	public int id_duplicate_check(String id);
+	public int email_duplicate_check(String email);
 }

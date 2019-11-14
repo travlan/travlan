@@ -13,11 +13,12 @@
 		<div class="collapse navbar-collapse" id="navcol-1">
 			<ul class="nav navbar-nav ml-auto">
 				<c:choose>
-					<c:when test="${sessionScope.id != 'dog'}">
+					<c:when test="${sessionScope.id == null}">
 						<li class="nav-item" role="presentation"><a class="nav-link" href="login">Login</a></li>
 						<li class="nav-item" role="presentation"><a class="nav-link" href="register">Signup</a></li>
 					</c:when>
 					<c:otherwise>
+						<li class="nav-item" role="presentation"><a class="nav-link" href="logout">Hello ${sessionScope.id}</a></li>
 						<li class="nav-item" role="presentation"><a class="nav-link" href="logout">Logout</a></li>
 					</c:otherwise>
 				</c:choose>

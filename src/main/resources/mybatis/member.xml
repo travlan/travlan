@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="create" parameterType="MemberDTO">
 		INSERT INTO member( GRADE, CREATED_DATE, ID, PASSWORD, NICKNAME, EMAIL )
-		VALUES('U', ()now, #{id}, #{password}, #{nickname}, #{email} )
+		VALUES('U', now(), #{id}, #{password}, #{nickname}, #{email} )
 	</insert>
 	
 	<insert id="create_member_info" parameterType="Member_InfoDTO">
@@ -19,6 +19,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(password)
 		FROM member
 		WHERE id = #{id} AND password = #{password}
+	</select>
+	
+	<select id="id_duplicate_check" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM member
+		WHERE id = #{id}
+	</select>
+	
+	<select id="email_duplicate_check" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM member
+		WHERE email = #{email}
 	</select>
 	
 </mapper>
