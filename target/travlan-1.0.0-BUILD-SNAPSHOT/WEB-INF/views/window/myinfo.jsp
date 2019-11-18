@@ -9,7 +9,47 @@
 	<form>
 		<div>
 			<strong>아이디</strong>
-			<label></label>
+			<label>${sessionScope.id}</label>
+		</div>
+		<div>
+			<strong>닉네임</strong>
+			<label>${dto.nickname}</label>
+		</div>
+		<div>
+			<strong>이메일</strong>
+			<label>${dto.email}</label>
+		</div>
+		<div>
+			<strong>성별</strong>
+			<label>여자</label>
+			<select>
+				<option>여자</option>
+				<option>남자</option>
+			</select>
+		</div>
+		<div>
+			<strong>나이</strong>
+			<label>20대</label>
+			<select>
+				<option>10</option>
+				<option>20</option>
+			</select>
+		</div>
+		<div>
+			<strong>선호도</strong>
+			<label>아아아아아아아아</label>
+			<select>
+				<option>10</option>
+				<option>20</option>
+			</select>
+		</div>
+		<div>
+			<strong>사는곳</strong>
+			<label>강원도 원주시</label>
+			<select>
+				<option>10</option>
+				<option>20</option>
+			</select>
 		</div>
 	</form>
 </div>

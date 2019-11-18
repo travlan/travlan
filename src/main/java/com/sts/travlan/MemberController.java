@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.model.mapper.MemberMapper;
 import com.model.member.MemberDTO;
+import com.model.member.Member_InfoDTO;
 
 @Controller
 public class MemberController {
@@ -55,8 +56,6 @@ public class MemberController {
 	@GetMapping("/register")
 	public String register() {
 		
-		
-		
 		return "/register";
 	}
 	
@@ -66,6 +65,7 @@ public class MemberController {
 		if (mapper.create(dto) == 1) {
 			request.setAttribute("sys_msg", "회원가입 성공!");
 			request.setAttribute("id", dto.getId());
+			request.setAttribute("num",dto.getNum());
 			return "register_additional_info";
 		} else {
 			request.setAttribute("sys_msg", "회원가입 실패!");
@@ -76,16 +76,26 @@ public class MemberController {
 	}
 	
 	@GetMapping("/register_additional_info")
-	public String register_additional_info(HttpServletRequest request){
+	public String register_additional_info(){
+		
 		return "/register_additional_info";
 	}
 	
 	@PostMapping("/register_additional_info")
-	public String register_additional_info() {
+	public String register_additional_info(Member_InfoDTO dto, HttpServletRequest request){
+		String type = "";
+		type += request.getParameter("type1");
+		type += request.getParameter("type2");
+		type += request.getParameter("type3");
+		dto.setType(type);
 		
-		return "redirect:/";
+		if(mapper.create_member_info(dto) > 0) {
+			return "";
+		}else {
+			return "";
+		}
 	}
-	
+
 	@ResponseBody
 	@GetMapping(value = "/idcheck", produces = "application/json;charset=utf-8")
 	public Map<String, Object> idcheck(String id) {
@@ -126,40 +136,56 @@ public class MemberController {
 		return "/forgot";
 	}
 	
-	@GetMapping("/id_find")
-	public String id_find() {
+	@ResponseBody
+	@GetMapping(value = "/find_id", produces = "application/json;charset=utf-8")
+	public Map<String, Object> find_id(String email) {
 		
-		return "/id_find";
+		String fid = mapper.find_id(email);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(fid == null) {
+			map.put("result", "N");
+		} else {
+			map.put("result", fid);
+		}
+		
+		return map;
 	}
 	
-	@PostMapping("/id_find_Proc")
-	public String id_find_Proc(String email, Model model) {
+	@ResponseBody
+	@GetMapping(value = "/find_passwd", produces = "application/json;charset=utf-8")
+	public Map<String, Object> find_passwd(String id, String email) {
 		
-		String id = mapper.id_find(email);
+		Map<String, String> find = new HashMap<String, String>();
+		find.put("id", id);
+		find.put("email", email);
 		
-		model.addAttribute("id", id);
+		String fpasswd = mapper.find_passwd(find);
 		
-		return "/id_find_Proc";
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(fpasswd == null) {
+			map.put("result", "N");
+		} else {
+			map.put("result", fpasswd);
+		}
+		
+		return map;
 	}
 	
-	@GetMapping("/passwd_find")
-	public String passwd_find() {
+	@GetMapping("/myinfo")
+	public String myinfo(String id, HttpSession session, Model model) {
 		
-		return "/passwd_find";
-	}
-	
-	@PostMapping("/passwd_find_Proc")
-	public String passwd_find_Proc(String id, String email, Model model) {
+		if(id == null) {
+			id = (String)session.getAttribute("id");
+		}
 		
-		Map map = new HashMap();
-		map.put("id", id);
-		map.put("email", email);
+		MemberDTO dto = mapper.myinfo(id);
 		
-		String passwd = mapper.passwd_find(map);
+		model.addAttribute("dto", dto);
 		
-		model.addAttribute("passwd", passwd);
-		
-		return "/passwd_find_Proc";
+		return "/myinfo";
 	}
 	
 

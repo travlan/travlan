@@ -22,16 +22,18 @@
 		</div>
 		<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="infomation_show()">추가 정보 입력</button></div>
 		<div id="addtional" style="display:none;">
+			<input type="hidden" name="num" value="${num}">
+			
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="male">
-				<label class="form-check-label" for="inlineCheckbox1">남자</label>
+				<input class="form-check-input" type="checkbox" id="age_male" value="male" name="gender">
+				<label class="form-check-label" for="age_male">남자</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="female">
-				<label class="form-check-label" for="inlineCheckbox2">여자</label>
+				<input class="form-check-input" type="checkbox" id="age_female" value="female" name="gender">
+				<label class="form-check-label" for="age_female">여자</label>
 			</div>
 			<div class="form-group">
-				<select id="inputState" class="form-control">
+				<select id="inputState" class="form-control" name="age">
 					<option selected>나이</option>
 					<option value="10">10대</option>
 					<option value="20">20대</option>
@@ -45,21 +47,21 @@
 			</div>
 			<label>선호도</label>
 			<div class="form-group">
-				<select id="inputState" class="form-control">
-					<option>빡빡한 일정을 좋아해요</option>
-					<option>느슨한 일정을 좋아해요</option>
+				<select id="inputState" class="form-control" name="type1">
+					<option value="A">빡빡한 일정을 좋아해요</option>
+					<option value="B">느슨한 일정을 좋아해요</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<select id="inputState" class="form-control">
-					<option>주간 여행을 좋아해요</option>
-					<option>야간 여행을 좋아해요</option>
+				<select id="inputState" class="form-control" name="type2">
+					<option value="A">주간 여행을 좋아해요</option>
+					<option value="B">야간 여행을 좋아해요</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<select id="inputState" class="form-control">
-					<option>활기찬 분위기를 선호해요</option>
-					<option>조용한 분위기를 선호해요</option>
+				<select id="inputState" class="form-control" name="type3">
+					<option value="A">활기찬 분위기를 선호해요</option>
+					<option value="B">조용한 분위기를 선호해요</option>
 				</select>
 			</div>
 		</div>

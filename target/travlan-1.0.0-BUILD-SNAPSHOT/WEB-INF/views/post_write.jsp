@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
     <div class="container">
-        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="post_write" method="post" enctype="multipart/form-data">
 
             <div class="form-group">
                 <div class="col-sm-12">
@@ -18,10 +18,10 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        <label for=""> | </label>
+                        <label for="">비용 | </label>
                     </div>
                     <div class="col-sm-6">
-                        <label for=""> |  ${pageContext.request.contextPath}</label>
+                        <label for=""> |  </label>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="">계절 | </label>
-                        <select name="">
+                        <select name="season">
                             <option value="spring">봄</option>
                             <option value="summer">여름</option>
                             <option value="fall">가을</option>

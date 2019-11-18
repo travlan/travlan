@@ -5,13 +5,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.MemberMapper">
 
-	<select id="passwd_find" parameterType="Map" resultType="String">
+	<select id="myinfo" parameterType="String" resultType="MemberDTO">
+		SELECT id, nickname, email
+		FROM member
+		WHERE id = #{id}
+	</select>
+	
+	<select id="find_passwd" parameterType="Map" resultType="String">
 		SELECT password
 		FROM member
 		WHERE id = #{id} AND email = #{email}
 	</select>
 	
-	<select id="id_find" parameterType="String" resultType="String">
+	<select id="find_id" parameterType="String" resultType="String">
 		SELECT id 
 		FROM member
 		WHERE email = #{email}
@@ -23,8 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="create_member_info" parameterType="Member_InfoDTO">
-		CREATE INTO member_info(num, age, TYPE, gender, region_num)
-		VALUES(#{num}, #{age}, #{TYPE}, #{gender}, #{region_num})
+		CREATE INTO member_info(num, age, type, gender, region_num)
+		VALUES(#{num}, #{age}, #{type}, #{gender}, #{region_num})
 	</insert>
 	
 	<select id="login" parameterType="Map" resultType="int">

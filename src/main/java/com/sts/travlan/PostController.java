@@ -11,12 +11,20 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.model.mapper.PostMapper;
+import com.model.post.PostDTO;
 
 @Controller
 public class PostController {
+	@Autowired
+	private PostMapper mapper;
 
 	@GetMapping("/post_write")
 	public String post() {
@@ -24,6 +32,17 @@ public class PostController {
 		return "/post_write";
 	}
 	
+	@PostMapping("/post_write")
+	public String post(PostDTO dto){
+		
+		if (mapper.create(dto) == 1) {
+			return "/";
+		} else {
+			return "/";
+		}
+	}
+	
+	@ResponseBody
 	@RequestMapping("/utility/file_uploader")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -82,7 +101,7 @@ public class PostController {
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 
 			sFileInfo += "&sFileName=" + filename;
-			sFileInfo += "&sFileURL=" + "/resource/photo_upload/" + realFileNm;
+			sFileInfo += "&sFileURL=" + "travlan/resource/photo_upload/" + realFileNm;
 			PrintWriter print = response.getWriter();
 
 			print.print(sFileInfo);

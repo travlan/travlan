@@ -34,6 +34,15 @@
         <put-attribute name="title" value="Register" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/register.jsp" /> 
     </definition>
-
+	
+	<definition name="/forgot" extends="single"> 
+        <put-attribute name="title" value="Register" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/forgot.jsp" /> 
+    </definition>
+	
+	<definition name="/myinfo" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/myinfo.jsp" /> 
+    </definition>
     
 </tiles-definitions>

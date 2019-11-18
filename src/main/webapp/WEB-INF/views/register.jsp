@@ -32,52 +32,58 @@
 </div>
 <script>
 	$("#id").focusout(function(){
-		$("#idcheck").addClass('alert');
-		$.ajax({
-			url: "idcheck",
-			data: { "id" : $("#id").val() },
-			type: "get",
-		}).done(function (data) {
-			if(data.flag == 'Y') {
-				$("#idcheck").text("사용할 수 있는 아이디입니다.");
-				$("#idcheck").removeClass('alert-danger');
-				$("#idcheck").addClass('alert-success');
-				$("#id").css('border', '1px solid #080');
-			} else {
-				$("#idcheck").text("이미 등록된 아이디입니다.");
-				$("#idcheck").removeClass('alert-success');
-				$("#idcheck").addClass('alert-danger');
-				$("#id").css('border', '1px solid #f00');
-			}
-		});
+		var id = $("#id").val();
+		if(id != "") {
+			$("#idcheck").addClass('alert');
+			$.ajax({
+				url: "idcheck",
+				data: { "id" : $("#id").val() },
+				type: "get",
+			}).done(function (data) {
+				if(data.flag == 'Y') {
+					$("#idcheck").text("사용할 수 있는 아이디입니다.");
+					$("#idcheck").removeClass('alert-danger');
+					$("#idcheck").addClass('alert-success');
+					$("#id").css('border', '1px solid #080');
+				} else {
+					$("#idcheck").text("이미 등록된 아이디입니다.");
+					$("#idcheck").removeClass('alert-success');
+					$("#idcheck").addClass('alert-danger');
+					$("#id").css('border', '1px solid #f00');
+				}
+			});
+		}
 	});
 	
-	$("#email").focusout(function() {
-		$("#emailcheck").addClass('alert');
-		$.ajax({
-			url: "emailcheck",
-			data: { "email" : $("#email").val() },
-			type: "get",
-		}).done(function (data) {
-			if(data.flag == 'Y') {
-				$("#emailcheck").text("사용할 수 있는 이메일입니다.");
-				$("#emailcheck").removeClass('alert-danger');
-				$("#emailcheck").addClass('alert-success');
-				$("#email").css('border', '1px solid #080');
-			} else {
-				$("#emailcheck").text("이미 등록된 이메일입니다.");
-				$("#emailcheck").removeClass('alert-success');
-				$("#emailcheck").addClass('alert-danger');
-				$("#email").css('border', '1px solid #f00');
-			}
-		});
+	$("#email").focusout(function(){
+		var email = $("#email").val();
+		if(email != "") {
+			$("#emailcheck").addClass('alert');
+			$.ajax({
+				url: "emailcheck",
+				data: { "email" : $("#email").val() },
+				type: "get",
+			}).done(function (data) {
+				if(data.flag == 'Y') {
+					$("#emailcheck").text("사용할 수 있는 이메일입니다.");
+					$("#emailcheck").removeClass('alert-danger');
+					$("#emailcheck").addClass('alert-success');
+					$("#email").css('border', '1px solid #080');
+				} else {
+					$("#emailcheck").text("이미 등록된 이메일입니다.");
+					$("#emailcheck").removeClass('alert-success');
+					$("#emailcheck").addClass('alert-danger');
+					$("#email").css('border', '1px solid #f00');
+				}
+			});
+		}
 	});
 	
 	$("#password_chk").focusout(function(){
-		$("#passwordcheck").addClass('alert');
 		var password = $("#password").val();
 		var passcheck = $("#password_chk").val();
 		if(password != "" && passcheck != "") {
+			$("#passwordcheck").addClass('alert');
 			if(password == passcheck) {
 				$("#passwordcheck").text("비밀번호가 일치합니다.");
 				$("#passwordcheck").removeClass('alert-danger');
