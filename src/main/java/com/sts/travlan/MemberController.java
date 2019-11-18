@@ -95,9 +95,9 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("str", id + "은(는) 중복되어서 사용할 수 없습니다.");;
+			map.put("flag","N");;
 		} else {
-			map.put("str", id + "은(는) 사용할 수 있습니다.");
+			map.put("flag", "Y");
 		}
 
 		return map;
@@ -112,12 +112,55 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("str", email + "은(는) 중복되어서 사용할 수 없습니다.");
+			map.put("flag","N");;
 		} else {
-			map.put("str", email + "은(는) 사용할 수 있습니다.");
+			map.put("flag", "Y");
 		}
 
 		return map;
 	}
+	
+	@GetMapping("/forgot")
+	public String forgot() {
+		
+		return "/forgot";
+	}
+	
+	@GetMapping("/id_find")
+	public String id_find() {
+		
+		return "/id_find";
+	}
+	
+	@PostMapping("/id_find_Proc")
+	public String id_find_Proc(String email, Model model) {
+		
+		String id = mapper.id_find(email);
+		
+		model.addAttribute("id", id);
+		
+		return "/id_find_Proc";
+	}
+	
+	@GetMapping("/passwd_find")
+	public String passwd_find() {
+		
+		return "/passwd_find";
+	}
+	
+	@PostMapping("/passwd_find_Proc")
+	public String passwd_find_Proc(String id, String email, Model model) {
+		
+		Map map = new HashMap();
+		map.put("id", id);
+		map.put("email", email);
+		
+		String passwd = mapper.passwd_find(map);
+		
+		model.addAttribute("passwd", passwd);
+		
+		return "/passwd_find_Proc";
+	}
+	
 
 }

@@ -5,6 +5,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.MemberMapper">
 
+	<select id="passwd_find" parameterType="Map" resultType="String">
+		SELECT password
+		FROM member
+		WHERE id = #{id} AND email = #{email}
+	</select>
+	
+	<select id="id_find" parameterType="String" resultType="String">
+		SELECT id 
+		FROM member
+		WHERE email = #{email}
+	</select>
+	
 	<insert id="create" parameterType="MemberDTO">
 		INSERT INTO member( GRADE, CREATED_DATE, ID, PASSWORD, NICKNAME, EMAIL )
 		VALUES('U', now(), #{id}, #{password}, #{nickname}, #{email} )

@@ -23,22 +23,28 @@ public class PostController {
 
 		return "/post_write";
 	}
-
+	
 	@RequestMapping("/utility/file_uploader")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			// 파일정보
 			String sFileInfo = "";
+			
 			// 파일명을 받는다 - 일반 원본파일명
 			String filename = request.getHeader("file-name");
+			
 			// 파일 확장자
 			String filename_ext = filename.substring(filename.lastIndexOf(".") + 1);
+			
 			// 확장자를 소문자로 변경
 			filename_ext = filename_ext.toLowerCase();
+			
 			// 파일 기본경로
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+			
 			// 파일 기본경로 _ 상세경로
 			String filePath = dftFilePath + "storage" + File.separator + "photo_upload" + File.separator;
+			
 			System.out.println(filePath);
 			File file = new File(filePath);
 
@@ -76,7 +82,7 @@ public class PostController {
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 
 			sFileInfo += "&sFileName=" + filename;
-			sFileInfo += "&sFileURL=" + "/first/resource/photo_upload/" + realFileNm;
+			sFileInfo += "&sFileURL=" + "/resource/photo_upload/" + realFileNm;
 			PrintWriter print = response.getWriter();
 
 			print.print(sFileInfo);
