@@ -33,12 +33,12 @@ public class PostController {
 			String filename = request.getHeader("file-name");
 			// 파일 확장자
 			String filename_ext = filename.substring(filename.lastIndexOf(".") + 1);
-			// 확장자를소문자로 변경
+			// 확장자를 소문자로 변경
 			filename_ext = filename_ext.toLowerCase();
 			// 파일 기본경로
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 			// 파일 기본경로 _ 상세경로
-			String filePath = dftFilePath + "resource" + File.separator + "photo_upload" + File.separator;
+			String filePath = dftFilePath + "storage" + File.separator + "photo_upload" + File.separator;
 			System.out.println(filePath);
 			File file = new File(filePath);
 
