@@ -95,9 +95,26 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("str", id + "은(는) 중복되어서 사용할 수 없습니다.");
+			map.put("str", id + "은(는) 중복되어서 사용할 수 없습니다.");;
 		} else {
 			map.put("str", id + "은(는) 사용할 수 있습니다.");
+		}
+
+		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/emailcheck", produces = "application/json;charset=utf-8")
+	public Map<String, Object> emailcheck(String email) {
+
+		int flag = mapper.email_duplicate_check(email);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		if (flag > 0) {
+			map.put("str", email + "은(는) 중복되어서 사용할 수 없습니다.");
+		} else {
+			map.put("str", email + "은(는) 사용할 수 있습니다.");
 		}
 
 		return map;

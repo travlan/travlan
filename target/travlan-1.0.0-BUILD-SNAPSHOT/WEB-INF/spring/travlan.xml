@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE  tiles-definitions PUBLIC 
+    "-//Aapche Software Foundation//DTD Tiles Configuration 2.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+ 
+<tiles-definitions>     
+	<!-- topnav랑 footer 있는 페이지 -->
+	<definition name="main" template="/WEB-INF/views/template/main_template.jsp"> 
+        <put-attribute name="topnav" value="/WEB-INF/views/template/topnav.jsp" /> 
+        <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" /> 
+    </definition> 
+    
+    <!-- topnav랑 footer 없어야 되는 페이지 -->
+    <definition name="single" template="/WEB-INF/views/template/single_template.jsp"> 
+        <put-attribute name="style" value="/WEB-INF/views/template/style.jsp" />
+    </definition> 
+    
+    <definition name="/home" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp" /> 
+    </definition>
+    
+    <definition name="/login" extends="single"> 
+        <put-attribute name="title" value="Login" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/login.jsp" /> 
+    </definition>
+    
+    <definition name="/register" extends="single"> 
+        <put-attribute name="title" value="Register" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/register.jsp" /> 
+    </definition>
+
+    
+</tiles-definitions>
