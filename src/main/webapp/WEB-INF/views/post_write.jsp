@@ -2,7 +2,8 @@
 
     <div class="container">
         <form class="form-horizontal" action="post_write" method="post" enctype="multipart/form-data">
-
+			<input type="hidden" name="id" value="${num}">
+			
             <div class="form-group">
                 <div class="col-sm-12">
                     <input type="text" class="form-control" id="title" name="title">
@@ -19,9 +20,11 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="">비용 | </label>
+						
                     </div>
                     <div class="col-sm-6">
-                        <label for=""> |  </label>
+                        <label for="">지역 |  </label>
+						
                     </div>
                 </div>
             </div>
@@ -39,8 +42,8 @@
                     </div>
                     <div class="col-sm-6">
                     <label for="">시간 | </label>
-                        <input type="checkbox" name="" id="" >주간
-                        <input type="checkbox" name="" id="" >야간
+                        <input type="checkbox" name="time" id="time" >주간
+                        <input type="checkbox" name="time" id="time" >야간
                     </div>
                 </div>
             </div>

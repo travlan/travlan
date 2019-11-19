@@ -24,8 +24,9 @@
 		</div>
 		<div id="emailcheck"></div>
 		<div class="form-group">
-			<input class="form-control" type="text" name="nickname" placeholder="닉네임" />
+			<input class="form-control" id="nickname" type="text" name="nickname" placeholder="닉네임" />
 		</div>
+		<div id="nicknamecheck"></div>
 		<div class="form-group"><button class="btn btn-primary btn-block" type="submit">회원가입</button></div>
 		<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="history.back()">취소</button></div>
 	</form>
@@ -93,6 +94,30 @@
 				$("#passwordcheck").removeClass('alert-success');
 				$("#passwordcheck").addClass('alert-danger');
 			}
+		}
+	});
+	
+	$("#nickname").focusout(function(){
+		var nickname = $("#nickname").val();
+		if(nickname != "") {
+			$("#nicknamecheck").addClass('alert');
+			$.ajax({
+				url: "nicknamecheck",
+				data: { "nickname" : $("#nickname").val() },
+				type: "get",
+			}).done(function (data) {
+				if(data.flag == 'Y') {
+					$("#nicknamecheck").text("사용할 수 있는 닉네임입니다.");
+					$("#nicknamecheck").removeClass('alert-danger');
+					$("#nicknamecheck").addClass('alert-success');
+					$("#nickname").css('border', '1px solid #080');
+				} else {
+					$("#nicknamecheck").text("이미 등록된 닉네임입니다.");
+					$("#nicknamecheck").removeClass('alert-success');
+					$("#nicknamecheck").addClass('alert-danger');
+					$("#nickname").css('border', '1px solid #f00');
+				}
+			});
 		}
 	});
 </script>

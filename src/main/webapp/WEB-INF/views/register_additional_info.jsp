@@ -23,19 +23,18 @@
 		<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="infomation_show()">추가 정보 입력</button></div>
 		<div id="addtional" style="display:none;">
 			<input type="hidden" name="num" value="${num}">
-			
+		
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="age_male" value="male" name="gender">
+				<input class="form-check-input" type="checkbox" id="age_male" value="M" name="gender">
 				<label class="form-check-label" for="age_male">남자</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="age_female" value="female" name="gender">
+				<input class="form-check-input" type="checkbox" id="age_female" value="F" name="gender">
 				<label class="form-check-label" for="age_female">여자</label>
 			</div>
 			<div class="form-group">
 				<select id="inputState" class="form-control" name="age">
-					<option selected>나이</option>
-					<option value="10">10대</option>
+					<option value="10" selected>10대</option>
 					<option value="20">20대</option>
 					<option value="30">30대</option>
 					<option value="40">40대</option>
@@ -62,6 +61,31 @@
 				<select id="inputState" class="form-control" name="type3">
 					<option value="A">활기찬 분위기를 선호해요</option>
 					<option value="B">조용한 분위기를 선호해요</option>
+				</select>
+			<label>거주 지역</label>
+			</div>
+				<div class="form-group">
+				<select id="inputState" class="form-control" name="province">
+					<option value="seoul" selected>서울특별시</option>
+					<option value="kangwon">강원도</option>
+					<option value="daejeon">대전광역시</option>
+					<option value="chungchongnam">충청남도</option>
+					<option value="chungchongbuk">충청북도</option>
+					<option value="incheon">인천광역시</option>
+					<option value="gyeonggi">경기도</option>
+					<option value="gwangju">광주광역시</option>
+					<option value="jeonranam">전라남도</option>
+					<option value="jeonrabuk">전라북도</option>
+					<option value="pusan">부산광역시</option>
+					<option value="gyeongsangnam">경상남도</option>
+					<option value="gyeongsangbuk">경상북도</option>
+					<option value="ulsan">울산광역시</option>
+					<option value="daegu">대구광역시</option>
+					<option value="jeju">제주도</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<select id="inputState" class="form-control" name="region_num">
 				</select>
 			</div>
 		</div>

@@ -44,5 +44,20 @@
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/myinfo.jsp" /> 
     </definition>
+		
+	<definition name="/scrap" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/scrap.jsp" /> 
+    </definition>
+			
+	<definition name="/passwd_check" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/passwd_check.jsp" /> 
+    </definition>
+				
+	<definition name="/passwd_change" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/passwd_change.jsp" /> 
+    </definition>
     
 </tiles-definitions>

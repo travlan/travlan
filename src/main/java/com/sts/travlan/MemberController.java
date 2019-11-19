@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -39,7 +40,7 @@ public class MemberController {
 			
 			if(flag > 0) {
 				session.setAttribute("id", map.get("id"));
-				return "/home";
+				return "redirect:/";
 			}else {
 				return "/babo";
 			}
@@ -65,7 +66,7 @@ public class MemberController {
 		if (mapper.create(dto) == 1) {
 			request.setAttribute("sys_msg", "회원가입 성공!");
 			request.setAttribute("id", dto.getId());
-			request.setAttribute("num",dto.getNum());
+			request.setAttribute("num",mapper.get_unique_number(dto.getId()));
 			return "register_additional_info";
 		} else {
 			request.setAttribute("sys_msg", "회원가입 실패!");
@@ -130,6 +131,23 @@ public class MemberController {
 		return map;
 	}
 	
+	@ResponseBody
+	@GetMapping(value = "/nicknamecheck", produces = "application/json;charset=utf-8")
+	public Map<String, Object> nicknamecheck(String nickname) {
+
+		int flag = mapper.nickname_duplicate_check(nickname);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		if (flag > 0) {
+			map.put("flag","N");;
+		} else {
+			map.put("flag", "Y");
+		}
+
+		return map;
+	}
+	
 	@GetMapping("/forgot")
 	public String forgot() {
 		
@@ -174,7 +192,7 @@ public class MemberController {
 		return map;
 	}
 	
-	@GetMapping("/myinfo")
+	@RequestMapping("/myinfo")
 	public String myinfo(String id, HttpSession session, Model model) {
 		
 		if(id == null) {
@@ -182,11 +200,57 @@ public class MemberController {
 		}
 		
 		MemberDTO dto = mapper.myinfo(id);
+		int count_info = mapper.is_info(id);
+		boolean is_info = count_info>0?true:false;
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("is_info", is_info);
 		
 		return "/myinfo";
 	}
 	
-
+	@GetMapping("/passwd_check")
+	public String passwd_check() {
+		
+		return "/passwd_check";
+	}
+	
+	@PostMapping("/passwd_check")
+	public String passwd_check(String id, HttpSession session) {
+		
+		if(id == null) {
+			id = (String)session.getAttribute("id");
+		}
+		
+		int flag = mapper.passwd_check(id);
+		
+		if(flag > 0) {
+			return "redirect:/passwd_change";
+		} else {
+			return "/babo";
+		}
+	}
+	
+	@GetMapping("/passwd_change")
+	public String passwd_change() {
+		
+		return "/passwd_change";
+	}
+	
+	@PostMapping("/passwd_change")
+	public String passwd_change(String password, HttpSession session) {
+				
+		Map map = new HashMap();
+		map.put("id", session.getAttribute("id"));
+		map.put("password", password);
+		
+		int flag = mapper.passwd_change(map);
+		
+		if(flag > 0) {
+			return "redirect:/myinfo";
+		} else {
+			return "/babo";
+		}
+	}
+	
 }

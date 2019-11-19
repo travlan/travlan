@@ -5,6 +5,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.MemberMapper">
 
+	<update id="passwd_change" parameterType="Map">
+		UPDATE member
+		SET password = #{password}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="passwd_check" parameterType="String" resultType="int">
+		SELECT COUNT(password)
+		FROM member
+		WHERE id = #{id}
+	</select>
+	
 	<select id="myinfo" parameterType="String" resultType="MemberDTO">
 		SELECT id, nickname, email
 		FROM member
@@ -29,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="create_member_info" parameterType="Member_InfoDTO">
-		CREATE INTO member_info(num, age, type, gender, region_num)
+		INSERT INTO member_info(num, age, type, gender, region_num)
 		VALUES(#{num}, #{age}, #{type}, #{gender}, #{region_num})
 	</insert>
 	
@@ -48,5 +60,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM member
 		WHERE email = #{email}
 	</select>
+		
+	<select id="nickname_duplicate_check" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM member
+		WHERE nickname = #{nickname}
+	</select>
 	
+	<select id="get_unique_number" parameterType="String" resultType="int">
+		SELECT num from member WHERE id = #{id}
+	</select>
+	
+	<select id="is_info" parameterType="String" resultType="int">
+		SELECT count(num)
+		FROM member_info
+		WHERE num = (SELECT num FROM member WHERE id = #{id})
+	</select>
 </mapper>

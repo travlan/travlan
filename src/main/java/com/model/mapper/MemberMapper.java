@@ -11,7 +11,12 @@ public interface MemberMapper {
 	public int login(Map map);
 	public int id_duplicate_check(String id);
 	public int email_duplicate_check(String email);
+	public int nickname_duplicate_check(String nickname);
 	public String find_id(String email);
 	public String find_passwd(Map map);
 	public MemberDTO myinfo(String id);
+	public int get_unique_number(String id);
+	public int passwd_check(String id);
+	public int passwd_change(Map map);
+	public int is_info(String id);
 }
