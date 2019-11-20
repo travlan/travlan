@@ -75,10 +75,44 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<button>
-					추가 정보를 입력하세요!
-				</button>
+				<button type="button" onclick="showInfobox()">추가 정보를 입력하세요!</button>
+				<div id="infobox" style="display: none;">
+					<div>
+						<strong>성별</strong>
+						<select>
+							<option>남자</option>
+							<option>여자</option>
+						</select>
+					</div>
+					<div>
+					<strong>나이</strong>
+						<select>
+							<option>10</option>
+							<option>20</option>
+						</select>
+					</div>
+					<div>
+						<strong>선호도</strong>
+						<select>
+							<option>10</option>
+							<option>20</option>
+						</select>
+					</div>
+					<div>
+						<strong>사는곳</strong>
+						<select>
+							<option>10</option>
+							<option>20</option>
+						</select>
+					</div>
+				</div>
 			</c:otherwise>
 		</c:choose>
 	</form>
 </div>
+
+<script>
+function showInfobox() {
+	$('#infobox').css('display','block');
+}
+</script>

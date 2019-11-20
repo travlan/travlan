@@ -11,10 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id = #{id}
 	</update>
 	
-	<select id="passwd_check" parameterType="String" resultType="int">
+	<select id="passwd_check" parameterType="Map" resultType="int">
 		SELECT COUNT(password)
 		FROM member
 		WHERE id = #{id}
+		AND password = #{password}
 	</select>
 	
 	<select id="myinfo" parameterType="String" resultType="MemberDTO">
@@ -46,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="login" parameterType="Map" resultType="int">
-		SELECT COUNT(password)
+		SELECT COUNT(*)
 		FROM member
 		WHERE id = #{id} AND password = #{password}
 	</select>
@@ -75,4 +76,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM member_info
 		WHERE num = (SELECT num FROM member WHERE id = #{id})
 	</select>
+	
+	<select id="getRegion" parameterType="String" resultType="map">
+		SELECT * FROM location
+		WHERE region LIKE CONCAT(#{province}, '%')
+	</select>
+
 </mapper>

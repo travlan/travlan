@@ -1,5 +1,6 @@
 package com.model.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import com.model.member.MemberDTO;
@@ -16,7 +17,8 @@ public interface MemberMapper {
 	public String find_passwd(Map map);
 	public MemberDTO myinfo(String id);
 	public int get_unique_number(String id);
-	public int passwd_check(String id);
+	public int passwd_check(Map map);
 	public int passwd_change(Map map);
 	public int is_info(String id);
+	public List<Map<String, Object>> getRegion(String province);
 }
