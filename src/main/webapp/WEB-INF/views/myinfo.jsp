@@ -53,7 +53,7 @@
 				</div>
 				<div>
 					<strong>나이</strong>
-					<label name="age">${dto.age}대</label>
+					<label>${dto.age}대</label>
 				</div>
 				<div>
 					<strong>선호도</strong>
@@ -67,15 +67,44 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<button>
-					추가 정보를 입력하세요!
-				</button>
+				<button type="button" onclick="showInfobox()">추가 정보를 입력하세요!</button>
+				<div id="infobox" style="display: none;">
+					<div>
+						<strong>성별</strong>
+						<select>
+							<option>남자</option>
+							<option>여자</option>
+						</select>
+					</div>
+					<div>
+					<strong>나이</strong>
+						<select>
+							<option>10</option>
+							<option>20</option>
+						</select>
+					</div>
+					<div>
+						<strong>선호도</strong>
+						<select>
+							<option>10</option>
+							<option>20</option>
+						</select>
+					</div>
+					<div>
+						<strong>사는곳</strong>
+						<select>
+							<option>10</option>
+							<option>20</option>
+						</select>
+					</div>
+				</div>
 			</c:otherwise>
 		</c:choose>
 	</form>
 </div>
 
 <script>
+<<<<<<< HEAD
 	$(document).ready(function(){
 		var type = '${dto.type}';
 		var typeArr = type.split('');
@@ -105,4 +134,9 @@
 	});
 		
 		
+=======
+function showInfobox() {
+	$('#infobox').css('display','block');
+}
+>>>>>>> 3e6c71415b54b4a1f06a4a34fbf4df21a8b300e4
 </script>

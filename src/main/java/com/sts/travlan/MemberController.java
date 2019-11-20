@@ -39,9 +39,11 @@ public class MemberController {
 	public String login(@RequestParam Map<String, String> map, HttpSession session) {
 
 			int flag = mapper.login(map);
-			
+			MemberDTO dto = mapper.myinfo(map.get("id"));	
+		
 			if(flag > 0) {
 				session.setAttribute("id", map.get("id"));
+				session.setAttribute("nickname", dto.getNickname());
 				return "redirect:/";
 			}else {
 				return "/babo";
@@ -226,14 +228,44 @@ public class MemberController {
 		return "/passwd_check";
 	}
 	
-	@PostMapping("/passwd_check")
-	public String passwd_check(String id, HttpSession session) {
+	@ResponseBody
+	@GetMapping(value = "/currentpassword", produces = "application/json;charset=utf-8")
+	public Map<String, Object> currentpassword(String password, HttpSession session) {
 		
-		if(id == null) {
-			id = (String)session.getAttribute("id");
+		Map<String, String> current = new HashMap<String, String>();
+		current.put("id", (String)session.getAttribute("id"));
+		current.put("password", password);
+		
+		int flag = mapper.passwd_check(current);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(flag > 0) {
+			map.put("flag", "Y");
+		} else {
+			map.put("flag", "N");
 		}
 		
-		int flag = mapper.passwd_check(id);
+		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/getRegion", produces="application/json;charset=utf-8")
+	public List<Map<String, Object>> getRegion(String province){
+		province = "전북";
+		List<Map<String, Object>> list = mapper.getRegion(province);
+
+		return list;
+	}
+	
+	@PostMapping("/passwd_check")
+	public String passwd_check(String password, HttpSession session) {
+		
+		Map map = new HashMap();
+		map.put("id", session.getAttribute("id"));
+		map.put("password", password);
+		
+		int flag = mapper.passwd_check(map);
 		
 		if(flag > 0) {
 			return "redirect:/passwd_change";

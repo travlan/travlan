@@ -20,9 +20,11 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="">비용 | </label>
+						
                     </div>
                     <div class="col-sm-6">
                         <label for="">지역 |  </label>
+						
                     </div>
                 </div>
             </div>
