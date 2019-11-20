@@ -39,7 +39,7 @@ public class MemberController {
 	public String login(@RequestParam Map<String, String> map, HttpSession session) {
 
 			int flag = mapper.login(map);
-			MemberDTO dto = mapper.myinfo(map.get("id"));	
+			MyinfoDTO dto = mapper.getMyinfo(map.get("id"));	
 		
 			if(flag > 0) {
 				session.setAttribute("id", map.get("id"));
@@ -196,14 +196,6 @@ public class MemberController {
 		return map;
 	}
 	
-	@ResponseBody
-	@GetMapping(value = "/getRegion", produces="application/json;charset=utf-8")
-	public List<Map<String, Object>> getRegion(String province){
-		province = "전북";
-		List<Map<String, Object>> list = mapper.getRegion(province);
-
-		return list;
-	}
 	
 	@RequestMapping("/myinfo")
 	public String myinfo(String id, HttpSession session, Model model) {
@@ -278,6 +270,27 @@ public class MemberController {
 	public String passwd_change() {
 		
 		return "/passwd_change";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/oldpassword", produces="application/json;charset=utf-8")
+	public Map<String, Object> oldpassword(String password, HttpSession session) {
+		
+		Map<String, String> old = new HashMap<String, String>();
+		old.put("id", (String) session.getAttribute("id"));
+		old.put("password", password);
+			
+		int flag = mapper.passwd_check(old);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(flag > 0) {
+			map.put("flag", "Y");
+		} else {
+			map.put("flag", "N");
+		}
+		
+		return map;
 	}
 	
 	@PostMapping("/passwd_change")

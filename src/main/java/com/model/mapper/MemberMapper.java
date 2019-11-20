@@ -21,8 +21,6 @@ public interface MemberMapper {
 	public int passwd_change(Map map);
 	public int is_info(String id);
 	public List<Map<String, Object>> getRegion(String province);
-<<<<<<< HEAD
 	public MyinfoDTO getMyinfo(String id);
-=======
->>>>>>> 3e6c71415b54b4a1f06a4a34fbf4df21a8b300e4
+
 }

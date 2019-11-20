@@ -18,10 +18,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND password = #{password}
 	</select>
 	
-	<select id="myinfo" parameterType="String" resultType="MemberDTO">
-		SELECT id, nickname, email
-		FROM member
-		WHERE id = #{id}
+	<select id="getMyinfo" parameterType="String" resultType="MyinfoDTO">
+		SELECT m.nickname, m.email, i.age, i.`type`, i.gender, l.region
+		FROM member AS m, member_info AS i, location AS l
+		WHERE m.id = #{id} AND i.region_num = l.num;
 	</select>
 	
 	<select id="find_passwd" parameterType="Map" resultType="String">
@@ -81,5 +81,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM location
 		WHERE region LIKE CONCAT(#{province}, '%')
 	</select>
-
 </mapper>

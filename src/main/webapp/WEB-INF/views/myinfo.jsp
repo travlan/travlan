@@ -64,9 +64,7 @@
 				<div>
 					<strong>사는곳</strong>
 					<label>${dto.region}</label>
-				</div>
-			</c:when>
-			<c:otherwise>
+				</div></c:when><c:otherwise>
 				<button type="button" onclick="showInfobox()">추가 정보를 입력하세요!</button>
 				<div id="infobox" style="display: none;">
 					<div>
@@ -97,14 +95,12 @@
 							<option>20</option>
 						</select>
 					</div>
-				</div>
-			</c:otherwise>
-		</c:choose>
+				</div></c:otherwise></c:choose>
 	</form>
 </div>
 
 <script>
-<<<<<<< HEAD
+
 	$(document).ready(function(){
 		var type = '${dto.type}';
 		var typeArr = type.split('');
@@ -133,10 +129,7 @@
 		}
 	});
 		
-		
-=======
 function showInfobox() {
 	$('#infobox').css('display','block');
 }
->>>>>>> 3e6c71415b54b4a1f06a4a34fbf4df21a8b300e4
 </script>

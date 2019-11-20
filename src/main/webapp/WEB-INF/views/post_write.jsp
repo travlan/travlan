@@ -42,20 +42,22 @@
                     </div>
                     <div class="col-sm-6">
                     <label for="">시간 | </label>
-                        <input type="checkbox" name="time" id="time" >주간
-                        <input type="checkbox" name="time" id="time" >야간
+                        <input type="checkbox" name="time" id="time" value="day">주간
+                        <input type="checkbox" name="time" id="time" value="night">야간
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div style="display: inline-block;text-align: center;">
-                    <button type="submit" class="btn btn-primary">작성하기</button>
+                    <button type="submit" class="btn btn-primary">제출</button>
                     <button type="button" class="btn btn-danger" onclick="history.back()">취소</button>
                 </div>
             </div>
         </form>
     </div>
+
+
 <script type="text/javascript" src="smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
         var obj = [];

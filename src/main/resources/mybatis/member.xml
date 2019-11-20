@@ -81,9 +81,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM location
 		WHERE region LIKE CONCAT(#{province}, '%')
 	</select>
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> 3e6c71415b54b4a1f06a4a34fbf4df21a8b300e4
 </mapper>

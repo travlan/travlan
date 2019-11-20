@@ -47,34 +47,24 @@
 			<c:when test="${is_info}">
 				<div>
 					<strong>성별</strong>
-					<label>여자</label>
+					<label>
+						<div id="gender"></div>
+					</label>
 				</div>
 				<div>
-				<strong>나이</strong>
-					<label>20대</label>
-					<select>
-						<option>10</option>
-						<option>20</option>
-					</select>
+					<strong>나이</strong>
+					<label>${dto.age}대</label>
 				</div>
 				<div>
 					<strong>선호도</strong>
-					<label>아아아아아아아아</label>
-					<select>
-						<option>10</option>
-						<option>20</option>
-					</select>
+					<label>
+						<div id="type"></div>
+					</label>
 				</div>
 				<div>
 					<strong>사는곳</strong>
-					<label>강원도 원주시</label>
-					<select>
-						<option>10</option>
-						<option>20</option>
-					</select>
-				</div>
-			</c:when>
-			<c:otherwise>
+					<label>${dto.region}</label>
+				</div></c:when><c:otherwise>
 				<button type="button" onclick="showInfobox()">추가 정보를 입력하세요!</button>
 				<div id="infobox" style="display: none;">
 					<div>
@@ -105,13 +95,40 @@
 							<option>20</option>
 						</select>
 					</div>
-				</div>
-			</c:otherwise>
-		</c:choose>
+				</div></c:otherwise></c:choose>
 	</form>
 </div>
 
 <script>
+
+	$(document).ready(function(){
+		var type = '${dto.type}';
+		var typeArr = type.split('');
+
+		var gender = '${dto.gender}';
+
+		if(typeArr[0] == 'A'){
+			$("#type").append("<span class='badge'>빡빡</span>");
+		}else{
+			$("#type").append("<span class='badge'>느긋</span>");
+		}
+		if(typeArr[1] == 'A'){
+			$("#type").append("<span class='badge'>빡빡</span>");
+		}else{
+			$("#type").append("<span class='badge'>느긋</span>");
+		}
+		if(typeArr[2] == 'A'){
+			$("#type").append("<span class='badge'>빡빡</span>");
+		}else{
+			$("#type").append("<span class='badge'>느긋</span>");
+		}
+		if(gender == 'M'){
+			$("#gender").append("남성");
+		}else{
+			$("#gender").append("여성");
+		}
+	});
+		
 function showInfobox() {
 	$('#infobox').css('display','block');
 }
