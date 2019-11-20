@@ -1,6 +1,7 @@
 package com.sts.travlan;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.model.mapper.MemberMapper;
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
+import com.model.member.MyinfoDTO;
 
 @Controller
 public class MemberController {
@@ -192,6 +194,15 @@ public class MemberController {
 		return map;
 	}
 	
+	@ResponseBody
+	@GetMapping(value = "/getRegion", produces="application/json;charset=utf-8")
+	public List<Map<String, Object>> getRegion(String province){
+		province = "전북";
+		List<Map<String, Object>> list = mapper.getRegion(province);
+
+		return list;
+	}
+	
 	@RequestMapping("/myinfo")
 	public String myinfo(String id, HttpSession session, Model model) {
 		
@@ -199,7 +210,7 @@ public class MemberController {
 			id = (String)session.getAttribute("id");
 		}
 		
-		MemberDTO dto = mapper.myinfo(id);
+		MyinfoDTO dto = mapper.getMyinfo(id);
 		int count_info = mapper.is_info(id);
 		boolean is_info = count_info>0?true:false;
 		

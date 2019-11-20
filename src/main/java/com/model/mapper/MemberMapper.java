@@ -1,9 +1,11 @@
 package com.model.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
+import com.model.member.MyinfoDTO;
 
 public interface MemberMapper {
 	public int create(MemberDTO dto);
@@ -14,9 +16,10 @@ public interface MemberMapper {
 	public int nickname_duplicate_check(String nickname);
 	public String find_id(String email);
 	public String find_passwd(Map map);
-	public MemberDTO myinfo(String id);
 	public int get_unique_number(String id);
 	public int passwd_check(String id);
 	public int passwd_change(Map map);
 	public int is_info(String id);
+	public List<Map<String, Object>> getRegion(String province);
+	public MyinfoDTO getMyinfo(String id);
 }
