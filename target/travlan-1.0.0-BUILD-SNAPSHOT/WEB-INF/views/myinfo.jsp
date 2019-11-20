@@ -1,47 +1,31 @@
 <%@ page contentType = "text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<style type="text/css">
-	a:link {
-		color: black;
-	}
-	a:visited {
-		color: black;
-	}
-	a:hover {
-		color: black;
-	}
-	.info-tab {
-		padding-left: 0;
-		list-style: none;
-	}
-	.info-tab li {
-		display: inline-block;
-	}
-	.info-tab .active {
-		font-size: 24px;
-	}
-</style>
-
 <div class="container">
 	<ul class="info-tab">
-		<li class="active"><a href="myinfo">내 정보</a></li>
-		<li><a href="scrap">스크랩 목록</a></li>
-		<li><a href="passwd_check">비밀번호 변경</a></li>
-		<li><a href="secession">회원탈퇴</a></li>
+		<li class="active"><a class="immutable" href="myinfo">내 정보</a></li>
+		<li><a class="immutable" href="scrap">스크랩 목록</a></li>
+		<li><a class="immutable" href="passwd_check">비밀번호 변경</a></li>
+		<li><a class="immutable" href="secession">회원탈퇴</a></li>
 	</ul>
-	<form>
-		<div>
-			<strong>아이디</strong>
-			<label>${sessionScope.id}</label>
+	<div data-aos="fade-right">
+		<div class="form-group row">
+			<label for="staticEmail" class="col-sm-2 col-form-label">아이디</label>
+			<div class="col-sm-10">
+				<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="${sessionScope.id}">
+			</div>
 		</div>
-		<div>
-			<strong>닉네임</strong>
-			<label>${dto.nickname}</label>
+		<div class="form-group row">
+			<label for="staticEmail" class="col-sm-2 col-form-label">닉네임</label>
+			<div class="col-sm-10">
+				<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="${dto.nickname}">
+			</div>
 		</div>
-		<div>
-			<strong>이메일</strong>
-			<label>${dto.email}</label>
+		<div class="form-group row">
+			<label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
+			<div class="col-sm-10">
+				<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="${dto.email}">
+			</div>
 		</div>
 		<c:choose>
 			<c:when test="${is_info}">
@@ -65,7 +49,7 @@
 					<strong>사는곳</strong>
 					<label>${dto.region}</label>
 				</div></c:when><c:otherwise>
-				<button type="button" onclick="showInfobox()">추가 정보를 입력하세요!</button>
+				<button class="btn btn-light" type="button" onclick="showInfobox()">추가 정보를 입력하세요!</button>
 				<div id="infobox" style="display: none;">
 					<div>
 						<strong>성별</strong>
@@ -95,12 +79,13 @@
 							<option>20</option>
 						</select>
 					</div>
-				</div></c:otherwise></c:choose>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</form>
 </div>
 
 <script>
-
 	$(document).ready(function(){
 		var type = '${dto.type}';
 		var typeArr = type.split('');

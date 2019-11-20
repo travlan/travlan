@@ -2,6 +2,12 @@
 <%%>
 
 <div class="container">
+	<ul class="info-tab">
+		<li class="active"><a class="immutable" href="passwd_check">비밀번호 변경</a></li>
+		<li><a class="immutable" href="myinfo">내 정보</a></li>
+		<li><a class="immutable" href="scrap">스크랩 목록</a></li>
+		<li><a class="immutable" href="secession">회원탈퇴</a></li>
+	</ul>
 	<span>비밀번호를 변경하시려면 현재 비밀번호를 입력하세요.</span>
 	<form method="post" action="passwd_check">
 		<div class="form-group">

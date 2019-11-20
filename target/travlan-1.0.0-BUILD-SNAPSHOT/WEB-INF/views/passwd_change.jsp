@@ -9,6 +9,12 @@
 </style>
 
 <div class="container">
+	<ul class="info-tab">
+		<li class="active"><a class="immutable" href="passwd_check">비밀번호 변경</a></li>
+		<li><a class="immutable" href="myinfo">내 정보</a></li>
+		<li><a class="immutable" href="scrap">스크랩 목록</a></li>
+		<li><a class="immutable" href="secession">회원탈퇴</a></li>
+	</ul>
 	<form method="post" action="passwd_change">
 		<div class="form-group">
 			<label>비밀번호</label>
