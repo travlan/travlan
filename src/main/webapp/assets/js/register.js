@@ -1,3 +1,5 @@
+var emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
 $("#id").focusout(function(){
     var id = $("#id").val();
     if(id != "") {
@@ -24,7 +26,13 @@ $("#id").focusout(function(){
 
 $("#email").focusout(function(){
     var email = $("#email").val();
-    if(email != "") {
+    if(!email.match(emailRegex)){
+    	$("#emailcheck").addClass('alert');
+    	$("#emailcheck").text("유효한 이메일 주소를 넣어주세요.");
+        $("#emailcheck").removeClass('alert-success');
+        $("#emailcheck").addClass('alert-danger');
+        $("#email").css('border', '1px solid #f00');
+    } else if(email != "") {
         $.ajax({
             url: "emailcheck",
             data: { "email" : $("#email").val() },

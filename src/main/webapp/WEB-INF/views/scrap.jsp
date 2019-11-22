@@ -9,7 +9,7 @@
 		<li><a class="immutable" href="secession">회원탈퇴</a></li>
 	</ul>
 	<form>
-		<div>
+		<div data-aos="fade-right">
 			<img>
 			<a href="#"><strong>제목</strong></a>
 			<label>내용</label>

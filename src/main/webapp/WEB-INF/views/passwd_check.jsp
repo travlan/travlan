@@ -8,16 +8,33 @@
 		<li><a class="immutable" href="scrap">스크랩 목록</a></li>
 		<li><a class="immutable" href="secession">회원탈퇴</a></li>
 	</ul>
-	<span>비밀번호를 변경하시려면 현재 비밀번호를 입력하세요.</span>
-	<form method="post" action="passwd_check">
-		<div class="form-group">
-			<label>비밀번호 입력</label>
-			<input class="form-control" id="password" type="password" name="password" placeholder="비밀번호" />
-			<div id="currentpassword"></div>
+	<div data-aos="fade-right">
+	
+		<div class="row">
+			<div class="col-lg-6 col-lg-offset-3 text-center">
+				<span>비밀번호를 변경하시려면 현재 비밀번호를 입력하세요.</span>
+			</div>
 		</div>
-		<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="goNext()">확인</button></div>
-		<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="history.back()">취소</button></div>
-	</form>
+		
+		<div class="row">
+			<form method="post" action="passwd_check">
+				<div class="">
+					<div class="form-group">
+						<label><br>비밀번호 입력</label>
+						<input class="form-control" id="password" type="password" name="password" placeholder="비밀번호" />
+						<div id="currentpassword"></div>
+					</div>
+				</div>
+				<div class="">
+					<div class="form-group"><button class="btn btn-primary btn-block" type="button" 
+					id="passwd_change_btn" onclick="goNext()" disabled="true">확인</button></div>
+					<div class="form-group"><button class="btn btn-primary btn-block" type="button" 
+					onclick="history.back()">취소</button></div>
+				</div>
+			</form>
+		</div>
+		
+	</div>
 </div>
 
 <script>
@@ -44,12 +61,14 @@
 					$("#currentpassword").removeClass('alert-danger');
 					$("#currentpassword").addClass('alert-success');
 					$("#password").css('border', '1px solid #080');
+					$("#passwd_change_btn").attr('disabled', false);
 					done = true;
 				} else {
 					$("#currentpassword").text("잘못된 비밀번호입니다.");
 					$("#currentpassword").removeClass('alert-success');
 					$("#currentpassword").addClass('alert-danger');
 					$("#password").css('border', '1px solid #f00');
+					$("#passwd_change_btn").attr('disabled', true);
 				}
 			});
 		}

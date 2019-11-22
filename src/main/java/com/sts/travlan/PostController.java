@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,15 @@ import com.model.post.PostDTO;
 
 @Controller
 public class PostController {
+	Utility util = new Utility();
+	
 	@Autowired
 	private PostMapper mapper;
 
 	@GetMapping("/post_write")
-	public String post() {
+	public String post(HttpSession session) {
 
-		return "/post_write";
+		return util.isLoginFilter(session, "/bye");
 	}
 	
 	@PostMapping("/post_write")
@@ -46,25 +49,18 @@ public class PostController {
 	@RequestMapping("/utility/file_uploader")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			// 파일정보
 			String sFileInfo = "";
 			
 			// 파일명을 받는다 - 일반 원본파일명
 			String filename = request.getHeader("file-name");
-			
-			// 파일 확장자
+		
 			String filename_ext = filename.substring(filename.lastIndexOf(".") + 1);
-			
-			// 확장자를 소문자로 변경
 			filename_ext = filename_ext.toLowerCase();
 			
-			// 파일 기본경로
+			// 파일 경로설정
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
-			
-			// 파일 기본경로 _ 상세경로
 			String filePath = dftFilePath + "storage" + File.separator + "photo_upload" + File.separator;
 			
-			System.out.println(filePath);
 			File file = new File(filePath);
 
 			if (!file.exists()) {
@@ -78,7 +74,6 @@ public class PostController {
 			String rlFileNm = filePath + realFileNm;
 
 			///////////////// 서버에 파일쓰기 /////////////////
-
 			InputStream is = request.getInputStream();
 			OutputStream os = new FileOutputStream(rlFileNm);
 			int numRead;
@@ -94,8 +89,6 @@ public class PostController {
 			os.flush();
 			os.close();
 			///////////////// 서버에 파일쓰기 /////////////////
-
-			// 정보 출력
 
 			sFileInfo += "&bNewLine=true";
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함

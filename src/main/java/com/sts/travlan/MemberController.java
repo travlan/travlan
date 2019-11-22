@@ -23,9 +23,12 @@ import com.model.mapper.MemberMapper;
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
 import com.model.member.MyinfoDTO;
+import com.sts.travlan.Utility;
 
 @Controller
 public class MemberController {
+	Utility util = new Utility();
+	
 	@Autowired
 	private MemberMapper mapper;
 	
@@ -61,9 +64,9 @@ public class MemberController {
 	}
 	
 	@GetMapping("/register")
-	public String register() {
+	public String register(HttpSession session) {
 		
-		return "/register";
+		return util.isLoginFilter(session);
 	}
 	
 	@PostMapping("/register")
@@ -76,7 +79,7 @@ public class MemberController {
 			return "register_additional_info";
 		} else {
 			request.setAttribute("sys_msg", "회원가입 실패!");
-			return "redirect:/";
+			return "redirect:home";
 		}
 		
 		
@@ -200,11 +203,9 @@ public class MemberController {
 	
 	
 	@RequestMapping("/myinfo")
-	public String myinfo(String id, HttpSession session, Model model) {
+	public String myinfo(HttpSession session, Model model) {
 		
-		if(id == null) {
-			id = (String)session.getAttribute("id");
-		}
+		String id = (String)session.getAttribute("id");
 		
 		MyinfoDTO dto = mapper.getMyinfo(id);
 		int count_info = mapper.is_info(id);
@@ -213,7 +214,7 @@ public class MemberController {
 		model.addAttribute("dto", dto);
 		model.addAttribute("is_info", is_info);
 		
-		return "/myinfo";
+		return util.isLoginFilter(session, "/myinfo");
 	}
 	
 	@GetMapping("/passwd_check")
@@ -246,7 +247,6 @@ public class MemberController {
 	@ResponseBody
 	@GetMapping(value = "/getRegion", produces="application/json;charset=utf-8")
 	public List<Map<String, Object>> getRegion(String province){
-		province = "전북";
 		List<Map<String, Object>> list = mapper.getRegion(province);
 
 		return list;
@@ -262,16 +262,16 @@ public class MemberController {
 		int flag = mapper.passwd_check(map);
 		
 		if(flag > 0) {
-			return "redirect:/passwd_change";
+			return "/passwd_change";
 		} else {
 			return "/babo";
 		}
 	}
 	
 	@GetMapping("/passwd_change")
-	public String passwd_change() {
+	public String passwd_change(HttpSession session, Model model) {
 		
-		return "/passwd_change";
+		return util.isLoginFilter(session, "/passwd_change");
 	}
 	
 	@ResponseBody
@@ -297,7 +297,7 @@ public class MemberController {
 	
 	@PostMapping("/passwd_change")
 	public String passwd_change(String password, HttpSession session) {
-				
+		
 		Map map = new HashMap();
 		map.put("id", session.getAttribute("id"));
 		map.put("password", password);
@@ -305,7 +305,7 @@ public class MemberController {
 		int flag = mapper.passwd_change(map);
 		
 		if(flag > 0) {
-			return "redirect:/myinfo";
+			return "redirect:myinfo";
 		} else {
 			return "/babo";
 		}
@@ -330,14 +330,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("/bye")
-	public String bye() {
+	public String bye(HttpSession session) {
 		
-		return "/bye";
+		return util.isLoginFilter(session, "/bye");
 	}
 	
 	@GetMapping("/scrap")
-	public String scrap() {
+	public String scrap(HttpSession session) {
 		
-		return "/scrap";
+		return util.isLoginFilter(session, "/scrap");
 	}
+	
 }

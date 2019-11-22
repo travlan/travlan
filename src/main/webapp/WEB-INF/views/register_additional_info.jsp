@@ -21,7 +21,7 @@
 				${id} 님의 회원가입이 완료되었습니다!
 			</div>
 			<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="infomation_show()">추가 정보 입력</button></div>
-			<div id="addtional" style="display:none;">
+			<div id="addtional" style="display:none;" data-aos="flip-up">
 				<input type="hidden" name="num" value="${num}">
 			
 				<div class="form-check form-check-inline">

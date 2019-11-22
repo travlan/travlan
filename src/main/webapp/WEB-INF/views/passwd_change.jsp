@@ -9,21 +9,23 @@
 </style>
 
 <div class="container">
+
 	<ul class="info-tab">
 		<li class="active"><a class="immutable" href="passwd_check">비밀번호 변경</a></li>
 		<li><a class="immutable" href="myinfo">내 정보</a></li>
 		<li><a class="immutable" href="scrap">스크랩 목록</a></li>
 		<li><a class="immutable" href="secession">회원탈퇴</a></li>
 	</ul>
+	
 	<form method="post" action="passwd_change">
 		<div class="form-group">
 			<label>비밀번호</label>
-			<input class="form-control" id="password" type="password" name="password" placeholder="비밀번호" />
+			<input class="form-control" id="password" type="password" name="password" placeholder="비밀번호" required/>
 			<div id="oldpassword"></div>
 		</div>
 		<div class="form-group">
 			<label>비밀번호 확인</label>
-			<input class="form-control" id="password_chk" type="password" name="password_chk" placeholder="비밀번호 확인" />
+			<input class="form-control" id="password_chk" type="password" name="password_chk" placeholder="비밀번호 확인" required/>
 			<div id="passwordcheck"></div>
 		</div>
 		<div class="form-group"><button class="btn btn-primary btn-block" type="submit">변경</button></div>
