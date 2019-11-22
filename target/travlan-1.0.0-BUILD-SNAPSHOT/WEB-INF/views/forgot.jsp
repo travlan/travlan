@@ -1,10 +1,8 @@
 <%@ page contentType = "text/html;charset=utf-8" %>
-<%	
-%>
 
 <div class="login-dark">
     <form>
-        <img src="assets/image/logo.png" width="100%">
+        <a href="./"><img src="assets/image/logo.png" width="100%"></a>
         <div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="idFindShow()">아이디 찾기</button></div>
 		<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="pwFindShow()">비밀번호 찾기</button></div>
 		<div id="id-layout" style="display:none;">
@@ -30,6 +28,7 @@
 				<div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="history.back()">취소</button></div>
 			</div>
 		</div>
+		<a class="forgot" href="${pageContext.request.contextPath}/login">로그인하러 가기</a>
     </form>
 </div>
 
@@ -74,11 +73,11 @@
 		}
 		else {
 			$.ajax({
-				url: "",
-				data: {  },
+				url: "find_passwd",
+				data: { 'id' : $('#pw-form[name="id"]').val, 'email' : $('#pw-form[name="email"]').val },
 				type: "get",
 			}).done(function (data) {
-
+				console.log(data);
 			});
 		}
 	}

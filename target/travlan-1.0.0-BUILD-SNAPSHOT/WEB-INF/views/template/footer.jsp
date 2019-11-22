@@ -1,4 +1,4 @@
-<div class="footer-clean" data-aos="fade-up">
+<div class="footer-clean">
 	<footer>
 		<div class="container">
 			<div class="row justify-content-center">

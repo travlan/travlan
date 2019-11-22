@@ -50,25 +50,25 @@
 					$("#oldpassword").removeClass('alert');
 					$("#oldpassword").removeClass('alert-danger');
 					$("#password").removeClass('red-box');
+					
+					$("#password_chk").focusout(function(){
+						var password = $("#password").val();
+						var passcheck = $("#password_chk").val();
+						if(password != "" && passcheck != "") {
+							$("#passwordcheck").addClass('alert');
+							if(password == passcheck) {
+								$("#passwordcheck").text("비밀번호가 일치합니다.");
+								$("#passwordcheck").removeClass('alert-danger');
+								$("#passwordcheck").addClass('alert-success');
+							} else {
+								$("#passwordcheck").text("비밀번호가 일치하지 않습니다.");
+								$("#passwordcheck").removeClass('alert-success');
+								$("#passwordcheck").addClass('alert-danger');
+							}
+						}
+					});
 				}
 			});
 		}
 	})
-	
-	$("#password_chk").focusout(function(){
-		var password = $("#password").val();
-		var passcheck = $("#password_chk").val();
-		if(password != "" && passcheck != "") {
-			$("#passwordcheck").addClass('alert');
-			if(password == passcheck) {
-				$("#passwordcheck").text("비밀번호가 일치합니다.");
-				$("#passwordcheck").removeClass('alert-danger');
-				$("#passwordcheck").addClass('alert-success');
-			} else {
-				$("#passwordcheck").text("비밀번호가 일치하지 않습니다.");
-				$("#passwordcheck").removeClass('alert-success');
-				$("#passwordcheck").addClass('alert-danger');
-			}
-		}
-	});
 </script>

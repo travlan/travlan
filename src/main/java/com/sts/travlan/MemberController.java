@@ -36,7 +36,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> map, HttpSession session) {
+	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model) {
 
 			int flag = mapper.login(map);
 			MyinfoDTO dto = mapper.getMyinfo(map.get("id"));	
@@ -46,7 +46,9 @@ public class MemberController {
 				session.setAttribute("nickname", dto.getNickname());
 				return "redirect:/";
 			}else {
-				return "/babo";
+				model.addAttribute("msg", "failure");
+				
+				return "/login";
 			}
 	}
 	
@@ -309,4 +311,33 @@ public class MemberController {
 		}
 	}
 	
+	@GetMapping("/secession")
+	public String secession() {
+		
+		return "/secession";
+	}
+	
+	@PostMapping("/secession")
+	public String secession(String id) {
+		
+		int flag = mapper.secession(id);
+		
+		if(flag > 0) {
+			return "/bye";
+		} else {
+			return "/babo";
+		}
+	}
+	
+	@GetMapping("/bye")
+	public String bye() {
+		
+		return "/bye";
+	}
+	
+	@GetMapping("/scrap")
+	public String scrap() {
+		
+		return "/scrap";
+	}
 }

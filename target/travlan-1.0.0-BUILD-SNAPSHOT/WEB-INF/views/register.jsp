@@ -3,7 +3,7 @@
 
 <div class="login-dark">
     <form method="post" action="register" onsubmit="return required(this)">
-		<img src="assets/image/logo.png" width="100%">
+		<a href="./"><img src="assets/image/logo.png" width="100%"></a>
 		<h2 class="sr-only">Login Form</h2>
 		<div class="illustration">
 			<i class="icon ion-ios-locked-outline"></i>

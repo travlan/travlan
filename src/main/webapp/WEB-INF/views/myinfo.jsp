@@ -82,7 +82,7 @@
 				</div>
 			</c:otherwise>
 		</c:choose>
-	</form>
+	</div>
 </div>
 
 <script>

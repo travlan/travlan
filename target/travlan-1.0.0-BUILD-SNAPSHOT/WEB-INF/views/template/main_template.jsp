@@ -19,8 +19,8 @@
 </head>
 <body>
 	<tiles:insertAttribute name="topnav" />
-	<div class="contant">
-		<tiles:insertAttribute name="body" />
+	<div class="content">
+		<tiles:insertAttribute name="body"/>
 	</div>
 	<tiles:insertAttribute name="footer" />
 	<script>

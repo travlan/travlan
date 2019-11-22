@@ -6,7 +6,9 @@
 .font-myungjo {
   font-family: 'Chosunilbo_myungjo'
 }
-
+.content {
+  margin: 0 0 100px 0;
+}
 /* FOOTER STYLE */
 .footer-clean {
   border-top: 1px solid #eee;

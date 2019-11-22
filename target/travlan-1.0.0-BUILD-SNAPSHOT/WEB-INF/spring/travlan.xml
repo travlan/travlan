@@ -59,5 +59,15 @@
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/passwd_change.jsp" /> 
     </definition>
+					
+	<definition name="/secession" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/secession.jsp" /> 
+    </definition>
+						
+	<definition name="/bye" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/bye.jsp" /> 
+    </definition>
     
 </tiles-definitions>

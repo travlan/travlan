@@ -5,6 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.MemberMapper">
 
+	<delete id="secession" parameterType="String">
+		DELETE FROM member
+		WHERE id = #{id}
+	</delete>
+	
 	<update id="passwd_change" parameterType="Map">
 		UPDATE member
 		SET password = #{password}
