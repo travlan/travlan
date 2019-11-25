@@ -31,17 +31,26 @@ public class PostController {
 
 	@GetMapping("/post_write")
 	public String post(HttpSession session) {
-
-		return util.isLoginFilter(session, "/bye");
+	
+		return util.isLoginFilter(session, "/post_write");
 	}
 	
 	@PostMapping("/post_write")
-	public String post(PostDTO dto){
+	public String post(PostDTO dto, HttpServletRequest request){
+		String time = "";
+		time += request.getParameter("time_day");
+		time += request.getParameter("time_night");
 		
-		if (mapper.create(dto) == 1) {
-			return "/";
+		if("DN".equals(time)) {
+			time = "A";
+		}
+	
+		dto.setTime(time);
+		
+		if (mapper.create(dto) > 0) {
+			return "redirect:post_list";
 		} else {
-			return "/";
+			return "redirect:/";
 		}
 	}
 	

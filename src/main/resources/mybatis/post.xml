@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.model.mapper.PostMapper">
 
 	<insert id="create" parameterType="PostDTO">
-		INSERT INTO post(title, content, region_num, season, time, cost, type)
-		VALUES(#{title}, #{content}, #{region_num}, #{season}, #{time}, #{cost}, #{type})
+		INSERT INTO post(num, title, content, region_num, season, time, cost)
+		VALUES(#{num}, #{title}, #{content}, #{region_num}, #{season}, #{time}, #{cost})
 	</insert>
 	
 </mapper>

@@ -1,6 +1,7 @@
 package com.model.member;
 
 public class MyinfoDTO {
+	private int num;
 	private String nickname;
 	private String email;
 	private String age;
@@ -11,8 +12,9 @@ public class MyinfoDTO {
 	public MyinfoDTO() {
 		super();
 	}
-	public MyinfoDTO(String nickname, String email, String age, String type, String gender, String region) {
+	public MyinfoDTO(int num, String nickname, String email, String age, String type, String gender, String region) {
 		super();
+		this.num = num;
 		this.nickname = nickname;
 		this.email = email;
 		this.age = age;
@@ -22,8 +24,14 @@ public class MyinfoDTO {
 	}
 	@Override
 	public String toString() {
-		return "MyinfoDTO [nickname=" + nickname + ", email=" + email + ", age=" + age + ", type=" + type + ", gender="
+		return "MyinfoDTO [num=" + num + ", nickname=" + nickname + ", email=" + email + ", age=" + age + ", type=" + type + ", gender="
 				+ gender + ", region=" + region + "]";
+	}
+	public int getNum(){
+		return num;
+	}
+	public void setNum(int num){
+		this.num = num;
 	}
 	public String getNickname() {
 		return nickname;

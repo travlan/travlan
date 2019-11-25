@@ -96,8 +96,9 @@
 								<select id="inputState" class="form-control" name="type3">
 									<option value="A">활기찬 분위기를 선호해요</option>
 									<option value="B">조용한 분위기를 선호해요</option>
-								</select> <label>거주 지역</label>
+								</select>
 							</div>
+							<label>거주 지역</label>
 							<div class="form-group">
 								<select id="inputState" class="form-control" name="province">
 									<option value="서울" selected>서울특별시</option>

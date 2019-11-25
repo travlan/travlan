@@ -46,11 +46,11 @@ public class MemberController {
 		
 			if(flag > 0) {
 				session.setAttribute("id", map.get("id"));
+				session.setAttribute("num", dto.getNum());
 				session.setAttribute("nickname", dto.getNickname());
 				return "redirect:/";
 			}else {
 				model.addAttribute("msg", "failure");
-				
 				return "/login";
 			}
 	}

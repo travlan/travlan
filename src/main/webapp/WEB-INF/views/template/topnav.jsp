@@ -20,8 +20,8 @@
 					<c:otherwise>
 						<li class="nav-item" role="presentation"><a class="nav-link" href="logout">Logout</a></li>
 						<li class="nav-item" role="presentation"><a class="nav-link" href="myinfo">MyInfo</a></li>
-						<li class="nav-item" role="presentation"><a class="nav-link" href="logout">Notify</a></li>
-						<li class="nav-item" role="presentation"><a class="nav-link" href="logout">Note</a></li>
+						<li class="nav-item" role="presentation"><a class="nav-link" href="notify">Notify</a></li>
+						<li class="nav-item" role="presentation"><a class="nav-link" href="note">Note</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
