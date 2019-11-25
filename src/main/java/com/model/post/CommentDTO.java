@@ -7,12 +7,22 @@ public class CommentDTO {
 	private String title;
 	private String content;
 	private String score;
+	private String created_date;
+	private String updated_date;
 	
+	@Override
+	public String toString() {
+		return "CommentDTO [num=" + num + ", post_num=" + post_num + ", member_num=" + member_num + ", title=" + title
+				+ ", content=" + content + ", score=" + score + ", created_date=" + created_date + ", updated_date="
+				+ updated_date + "]";
+	}
+
 	public CommentDTO() {
 		super();
 	}
 	
-	public CommentDTO(int num, int post_num, String member_num, String title, String content, String score) {
+	public CommentDTO(int num, int post_num, String member_num, String title, String content, String score,
+			String created_date, String updated_date) {
 		super();
 		this.num = num;
 		this.post_num = post_num;
@@ -20,14 +30,25 @@ public class CommentDTO {
 		this.title = title;
 		this.content = content;
 		this.score = score;
+		this.created_date = created_date;
+		this.updated_date = updated_date;
 	}
-	
-	@Override
-	public String toString() {
-		return "CommentDTO [num=" + num + ", post_num=" + post_num + ", member_num=" + member_num + ", title=" + title
-				+ ", content=" + content + ", score=" + score + "]";
+
+	public String getCreated_date() {
+		return created_date;
 	}
-	
+
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
+	}
+
+	public String getUpdated_date() {
+		return updated_date;
+	}
+
+	public void setUpdated_date(String updated_date) {
+		this.updated_date = updated_date;
+	}
 	public int getNum() {
 		return num;
 	}

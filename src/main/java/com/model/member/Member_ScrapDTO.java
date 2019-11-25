@@ -5,23 +5,31 @@ public class Member_ScrapDTO {
 	private int member_num;
 	private int post_num;
 	private String memo;
+	private String created_date;
 	
 	public Member_ScrapDTO() {
 		super();
 	}
 	
-	public Member_ScrapDTO(int num, int member_num, int post_num, String memo) {
+	public Member_ScrapDTO(int num, int member_num, int post_num, String memo, String created_date) {
 		super();
 		this.num = num;
 		this.member_num = member_num;
 		this.post_num = post_num;
 		this.memo = memo;
+		this.created_date = created_date;
 	}
 	
 	@Override
 	public String toString() {
 		return "Member_ScrapDTO [num=" + num + ", member_num=" + member_num + ", post_num=" + post_num + ", memo="
-				+ memo + "]";
+				+ memo + ", created_date=" + created_date + "]";
+	}
+	public String getCreated_date() {
+		return created_date;
+	}
+	public void setCreated_date() {
+		this.created_date = created_date;
 	}
 	
 	public int getNum() {
