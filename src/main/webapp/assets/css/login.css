@@ -1,6 +1,17 @@
+@font-face { font-family: 'classic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff'); font-weight: normal; font-style: normal; }
+.font-classic {
+	font-family: 'classic';
+}
+.text-title {
+	color: #ee9446;
+	text-align: center;
+    font-size: 4em;
+    display: block;
+}
+
 .login-dark {
     height: 100vh;
-    background: #475d62 url(../image/4.jpg);
+    background: #475d62 url(../image/2.jpg);
     background-size: cover;
     position: relative;
 }
@@ -49,7 +60,7 @@
 
 .login-dark form .btn-primary:hover,
 .login-dark form .btn-primary:active {
-    background: #214a80;
+    background: #aa5866;
     outline: none;
 }
 

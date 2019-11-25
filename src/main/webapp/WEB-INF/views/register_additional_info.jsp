@@ -16,7 +16,7 @@
 <body>
 	<div class="login-dark">
 		<form method="post" action="register_additional_info">
-			<img src="assets/image/logo.png" width="100%">
+			<a class="font-classic text-title immutable" href="./">Travlan</a>
 			<div class="alert alert-success" role="alert">
 				${id} 님의 회원가입이 완료되었습니다!
 			</div>

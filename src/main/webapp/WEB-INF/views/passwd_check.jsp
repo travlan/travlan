@@ -9,31 +9,14 @@
 		<li><a class="immutable" href="secession">회원탈퇴</a></li>
 	</ul>
 	<div data-aos="fade-right">
-	
-		<div class="row">
-			<div class="col-lg-6 col-lg-offset-3 text-center">
-				<span>비밀번호를 변경하시려면 현재 비밀번호를 입력하세요.</span>
+		<div id="currentpassword" class="alert alert-primary">패스워드를 변경하려면 현재 비밀번호를 입력하십시오.</div>
+		<form class="form-inline" method="post" action="passwd_check">
+			<div class="form-group mx-sm-4 mb-2">
+			    <label for="inputPassword2" class="sr-only">Password</label>
+			    <input type="password" class="form-control" id="password" type="password" name="password" placeholder="비밀번호">
 			</div>
-		</div>
-		
-		<div class="row">
-			<form method="post" action="passwd_check">
-				<div class="">
-					<div class="form-group">
-						<label><br>비밀번호 입력</label>
-						<input class="form-control" id="password" type="password" name="password" placeholder="비밀번호" />
-						<div id="currentpassword"></div>
-					</div>
-				</div>
-				<div class="">
-					<div class="form-group"><button class="btn btn-primary btn-block" type="button" 
-					id="passwd_change_btn" onclick="goNext()" disabled="true">확인</button></div>
-					<div class="form-group"><button class="btn btn-primary btn-block" type="button" 
-					onclick="history.back()">취소</button></div>
-				</div>
-			</form>
-		</div>
-		
+			<button type="submit" class="btn btn-primary mb-2" type="button" id="passwd_change_btn" disabled onclick="goNext()">비밀번호 확인</button>
+		</form>
 	</div>
 </div>
 
@@ -50,7 +33,7 @@
 	$("#password").focusout(function(){
 		var password = $("#password").val();
 		if(password != "") {
-			$("#currentpassword").addClass('alert');
+			$("#currentpassword").removeClass('alert-primary');
 			$.ajax({
 				url: "currentpassword",
 				data: { "password" : $("#password").val() },

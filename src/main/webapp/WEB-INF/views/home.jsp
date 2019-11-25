@@ -20,8 +20,8 @@
 	</c:choose>
 </div>
 <div class="container mt-5">
-	<div class="intro mb-5">
-		<h5 class="text-center font-myungjo">Travlan에서 완벽한 계획을 찾아보세요!</h5>
+	<div class="intro mb-5 font-myungjo">
+		<h5 class="text-center">Travlan에서 완벽한 계획을 찾아보세요!</h5>
 	</div>
 	<div class="articles">
 		<div class="post-list row" data-aos="zoom-in">

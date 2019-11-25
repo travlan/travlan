@@ -5,13 +5,13 @@
     <form method="post"
   		  action="${pageContext.request.contextPath}/login"
 		  onsubmit="return required(this)">
-        <a href="./"><img src="assets/image/logo.png" width="100%"></a>
+        <a class="font-classic text-title immutable" href="./">Travlan</a>
         <h2 class="sr-only">Login Form</h2>
         <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
         <div class="form-group"><input class="form-control" type="text" name="id" placeholder="ID" /></div>
         <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" /></div>
 		<c:if test="${msg == 'failure'}">
-			<div style="color: red;">아이디 또는 비밀번호가 일치하지 않습니다.</div>
+			<div class="alert alert-danger">아이디 또는 비밀번호가 일치하지 않습니다.</div>
 		</c:if>
         <div class="form-group"><button class="btn btn-primary btn-block" type="submit">로그인</button></div>
         <div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="location.href='register'">회원가입</button></div>
