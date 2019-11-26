@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://static.blex.kr/assets/library/bootstrap.css">
-    <link rel="stylesheet" href="https://baejino.com/baealex.css">
-    <link href="https://fonts.googleapis.com/css?family=Yeon+Sung&display=swap" rel="stylesheet">
-    <link href="assets/css/login.css" rel="stylesheet">
-</head>
-
-<body>
+<%@ page contentType = "text/html;charset=utf-8" %>
     <nav class="navbar navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">Travlan Admin</a>
@@ -23,7 +9,7 @@
             <div class="col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item active d-flex justify-content-between align-items-center">
-                        회원
+                        Member
                         <span>
                             <a class="text-light" href="admin_list.html">...</a>
                         </span>
@@ -36,7 +22,7 @@
             <div class="col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item active d-flex justify-content-between align-items-center">
-                        게시글
+                        Member
                         <span>
                             <a class="text-light" href="#">...</a>
                         </span>
@@ -47,7 +33,7 @@
             <div class="col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item active d-flex justify-content-between align-items-center">
-                        댓글
+                        Member
                         <span>
                             <a class="text-light" href="#">...</a>
                         </span>
@@ -58,7 +44,7 @@
             <div class="col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item active d-flex justify-content-between align-items-center">
-                        쪽지
+                        Member
                         <span>
                             <a class="text-light" href="#">...</a>
                         </span>
@@ -69,7 +55,7 @@
             <div class="col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item active d-flex justify-content-between align-items-center">
-                        알림
+                        Member
                         <span>
                             <a class="text-light" href="#">...</a>
                         </span>
@@ -80,7 +66,7 @@
             <div class="col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item active d-flex justify-content-between align-items-center">
-                        스크랩
+                        Member
                         <span>
                             <a class="text-light" href="#">...</a>
                         </span>
@@ -91,7 +77,7 @@
             <div class="col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item active d-flex justify-content-between align-items-center">
-                        신고
+                        Member
                         <span>
                             <a class="text-light" href="#">...</a>
                         </span>
@@ -102,7 +88,7 @@
             <div class="col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item active d-flex justify-content-between align-items-center">
-                        지역
+                        Member
                         <span>
                             <a class="text-light" href="#">...</a>
                         </span>
@@ -112,8 +98,3 @@
             </div>
         </div>
     </div>
-    <script src="https://static.blex.kr/assets/library/jquery.js"></script>
-    <script src="https://static.blex.kr/assets/library/bootstrap.js"></script>
-</body>
-
-</html>

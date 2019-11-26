@@ -44,6 +44,11 @@
         <put-attribute name="title" value="Register" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/forgot.jsp" /> 
     </definition>
+    
+    <definition name="/admin" extends="single"> 
+        <put-attribute name="title" value="Register" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/admin.jsp" /> 
+    </definition>
 	
 	<definition name="/myinfo" extends="main"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
