@@ -34,19 +34,19 @@
 			<c:when test="${is_info}">
 				<div>
 					<strong>성별</strong> <label>
-						<div id="gender"></div>
+						<div id="gender">${idto.gender}</div>
 					</label>
 				</div>
 				<div>
-					<strong>나이</strong> <label>${dto.age}대</label>
+					<strong>나이</strong> <label>${idto.age}대</label>
 				</div>
 				<div>
-					<strong>선호도</strong> <label>
+					<strong>선호도</strong><label>
 						<div id="type"></div>
 					</label>
 				</div>
 				<div>
-					<strong>사는곳</strong> <label>${dto.region}</label>
+					<strong>사는곳</strong> <label>${idto.region_num}</label>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -68,7 +68,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<select id="inputState" class="form-control" name="age">
+								<select id="age" class="form-control" name="age">
 									<option value="10" selected>10대</option>
 									<option value="20">20대</option>
 									<option value="30">30대</option>
@@ -100,7 +100,7 @@
 							</div>
 							<label>거주 지역</label>
 							<div class="form-group">
-								<select id="inputState" class="form-control" name="province">
+								<select id="province" class="form-control" name="province">
 									<option value="서울" selected>서울특별시</option>
 									<option value="강원">강원도</option>
 									<option value="대전">대전광역시</option>
@@ -120,11 +120,11 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<select id="inputState" class="form-control" name="region_num">
+								<select id="region_num" class="form-control" name="region_num">
 								</select>
 							</div>
 						</div>
-						<div id="done" style="display: none" class="form-group">
+						<div id="done" class="form-group">
 							<button class="btn btn-primary btn-block" type="submit">완료</button>
 						</div>
 					</form>
@@ -136,10 +136,9 @@
 
 <script>
 	$(document).ready(function() {
-		var type = '${dto.type}';
+		var type = '${idto.type}';
 		var typeArr = type.split('');
 
-		var gender = '${dto.gender}';
 
 		if (typeArr[0] == 'A') {
 			$("#type").append("<span class='type'>빡빡</span>");
@@ -156,15 +155,25 @@
 		} else {
 			$("#type").append("<span class='type'>조용</span>");
 		}
-		if (gender == 'M') {
-			$("#gender").append("남성");
-		} else {
-			$("#gender").append("여성");
-		}
 	});
 
 	function showInfobox() {
 		$('#infobox').css('display', 'block');
 		$('#infobox_btn').css('visibility', 'hidden');
 	}
+
+	$("#province").change(function(){
+		$.ajax({
+            url: "getRegion",
+            data: { "province" : $("#province").val() },
+            type: "get",
+        }).done(function (data) {
+            var codes = "";
+            $("#region_num").html("");
+            $.each(data, function(index, item){
+                codes += "<option value=" + item.num + ">" + item.region + "</option>"
+            	$("#region_num").html(codes);
+            });
+		});
+	});
 </script>

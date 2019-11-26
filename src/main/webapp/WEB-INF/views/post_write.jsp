@@ -3,16 +3,17 @@
     <div class="container">
         <form class="form-horizontal" action="post_write" method="post" enctype="multipart/form-data">
 			
-			<input type="hidden" name="num" value="${num}">
+			<input type="hidden" name="member_num" value="${sessionScope.num}">
+			<input type="hidden" name="type" value="ABA">
 			
             <div class="form-group">
-                <div class="col-sm-12">
+                <div class="col-lg-12">
                     <input type="text" class="form-control" id="title" name="title">
                 </div>
             </div>
 
             <div class="form-group">
-                <div class="col-sm-12">
+                <div class="col-lg-12">
                     <textarea rows="12" cols="6" id="content" name="content" class="form-control"></textarea>
                 </div>
             </div>

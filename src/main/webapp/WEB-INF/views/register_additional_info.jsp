@@ -62,10 +62,10 @@
 						<option value="A">활기찬 분위기를 선호해요</option>
 						<option value="B">조용한 분위기를 선호해요</option>
 					</select>
-				<label>거주 지역</label>
 				</div>
-					<div class="form-group">
-					<select id="inputState" class="form-control" name="province">
+				<label>거주 지역</label>
+				<div class="form-group">
+					<select id="province" class="form-control" name="province">
 						<option value="서울" selected>서울특별시</option>
 						<option value="강원">강원도</option>
 						<option value="대전">대전광역시</option>
@@ -85,7 +85,7 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<select id="inputState" class="form-control" name="region_num">
+					<select id="region_num" class="form-control" name="region_num">
 					</select>
 				</div>
 			</div>
@@ -101,5 +101,20 @@
 		$('#cancle').css('display', 'none');
 		$('#done').css('display', 'block');
 	}
+
+	$("#province").change(function(){
+		$.ajax({
+            url: "getRegion",
+            data: { "province" : $("#province").val() },
+            type: "get",
+        }).done(function (data) {
+            var codes = "";
+            $("#region_num").html("");
+            $.each(data, function(index, item){
+                codes += "<option value=" + item.num + ">" + item.region + "</option>"
+            	$("#region_num").html(codes);
+            });
+		});
+	});
 	</script>
 </body>

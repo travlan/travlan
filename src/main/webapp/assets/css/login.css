@@ -60,7 +60,7 @@
 
 .login-dark form .btn-primary:hover,
 .login-dark form .btn-primary:active {
-    background: #aa5866;
+    background-color: #aa5866 !important;
     outline: none;
 }
 

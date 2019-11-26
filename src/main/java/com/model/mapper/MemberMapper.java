@@ -22,5 +22,7 @@ public interface MemberMapper {
 	public int is_info(String id);
 	public List<Map<String, Object>> getRegion(String province);
 	public MyinfoDTO getMyinfo(String id);
+	public MemberDTO getMember(String id);
+	public Member_InfoDTO getMemberInfo(int num);
 	public int secession(String id);
 }

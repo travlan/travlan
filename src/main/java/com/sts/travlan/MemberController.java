@@ -41,18 +41,20 @@ public class MemberController {
 	@PostMapping("/login")
 	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model) {
 
-			int flag = mapper.login(map);
-			MyinfoDTO dto = mapper.getMyinfo(map.get("id"));	
+		int flag = mapper.login(map);
 		
-			if(flag > 0) {
-				session.setAttribute("id", map.get("id"));
-				session.setAttribute("num", dto.getNum());
-				session.setAttribute("nickname", dto.getNickname());
-				return "redirect:/";
-			}else {
-				model.addAttribute("msg", "failure");
-				return "/login";
-			}
+		MemberDTO dto = mapper.getMember(map.get("id"));
+		
+		if(flag > 0) {
+			session.setAttribute("id", map.get("id"));
+			session.setAttribute("num", dto.getNum());
+			session.setAttribute("nickname", dto.getNickname());
+				
+			return "redirect:/";
+		}else {
+			model.addAttribute("msg", "failure");
+			return "/login";
+		}
 	}
 	
 	@GetMapping("/logout")
@@ -82,7 +84,6 @@ public class MemberController {
 			return "redirect:home";
 		}
 		
-		
 	}
 	
 	@GetMapping("/register_additional_info")
@@ -100,7 +101,7 @@ public class MemberController {
 		dto.setType(type);
 		
 		if(mapper.create_member_info(dto) > 0) {
-			return "";
+			return "redirect:home";
 		}else {
 			return "";
 		}
@@ -207,10 +208,19 @@ public class MemberController {
 		
 		String id = (String)session.getAttribute("id");
 		
-		MyinfoDTO dto = mapper.getMyinfo(id);
-		int count_info = mapper.is_info(id);
-		boolean is_info = count_info>0?true:false;
-		
+		MemberDTO dto = mapper.getMember(id);
+		boolean is_info = mapper.is_info(id) > 0 ? true : false;
+		if(is_info) {
+			Member_InfoDTO idto = mapper.getMemberInfo(dto.getNum());
+			
+			if(idto.getGender().equals("F")){
+				idto.setGender("여성");
+			}else{
+				idto.setGender("남성");
+			}
+
+			model.addAttribute("idto", idto);
+		}
 		model.addAttribute("dto", dto);
 		model.addAttribute("is_info", is_info);
 		
