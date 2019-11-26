@@ -14,12 +14,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.model.mapper.MemberMapper;
 import com.model.mapper.PostMapper;
+import com.model.member.MemberDTO;
 import com.model.post.PostDTO;
 
 @Controller
@@ -27,7 +30,9 @@ public class PostController {
 	Utility util = new Utility();
 	
 	@Autowired
-	private PostMapper mapper;
+	private PostMapper post_mapper;
+	@Autowired
+	private MemberMapper member_mapper;
 
 	@GetMapping("/post_write")
 	public String post(HttpSession session) {
@@ -38,11 +43,23 @@ public class PostController {
 	@PostMapping("/post_write")
 	public String post(PostDTO dto, HttpServletRequest request){
 		
-		if (mapper.create(dto) > 0) {
+		if (post_mapper.create(dto) > 0) {
 			return "redirect:post_list";
 		} else {
 			return "redirect:/";
 		}
+	}
+	
+	@GetMapping("/post_read")
+	public String post_read(int num, Model model) {
+		
+		PostDTO post = post_mapper.read(num);
+		MemberDTO author = member_mapper.getMember(post.getMember_num());
+		
+		model.addAttribute("post", post);
+		model.addAttribute("author", author);
+		
+		return "/post_read";
 	}
 	
 	@ResponseBody

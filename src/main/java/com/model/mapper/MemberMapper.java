@@ -20,7 +20,7 @@ public interface MemberMapper {
 	public int passwd_change(Map map);
 	public int is_info(String id);
 	public List<Map<String, Object>> getRegion(String province);
-	public MemberDTO getMember(String id);
+	public MemberDTO getMember(int num);
 	public Member_InfoDTO getMemberInfo(int num);
 	public int secession(String id);
 }

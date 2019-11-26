@@ -2,9 +2,10 @@
 
     <div class="container">
     
-        <form class="form-horizontal" action="post_write" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="post_write" method="post" enctype="multipart/form-data" id="post_write">
 			<input type="hidden" name="member_num" value="${sessionScope.num}">
 			<input type="hidden" name="type" value="ABA">
+			<input type="hidden" name="thumbnail" value="default.jpg">
 			
             <div class="form-group row">
                 <div class="col-sm-12">
@@ -97,7 +98,7 @@
 			
             <div class="form-group">
                 <div style="display: inline-block;text-align: center;">
-                    <button type="submit" class="btn btn-primary">제출</button>
+                    <button type="button" class="btn btn-primary" onclick="submitContents()">제출</button>
                     <button type="button" class="btn btn-danger" onclick="history.back()">취소</button>
                 </div>
             </div>
@@ -107,10 +108,10 @@
 
 <script type="text/javascript" src="smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-        var obj = [];
+        var editor_obj = [];
         //스마트에디터 프레임생성
         nhn.husky.EZCreator.createInIFrame({
-            oAppRef: obj,
+            oAppRef: editor_obj,
             elPlaceHolder: "content",
             sSkinURI: "smarteditor2/SmartEditor2Skin.html",
             htParams : {
@@ -136,4 +137,10 @@
                 });
     		});
     	});
+	
+	function submitContents() {
+		editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		
+		$("#post_write").submit();
+	}
 </script>

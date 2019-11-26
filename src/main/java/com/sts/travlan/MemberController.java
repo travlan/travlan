@@ -42,7 +42,7 @@ public class MemberController {
 
 		int flag = mapper.login(map);
 		
-		MemberDTO dto = mapper.getMember(map.get("id"));
+		MemberDTO dto = mapper.getMember(mapper.get_unique_number(map.get("id")));
 		
 		if(flag > 0) {
 			session.setAttribute("id", map.get("id"));
@@ -204,11 +204,9 @@ public class MemberController {
 	
 	@RequestMapping("/myinfo")
 	public String myinfo(HttpSession session, Model model) {
+		MemberDTO dto = mapper.getMember((Integer)session.getAttribute("num"));
 		
-		String id = (String)session.getAttribute("id");
-		
-		MemberDTO dto = mapper.getMember(id);
-		boolean is_info = mapper.is_info(id) > 0 ? true : false;
+		boolean is_info = mapper.is_info((String)session.getAttribute("id")) > 0 ? true : false;
 		if(is_info) {
 			Member_InfoDTO idto = mapper.getMemberInfo(dto.getNum());
 			
