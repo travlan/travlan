@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
-import com.model.member.MyinfoDTO;
 
 public interface MemberMapper {
 	public int create(MemberDTO dto);
@@ -21,7 +20,6 @@ public interface MemberMapper {
 	public int passwd_change(Map map);
 	public int is_info(String id);
 	public List<Map<String, Object>> getRegion(String province);
-	public MyinfoDTO getMyinfo(String id);
 	public MemberDTO getMember(String id);
 	public Member_InfoDTO getMemberInfo(int num);
 	public int secession(String id);

@@ -46,7 +46,7 @@
 					</label>
 				</div>
 				<div>
-					<strong>사는곳</strong> <label>${idto.region_num}</label>
+					<strong>사는곳</strong> <label>${idto.region}</label>
 				</div>
 			</c:when>
 			<c:otherwise>

@@ -22,7 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.model.mapper.MemberMapper;
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
-import com.model.member.MyinfoDTO;
 import com.sts.travlan.Utility;
 
 @Controller
@@ -133,7 +132,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag","N");;
+			map.put("flag", "N");;
 		} else {
 			map.put("flag", "Y");
 		}

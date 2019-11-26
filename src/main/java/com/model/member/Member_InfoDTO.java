@@ -6,24 +6,26 @@ public class Member_InfoDTO {
 	private String type;
 	private String gender;
 	private int region_num;
+	private String region;
 	
 	public Member_InfoDTO() {
 		super();
 	}
 	
-	public Member_InfoDTO(int num, String age, String type, String gender, int region_num) {
+	public Member_InfoDTO(int num, String age, String type, String gender, int region_num, String region) {
 		super();
 		this.num = num;
 		this.age = age;
 		this.type = type;
 		this.gender = gender;
 		this.region_num = region_num;
+		this.region = region;
 	}
 	
 	@Override
 	public String toString() {
 		return "Member_InfoDTO [num=" + num + ", age=" + age + ", type=" + type + ", gender=" + gender + ", region_num="
-				+ region_num + "]";
+				+ region_num + ", region=" + region + "]";
 	}
 	
 	public int getNum() {
@@ -56,5 +58,10 @@ public class Member_InfoDTO {
 	public void setRegion_num(int region_num) {
 		this.region_num = region_num;
 	}
-	
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
+	}
 }

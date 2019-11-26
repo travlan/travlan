@@ -37,19 +37,6 @@ public class PostController {
 	
 	@PostMapping("/post_write")
 	public String post(PostDTO dto, HttpServletRequest request){
-		String time = "";
-			
-		if(!request.getParameter("time_day").equals("null"))
-			time += request.getParameter("time_day");
-		
-		if(!request.getParameter("time_night").equals("null"))
-			time += request.getParameter("time_night");
-		
-		if("DN".equals(time)) {
-			time = "A";
-		}
-	
-		dto.setTime(time);
 		
 		if (mapper.create(dto) > 0) {
 			return "redirect:post_list";
