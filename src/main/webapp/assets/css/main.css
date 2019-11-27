@@ -186,16 +186,6 @@
   margin-top: -5px;
 }
 
-@media (max-width:768px) {
-  .post-thumb {
-    width: 100%;
-  }
-  .post-content {
-    padding-left:0px;
-    padding-top:10px;
-  }
-}
-
 
 /* INFO STYLE */
 a.immutable:link, a.immutable:visited, a.immutable:hover {
@@ -265,6 +255,15 @@ a.immutable:link, a.immutable:visited, a.immutable:hover {
 .post-thumb {
   width: 200px;
   height: 200px;
+}
+@media (max-width:768px) {
+  .post-thumb {
+    width: 100%;
+  }
+  .post-content {
+    padding-left:0px;
+    padding-top:10px;
+  }
 }
 .post-content {
   padding-left:30px;
