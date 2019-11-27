@@ -80,7 +80,7 @@ public class MemberController {
 			return "register_additional_info";
 		} else {
 			request.setAttribute("sys_msg", "회원가입 실패!");
-			return "redirect:home";
+			return "redirect:/";
 		}
 		
 	}
@@ -100,7 +100,7 @@ public class MemberController {
 		dto.setType(type);
 		
 		if(mapper.create_member_info(dto) > 0) {
-			return "redirect:home";
+			return "redirect:/";
 		}else {
 			return "";
 		}

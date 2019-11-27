@@ -6,7 +6,7 @@
         <section class="clean-block clean-post dark">
             <div class="container">
                 <div class="block-content">
-                    <div class="post-image" style="background-image:url(assets/image/4.jpg);"></div>
+                    <div class="post-image" style="background-image:url(storage/photo_thumbnail/${post.thumbnail});"></div>
                     <div class="post-body">
                         <h3>${post.title}</h3>
                         <div class="post-info"><span>By ${author.nickname}</span><span>${post.created_date}</span></div>

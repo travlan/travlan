@@ -25,12 +25,8 @@
 				<input type="hidden" name="num" value="${num}">
 			
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" id="age_male" value="M" name="gender">
-					<label class="form-check-label" for="age_male">남자</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" id="age_female" value="F" name="gender">
-					<label class="form-check-label" for="age_female">여자</label>
+					<input type="radio" name="gender" value="M" checked>남자<br>
+					<input type="radio" name="gender" value="F">여자<br>
 				</div>
 				<div class="form-group">
 					<select id="inputState" class="form-control" name="age">

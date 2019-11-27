@@ -10,6 +10,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +28,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.model.mapper.MemberMapper;
 import com.model.mapper.PostMapper;
@@ -64,6 +71,43 @@ public class PostController {
 		model.addAttribute("author", author);
 		
 		return "/post_read";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/utility/thumbnail_uploader")
+	public void thumbnailPhotoUpload(MultipartHttpServletRequest multipartRequest) {
+		
+		List<HashMap> fileArrayList = new ArrayList<HashMap>();
+	    HashMap fileHashMap;
+	    
+	    Iterator<String> itr =  multipartRequest.getFileNames();
+		
+		// 파일 경로설정
+		String dftFilePath = multipartRequest.getSession().getServletContext().getRealPath("/");
+		String filePath = dftFilePath + "storage" + File.separator + "photo_thumbnail" + File.separator;
+		
+		File file = new File(filePath);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		while (itr.hasNext()) { //파일을 하나씩 불러온다.
+			 
+	        MultipartFile mpf = multipartRequest.getFile(itr.next());
+	 
+	        fileHashMap = new HashMap();
+	 
+	        String originalFilename = mpf.getOriginalFilename(); //파일명
+	        String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
+	        
+	        try {
+	            mpf.transferTo(new File(fileFullPath)); //파일저장
+	            System.out.println("Upload Success!! " + fileFullPath);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	
 	@ResponseBody
