@@ -1,5 +1,9 @@
 package com.sts.travlan;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -165,5 +169,36 @@ public class PostController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("/home")
+	public String post_list(HttpServletRequest request, Model model) {
+		
+		int pagePost = 8;
+		int page = request.getParameter("page")==null? 1 : Integer.parseInt(request.getParameter("page"));
+		int total = post_mapper.total();
+		int lastPage = (total-(total%pagePost))/pagePost + 1;
+		
+		if(page > lastPage) {
+			page = lastPage;
+		}
+		
+		int sno = (page-1) * pagePost + 1;
+		int eno = (page-1) * pagePost + 1 + pagePost;
+		
+		if(eno > total) {
+			eno = total;
+		}
+		
+		Map map = new HashMap();
+		map.put("sno", sno);
+		map.put("eno", eno);
+		
+		List<PostDTO> list = post_mapper.list(map);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("page", page);
+		
+		return "/home";
 	}
 }

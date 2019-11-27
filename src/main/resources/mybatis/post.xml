@@ -14,4 +14,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM post WHERE post_num = #{num};
 	</select>
 	
+	<select id="list" parameterType="Map" resultType="PostDTO">
+		SELECT C.*
+		FROM(
+			SELECT @rownum:=@rownum+1 AS r, A.*
+			FROM(
+				SELECT p.post_num, p.thumbnail, p.title, p.season, p.`type`, m.nickname, l.region
+				FROM post AS p, member AS m, location AS l
+				WHERE p.member_num = m.num AND p.region_num = l.num
+				<!-- AND
+				<choose>
+					<when test="col == 'nickname'">
+        				nickname LIKE CONCAT('%', #{word}, '%')
+        			</when>
+        			<when test="col == 'title'">
+        				title LIKE CONCAT('%', #{word}, '%')
+        			</when>
+				</choose> -->
+			) AS A,
+			(
+			SELECT @rownum:=0
+			) AS B
+		ORDER BY post_num ASC
+		) AS C
+		<![CDATA[
+		WHERE C.r >= #{sno} AND C.r <= #{eno}
+		]]>
+	</select>
+	
+	<select id="total" resultType="int">
+		SELECT COUNT(*)
+		FROM post
+		<!-- <where>
+        	<choose>
+        		<when test="col == 'nickname'">
+        			nickname LIKE CONCAT('%', #{word}, '%')
+        		</when>
+        		<when test="col == 'title'">
+        			title LIKE CONCAT('%', #{word}, '%')
+        		</when>
+        	</choose>
+        </where> -->
+	</select>
+	
 </mapper>

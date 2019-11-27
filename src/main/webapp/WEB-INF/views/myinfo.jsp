@@ -12,41 +12,51 @@
 		<div class="form-group row">
 			<label for="staticEmail" class="col-sm-2 col-form-label">아이디</label>
 			<div class="col-sm-10">
-				<input type="text" readonly class="form-control-plaintext"
-					id="staticEmail" value="${sessionScope.id}">
+				<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${sessionScope.id}">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="staticEmail" class="col-sm-2 col-form-label">닉네임</label>
 			<div class="col-sm-10">
-				<input type="text" readonly class="form-control-plaintext"
-					id="staticEmail" value="${dto.nickname}">
+				<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${dto.nickname}">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
 			<div class="col-sm-10">
-				<input type="text" readonly class="form-control-plaintext"
-					id="staticEmail" value="${dto.email}">
+				<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${dto.email}">
 			</div>
 		</div>
 		<c:choose>
 			<c:when test="${is_info}">
-				<div>
-					<strong>성별</strong> <label>
-						<div id="gender">${idto.gender}</div>
-					</label>
+				<div class="form-group row">
+					<label for="staticEmail" class="col-sm-2 col-form-label">성별</label>
+					<div class="col-sm-10">
+						<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${idto.gender}">
+					</div>
 				</div>
-				<div>
-					<strong>나이</strong> <label>${idto.age}대</label>
+				<div class="form-group row">
+					<label for="staticEmail" class="col-sm-2 col-form-label">나이</label>
+					<div class="col-sm-10">
+						<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${idto.age}대">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="staticEmail" class="col-sm-2 col-form-label">선호도</label>
+					<div class="col-sm-10">
+						<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="staticEmail" class="col-sm-2 col-form-label">사는곳</label>
+					<div class="col-sm-10">
+						<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${idto.region}">
+					</div>
 				</div>
 				<div>
 					<strong>선호도</strong><label>
 						<div id="type"></div>
 					</label>
-				</div>
-				<div>
-					<strong>사는곳</strong> <label>${idto.region}</label>
 				</div>
 			</c:when>
 			<c:otherwise>

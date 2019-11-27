@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>123</title>
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://baejino.com/baealex.css">
+	<link rel="stylesheet" href="http://travlan.tk/travlan/assets/css/bootstrap.css">
+	<link rel="stylesheet" href="http://travlan.tk/travlan/assets/css/main.css">
+	<link rel="stylesheet" href="http://travlan.tk/travlan/assets/css/post_read.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+	<script src="http://travlan.tk/travlan/assets/js/jquery.js"></script>
+	<script src="http://travlan.tk/travlan/assets/js/bootstrap.js"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean" style="padding: 50px;">
+        <div class="container">
+            <a class="navbar-brand" href="./">TRAVLAN</a>
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+                <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="logout">로그아웃</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="myinfo">내 정보</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="notify">알림</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="note">쪽지</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <style>
+    .user-info-top {
+        border-bottom: 1px solid #ccc;
+    }
+    .user-info h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .user-info h5 {
+        font-size: 0.8rem;
+    }
+    ul.user-action {
+        margin-top: 20px;
+        padding: 0;
+    }
+    ul.user-action li {
+        width: 38px;
+        padding: 5px;
+        font-size: 18px;
+        text-align: center;
+        display: inline-block;
+        border-radius: 100%;
+    }
+    .user-info-tab {
+        list-style: none;
+        padding: 0;
+        width: 100%;
+    }
+    .user-info-tab li {
+        display: inline-block;
+        text-align: center;
+        width: 49%;
+        padding-top: 10px;
+        font-size: 1rem;
+    }
+    .user-info-tab li.active {
+        border-top: 1px solid #000;
+    }
+    </style>
+	<div class="content">
+        <div class="container">
+            <div class="col-md-8 mx-auto">
+                <div class="user-info-top">
+                    <div class="user-info">
+                        <h3>baealex</h3>
+                        <h5>Jino Bae</h5>
+                    </div>
+                    <ul class="user-action">
+                        <li><i class="far fa-comment-alt"></i></li>
+                        <li><i class="fas fa-user-alt-slash"></i></li>
+                    </ul>
+                </div>
+                <ul class="user-info-tab">
+                    <li class="active">글</li>
+                    <li>댓글</li>
+                </ul>
+                <div class="post-list row aos-init aos-animate" data-aos="zoom-in">
+                    <div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
+                    <div class="post-content font-myungjo">
+                        <h4>강릉으로 여행을 떠나요!!</h4>
+                        <p>배진오</p>
+                        <span class="type">저렴한</span>
+                        <span class="type">조용한</span>
+                        <span class="type">겨울</span>
+                        <span class="type">강릉</span>
+                        <ul class="post-info">
+                            <li><i class="far fa-thumbs-up"></i> 25</li>
+                            <li><i class="far fa-comment"></i> 25</li>
+                            <li><i class="far fa-heart"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="post-list row aos-init aos-animate" data-aos="zoom-in">
+                    <div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
+                    <div class="post-content font-myungjo">
+                        <h4>강릉으로 여행을 떠나요!!</h4>
+                        <p>배진오</p>
+                        <span class="type">저렴한</span>
+                        <span class="type">조용한</span>
+                        <span class="type">겨울</span>
+                        <span class="type">강릉</span>
+                        <ul class="post-info">
+                            <li><i class="far fa-thumbs-up"></i> 25</li>
+                            <li><i class="far fa-comment"></i> 25</li>
+                            <li><i class="far fa-heart"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="post-list row aos-init aos-animate" data-aos="zoom-in">
+                    <div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
+                    <div class="post-content font-myungjo">
+                        <h4>강릉으로 여행을 떠나요!!</h4>
+                        <p>배진오</p>
+                        <span class="type">저렴한</span>
+                        <span class="type">조용한</span>
+                        <span class="type">겨울</span>
+                        <span class="type">강릉</span>
+                        <ul class="post-info">
+                            <li><i class="far fa-thumbs-up"></i> 25</li>
+                            <li><i class="far fa-comment"></i> 25</li>
+                            <li><i class="far fa-heart"></i></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+	<script>
+  		AOS.init();
+	</script>
+</body>
+</html>
