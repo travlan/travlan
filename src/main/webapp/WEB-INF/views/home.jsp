@@ -23,74 +23,39 @@
 	<div class="intro mb-5 font-myungjo">
 		<h5 class="text-center">Travlan에서 완벽한 계획을 찾아보세요!</h5>
 	</div>
-	<div class="articles">
-		<div class="post-list row" data-aos="zoom-in">
-			<div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
-			<div class="post-content font-myungjo">
-				<h4>강릉으로 여행을 떠나요!!</h4>
-				<p>배진오</p>
-				<span class="type">저렴한</span>
-				<span class="type">조용한</span>
-				<span class="type">겨울</span>
-				<span class="type">강릉</span>
-				<ul class="post-info">
-					<li><i class="far fa-thumbs-up"></i> 25</li>
-					<li><i class="far fa-comment"></i> 25</li>
-					<li><i class="far fa-heart"></i></li>
-				</ul>
-			</div>
-		</div>
-		<div class="post-list row" data-aos="zoom-in">
-			<div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
-			<div class="post-content font-myungjo">
-				<h4>강릉으로 여행을 떠나요!!</h4>
-				<p>배진오</p>
-				<span class="type">저렴한</span>
-				<span class="type">조용한</span>
-				<span class="type">겨울</span>
-				<span class="type">강릉</span>
-				<ul class="post-info">
-					<li><i class="far fa-thumbs-up"></i> 25</li>
-					<li><i class="far fa-comment"></i> 25</li>
-					<li><i class="far fa-heart"></i></li>
-				</ul>
-			</div>
-		</div>
-		<div class="post-list row" data-aos="zoom-in">
-			<div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
-			<div class="post-content font-myungjo">
-				<h4>강릉으로 여행을 떠나요!!</h4>
-				<p>배진오</p>
-				<span class="type">저렴한</span>
-				<span class="type">조용한</span>
-				<span class="type">겨울</span>
-				<span class="type">강릉</span>
-				<ul class="post-info">
-					<li><i class="far fa-thumbs-up"></i> 25</li>
-					<li><i class="far fa-comment"></i> 25</li>
-					<li><i class="far fa-heart"></i></li>
-				</ul>
-			</div>
-		</div>
-		<div class="post-list row" data-aos="zoom-in">
-			<div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
-			<div class="post-content font-myungjo">
-				<h4>강릉으로 여행을 떠나요!!</h4>
-				<p>배진오</p>
-				<span class="type">저렴한</span>
-				<span class="type">조용한</span>
-				<span class="type">겨울</span>
-				<span class="type">강릉</span>
-				<ul class="post-info">
-					<li><i class="far fa-thumbs-up"></i> 25</li>
-					<li><i class="far fa-comment"></i> 25</li>
-					<li><i class="far fa-heart"></i></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	<c:choose>
+		<c:when test="${empty list}">
+			게시글이 존재하지 않습니다.
+		</c:when>
+		<c:otherwise>
+			<c:forEach var="dto" items="${list}">
+				<div class="articles">
+					<div class="post-list row" data-aos="zoom-in">
+						<a href="post_read?num=${dto.post_num}">
+							<div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
+						</a>
+						<div class="post-content font-myungjo">
+							<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
+							<p>${dto.nickname}</p>
+							<span class="type op1">${dto.type.charAt(0)}</span>
+							<span class="type op2">${dto.type.charAt(1)}</span>
+							<span class="type op3">${dto.type.charAt(2)}</span>
+							<span class="type op4">${dto.season}</span>
+							<span class="type">${dto.region}</span>
+							<ul class="post-info">
+								<li><i class="far fa-thumbs-up"></i> 25</li>
+								<li><i class="far fa-comment"></i> 25</li>
+								<li><i class="far fa-heart"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
 </div>
 
+<!--
 <nav aria-label="Page navigation example">
 	<ul class="pagination justify-content-center">
 		<li class="page-item"><a class="page-link" href="#"
@@ -107,3 +72,46 @@
 		</a></li>
 	</ul>
 </nav>
+-->
+
+<script>
+	$(document).ready(function() {
+		
+		$('.op1').each(function (index, item) {
+			if($(item).html() == 'A') {
+				$(item).html('빡빡')
+			} else {
+				$(item).html('느긋')
+			}
+		});
+		
+		$('.op2').each(function (index, item) {
+			if($(item).html() == 'A') {
+				$(item).html('주간')
+			} else {
+				$(item).html('야간')
+			}
+		});
+		
+		$('.op3').each(function (index, item) {
+			if($(item).html() == 'A') {
+				$(item).html('활기')
+			} else {
+				$(item).html('조용')
+			}
+		});
+		
+		$('.op4').each(function (index, item) {
+			if($(item).html() == 'S') {
+				$(item).html('봄')
+			} else if($(item).html() == 'U') {
+				$(item).html('여름')
+			} else if($(item).html() == 'F') {
+				$(item).html('가을')
+			} else {
+				$(item).html('겨울')
+			}
+		});
+	});
+	
+</script>
