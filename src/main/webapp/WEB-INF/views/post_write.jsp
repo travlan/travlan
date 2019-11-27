@@ -5,7 +5,7 @@
         <form class="form-horizontal" action="post_write" method="post" enctype="multipart/form-data" id="post_write">
 			<input type="hidden" name="member_num" value="${sessionScope.num}">
 			<input type="hidden" name="type" value="ABA">
-			<input type="hidden" name="thumbnail" value="default.jpg">
+			<input type="hidden" id="thumbnail" name="thumbnail" value="default.jpg">
 			
             <div class="form-group row">
                 <div class="col-sm-12">
@@ -98,18 +98,47 @@
 			
             <div class="form-group">
                 <div style="display: inline-block;text-align: center;">
-                    <button type="button" class="btn btn-primary" onclick="submitContents()">제출</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#thumbnail_modal">제출</button>
                     <button type="button" class="btn btn-danger" onclick="history.back()">취소</button>
                 </div>
             </div>
         </form>
     </div>
-
+    
+    
+    <div class="modal fade" id="thumbnail_modal">
+  		<div class="modal-dialog">
+      		<div class="modal-content">
+      		
+        		<div class="modal-header">
+        			<h4 class="modal-title">썸네일을 설정해주세요!</h4>
+          			<button type="button" class="close" data-dismiss="modal">×</button>
+        		</div>
+        		
+        		<div class="modal-body">
+          			<input type="file" accept="image/*" id="thumbnail_upload" >
+          			<div class="select_img">
+          				<img src=""/>
+          			</div>
+        		</div>
+        		
+        		<div class="modal-footer">
+          			<button type="button" class="btn btn-primary" onclick="submitContents()">제출</button>
+        		</div>
+        		
+      		</div>
+    	</div>
+	</div>
 
 <script type="text/javascript" src="smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
+		//썸네일 업로드를 위한 data정보
+		var reader = new FileReader;
+		var formData = new FormData();
+		var fileList;
+		
+		// 스마트에디터 프레임생성
         var editor_obj = [];
-        //스마트에디터 프레임생성
         nhn.husky.EZCreator.createInIFrame({
             oAppRef: editor_obj,
             elPlaceHolder: "content",
@@ -123,6 +152,7 @@
                 bUseModeChanger : true,
             }
         });
+        
     	$("#province").change(function(){
     		$.ajax({
                 url: "getRegion",
@@ -137,9 +167,38 @@
                 });
     		});
     	});
+
+    	$("#thumbnail_upload").change(function() {
+    		if(this.files && this.files[0]) {
+    		    reader.onload = function(data) {
+    		    	$(".select_img img").attr("src", data.target.result).width(450);        
+    		    }
+    		    fileList = this.files;
+    			reader.readAsDataURL(this.files[0]);	
+    			$("#thumbnail").val(this.files[0].name);
+    		}
+    	});
+    	
+    function thumbnailUpload(){
+    	formData.append("file", fileList[0]);
+    	console.log(fileList[0]);
+    	console.log($("#thumbnail").val());
+    	$.ajax({
+            url: "utility/thumbnail_uploader",
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: 'POST'
+        });
+	}
+
 	
 	function submitContents() {
 		editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		
+		if($("#thumbnail").val() != "default.jpg"){
+			thumbnailUpload();
+		}
 		
 		$("#post_write").submit();
 	}

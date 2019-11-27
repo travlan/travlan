@@ -22,6 +22,7 @@
 		<form method="post" action="secession" onsubmit="return send()" name="frm">
 			<div class="custom-control custom-checkbox mb-3">
 			   <input id="agree" name="agree" value="1" type="checkbox" class="custom-control-input" required>
+			   <input type="hidden" name="id" value="${sessionScope.id}">
 			   <label class="custom-control-label" for="agree">상기 내용에 동의하며 탈퇴를 진행합니다.</label>
 			</div>
 			<div class="form-group"><button class="btn btn-primary" type="submit">탈퇴</button></div>

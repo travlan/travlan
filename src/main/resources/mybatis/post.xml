@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="create" parameterType="PostDTO">
 		INSERT INTO post(title, content, region_num, season, TIME, cost, TYPE, thumbnail, created_date, member_num)
-		VALUES(#{title}, #{content}, #{region_num}, #{season}, #{time}, #{cost}, #{type}, 'basic.jpg',  NOW(), 	#{member_num})
+		VALUES(#{title}, #{content}, #{region_num}, #{season}, #{time}, #{cost}, #{type}, #{thumbnail}, NOW(), #{member_num})
 	</insert>
 	
 	<select id="read" parameterType="int" resultType="PostDTO">
