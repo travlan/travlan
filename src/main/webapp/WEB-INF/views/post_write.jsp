@@ -40,7 +40,8 @@
 				
 				<div class="col-sm-3">
 					<select id="province" class="form-control" name="province">
-						<option value="서울" selected>서울특별시</option>
+						<option value="XX" selected>지역을 선택해주세요</option>
+						<option value="서울">서울특별시</option>
 						<option value="강원">강원도</option>
 						<option value="대전">대전광역시</option>
 						<option value="충남">충청남도</option>
@@ -159,6 +160,7 @@
                 data: { "province" : $("#province").val() },
                 type: "get",
             }).done(function (data) {
+            	$("#province option:eq(0)").remove();
                 var codes = "";
                 $("#region_num").html("");
                 $.each(data, function(index, item){
@@ -171,24 +173,26 @@
     	$("#thumbnail_upload").change(function() {
     		if(this.files && this.files[0]) {
     		    reader.onload = function(data) {
-    		    	$(".select_img img").attr("src", data.target.result).width(450);        
+    		    	$(".select_img img").attr("src", data.target.result).width(455);        
     		    }
     		    fileList = this.files;
-    			reader.readAsDataURL(this.files[0]);	
+    			reader.readAsDataURL(this.files[0]);
     			$("#thumbnail").val(this.files[0].name);
     		}
     	});
     	
     function thumbnailUpload(){
     	formData.append("file", fileList[0]);
-    	console.log(fileList[0]);
-    	console.log($("#thumbnail").val());
+    	
     	$.ajax({
             url: "utility/thumbnail_uploader",
             data: formData,
             processData: false,
             contentType: false,
             type: 'POST'
+        }).done(function (data) {
+        	$("#thumbnail").val(data);
+        	$("#post_write").submit();
         });
 	}
 
@@ -198,8 +202,8 @@
 		
 		if($("#thumbnail").val() != "default.jpg"){
 			thumbnailUpload();
+		} else {
+			$("#post_write").submit();
 		}
-		
-		$("#post_write").submit();
 	}
 </script>

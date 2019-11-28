@@ -28,10 +28,10 @@
 			게시글이 존재하지 않습니다.
 		</c:when>
 		<c:otherwise>
-			<div id="articles">
+			<div id="card-wrapper">
 			<c:forEach var="dto" items="${list}">
-				<div class="articles">
-					<div class="post-list row" data-aos="zoom-in">
+				<div class="articles" data-aos="zoom-in">
+					<div class="post-list row">
 						<a href="post_read?num=${dto.post_num}">
 							<div class="post-thumb fill-img" style="background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
 						</a>
@@ -75,7 +75,6 @@
 	</ul>
 </nav>
 -->
-
 <script>
 	$(document).ready(function() {
 		
@@ -115,4 +114,11 @@
 			}
 		});
 	});
+</script>
+<script src="assets/js/infiscroll.js"></script>
+<script>
+var postWrapperId = 'card-wrapper';
+var paginatePath = '/travlan/?page=';
+var lastPage = ${lastPage};
+new InfiniteScroll(paginatePath, postWrapperId, lastPage);
 </script>

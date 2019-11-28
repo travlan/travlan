@@ -342,10 +342,5 @@ public class MemberController {
 		return util.isLoginFilter(session, "/bye");
 	}
 	
-	@GetMapping("/scrap")
-	public String scrap(HttpSession session) {
-		
-		return util.isLoginFilter(session, "/scrap");
-	}
 	
 }

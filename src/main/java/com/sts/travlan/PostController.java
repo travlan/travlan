@@ -55,7 +55,7 @@ public class PostController {
 	public String post(PostDTO dto, HttpServletRequest request){
 		
 		if (post_mapper.create(dto) > 0) {
-			return "redirect:post_list";
+			return "redirect:/";
 		} else {
 			return "redirect:/";
 		}
@@ -75,11 +75,8 @@ public class PostController {
 	
 	@ResponseBody
 	@RequestMapping("/utility/thumbnail_uploader")
-	public void thumbnailPhotoUpload(MultipartHttpServletRequest multipartRequest) {
+	public String thumbnailPhotoUpload(MultipartHttpServletRequest multipartRequest) {
 		
-		List<HashMap> fileArrayList = new ArrayList<HashMap>();
-	    HashMap fileHashMap;
-	    
 	    Iterator<String> itr =  multipartRequest.getFileNames();
 		
 		// 파일 경로설정
@@ -87,27 +84,29 @@ public class PostController {
 		String filePath = dftFilePath + "storage" + File.separator + "photo_thumbnail" + File.separator;
 		
 		File file = new File(filePath);
-
+		String returnFilename = "";
+		
 		if (!file.exists()) {
 			file.mkdirs();
 		}
 		
-		while (itr.hasNext()) { //파일을 하나씩 불러온다.
-			 
+		while (itr.hasNext()) {
 	        MultipartFile mpf = multipartRequest.getFile(itr.next());
-	 
-	        fileHashMap = new HashMap();
-	 
-	        String originalFilename = mpf.getOriginalFilename(); //파일명
-	        String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
 	        
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+			String today = formatter.format(new java.util.Date());
+	        String originalFilename = today + "TN_" + mpf.getOriginalFilename();
+	        String fileFullPath = filePath + File.separator + originalFilename;
 	        try {
-	            mpf.transferTo(new File(fileFullPath)); //파일저장
+	            mpf.transferTo(new File(fileFullPath));
+	            returnFilename = originalFilename;
 	            System.out.println("Upload Success!! " + fileFullPath);
+	            
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 	    }
+		return returnFilename;
 	}
 	
 	@ResponseBody
@@ -135,7 +134,7 @@ public class PostController {
 			String realFileNm = "";
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 			String today = formatter.format(new java.util.Date());
-			realFileNm = today + UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
+			realFileNm = today + filename.substring(filename.lastIndexOf("."));
 			String rlFileNm = filePath + realFileNm;
 
 			///////////////// 서버에 파일쓰기 /////////////////
@@ -156,8 +155,8 @@ public class PostController {
 			///////////////// 서버에 파일쓰기 /////////////////
 
 			sFileInfo += "&bNewLine=true";
+			
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
-
 			sFileInfo += "&sFileName=" + filename;
 			sFileInfo += "&sFileURL=" + "../../travlan/storage/photo_upload/" + realFileNm;
 			
@@ -175,16 +174,16 @@ public class PostController {
 	public String post_list(HttpServletRequest request, Model model) {
 		
 		int pagePost = 8;
-		int page = request.getParameter("page")==null ? 1 : Integer.parseInt(request.getParameter("page"));
+		int page = request.getParameter("page")==null? 1 : Integer.parseInt(request.getParameter("page"));
 		int total = post_mapper.total();
-		int lastPage = (total-(total%pagePost))/pagePost + 1;
+		int lastPage = (total-(total%pagePost))/pagePost;
 		
 		if(page > lastPage) {
 			page = lastPage;
 		}
 		
-		int sno = (page-1) * pagePost;
-		int eno = (page-1) * pagePost + pagePost;
+		int sno = (page-1) * pagePost + 1;
+		int eno = (page-1) * pagePost + 1 + pagePost;
 		
 		if(eno > total) {
 			eno = total;
@@ -198,7 +197,6 @@ public class PostController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("page", page);
-		model.addAttribute("lastPage", lastPage);
 		
 		return "/home";
 	}

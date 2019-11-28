@@ -5,8 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.Member_ScrapMapper">
 	
-	<select id="read" parameterType="int" resultType="Member_ScrapDTO">
-		SELECT 
+	<select id="list" resultType="Member_ScrapDTO">
+		SELECT s.memo, s.created_date, m.nickname, p.thumbnail
+		FROM member_scrap AS s, member AS m, post AS p
+		WHERE p.member_num = m.num AND s.post_num = p.post_num
+		ORDER BY created_date DESC
 	</select>
 	
 	<insert id="scrap" parameterType="Member_ScrapDTO">
@@ -14,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{member_num}, #{post_num}, #{memo}, now())
 	</insert>
 	
-	<select id="scrapPost" parameterType="int" resultType="Map">
+	<select id="scrapPost" parameterType="int" resultType="List">
 		SELECT post_num 
 		FROM member_scrap 
 		WHERE member_num = #{member_num}
