@@ -8,4 +8,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="read" parameterType="int" resultType="Member_ScrapDTO">
 		SELECT 
 	</select>
+	
+	<insert id="scrap" parameterType="Member_ScrapDTO">
+		INSERT INTO member_scrap(member_num, post_num, memo, created_date)
+		VALUES(#{member_num}, #{post_num}, #{memo}, now())
+	</insert>
+	
+	<select id="scrapPost" parameterType="int" resultType="Map">
+		SELECT post_num 
+		FROM member_scrap 
+		WHERE member_num = #{member_num}
+	</select>
+	
 </mapper>

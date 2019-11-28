@@ -28,11 +28,12 @@
 			게시글이 존재하지 않습니다.
 		</c:when>
 		<c:otherwise>
+			<div id="articles">
 			<c:forEach var="dto" items="${list}">
 				<div class="articles">
 					<div class="post-list row" data-aos="zoom-in">
 						<a href="post_read?num=${dto.post_num}">
-							<div class="post-thumb fill-img" style="background-image: url(assets/image/1.jpg);"></div>
+							<div class="post-thumb fill-img" style="background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
 						</a>
 						<div class="post-content font-myungjo">
 							<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
@@ -51,6 +52,7 @@
 					</div>
 				</div>
 			</c:forEach>
+			</div>
 		</c:otherwise>
 	</c:choose>
 </div>
@@ -113,5 +115,4 @@
 			}
 		});
 	});
-	
 </script>
