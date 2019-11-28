@@ -197,6 +197,7 @@ public class PostController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("page", page);
+		model.addAttribute("lastPage", lastPage);
 		
 		return "/home";
 	}

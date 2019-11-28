@@ -38,7 +38,10 @@
 						<div class="post-content font-myungjo">
 							<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
 							<p>${dto.nickname}</p>
-							<span class="type op1">${dto.type.charAt(0)}</span>
+							<span class="type op1">
+								<c:if test="${dto.type.charAt(0)} == 'A'">빡빡</c:if>
+								<c:if test="${dto.type.charAt(0)} == 'B'">느긋</c:if>
+							</span>
 							<span class="type op2">${dto.type.charAt(1)}</span>
 							<span class="type op3">${dto.type.charAt(2)}</span>
 							<span class="type op4">${dto.season}</span>
@@ -77,14 +80,6 @@
 -->
 <script>
 	$(document).ready(function() {
-		
-		$('.op1').each(function (index, item) {
-			if($(item).html() == 'A') {
-				$(item).html('빡빡')
-			} else {
-				$(item).html('느긋')
-			}
-		});
 		
 		$('.op2').each(function (index, item) {
 			if($(item).html() == 'A') {

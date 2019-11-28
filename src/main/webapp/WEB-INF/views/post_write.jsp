@@ -160,7 +160,6 @@
                 data: { "province" : $("#province").val() },
                 type: "get",
             }).done(function (data) {
-            	$("#province option:eq(0)").remove();
                 var codes = "";
                 $("#region_num").html("");
                 $.each(data, function(index, item){
