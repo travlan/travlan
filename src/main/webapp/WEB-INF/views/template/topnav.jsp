@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
-<nav class="navbar navbar-light navbar-expand-md navigation-clean"
-	style="padding: 50px;">
+<nav id="top-main-nav" class="navbar navbar-light bg-light navbar-expand-md navigation-clean fixed-top"
+	style="padding: 50px; position: absolute;">
 	<div class="container">
 		<a class="navbar-brand" href="./">TRAVLAN</a>
 		<button data-toggle="collapse" class="navbar-toggler"
@@ -20,19 +20,17 @@
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item" role="presentation"><a class="nav-link" href="logout">로그아웃</a></li>
-						<li class="nav-item" role="presentation"><a class="nav-link" href="myinfo">내 정보</a></li>
+						<li class="nav-item" role="presentation"><a class="nav-link" href="myinfo">내정보</a></li>
 						<li class="nav-item" role="presentation">
 						<li class="nav-item" role="presentation">
 							<div class="dropdown">
 								<a class="nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">알림</a>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 									<a class="dropdown-item" href="#">Action</a>
-									<a class="dropdown-item" href="#">Another action</a>
-									<a class="dropdown-item" href="#">Something else here</a>
 								</div>
 							</div>
 						</li>
-						<li class="nav-item" role="presentation"><a class="nav-link" href="note">쪽지</a></li>
+						<li class="nav-item" role="presentation"><a class="nav-link" href="post_write">글쓰기</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>

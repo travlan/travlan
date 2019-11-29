@@ -17,10 +17,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{member_num}, #{post_num}, #{memo}, now())
 	</insert>
 	
-	<select id="scrapPost" parameterType="int" resultType="List">
-		SELECT post_num 
-		FROM member_scrap 
-		WHERE member_num = #{member_num}
-	</select>
-	
 </mapper>

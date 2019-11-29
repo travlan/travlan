@@ -27,5 +27,19 @@
 	<script>
   		AOS.init();
 	</script>
+	<script>
+		$(document).ready(function () {
+			$(window).scroll(function () {
+				screenPosition = $(this).scrollTop();
+				if (screenPosition < 1) {
+					$('#top-main-nav').css("position", "absolute");
+					$('#top-main-nav').css("padding", "50px");
+				} else {
+					$('#top-main-nav').css("position", "fixed");
+					$('#top-main-nav').css("padding", "10px");
+				}
+			});
+		});
+	</script>
 </body>
 </html>

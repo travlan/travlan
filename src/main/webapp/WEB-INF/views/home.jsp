@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="slide fill-half-display">
     <ul>
@@ -39,12 +40,31 @@
 							<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
 							<p>${dto.nickname}</p>
 							<span class="type op1">
-								<c:if test="${dto.type.charAt(0)} == 'A'">빡빡</c:if>
-								<c:if test="${dto.type.charAt(0)} == 'B'">느긋</c:if>
+							<c:choose>
+								<c:when test="${fn:substring(dto.type, 0, 1) == 'A'}">빡빡</c:when>
+								<c:when test="${fn:substring(dto.type, 0, 1) == 'B'}">느긋</c:when>
+							</c:choose>
 							</span>
-							<span class="type op2">${dto.type.charAt(1)}</span>
-							<span class="type op3">${dto.type.charAt(2)}</span>
-							<span class="type op4">${dto.season}</span>
+							<span class="type op2">
+							<c:choose>
+								<c:when test="${fn:substring(dto.type, 1, 2) == 'A'}">주간</c:when>
+								<c:when test="${fn:substring(dto.type, 1, 2) == 'B'}">야간</c:when>
+							</c:choose>
+							</span>
+							<span class="type op3">
+							<c:choose>
+								<c:when test="${fn:substring(dto.type, 2, 3) == 'A'}">활기</c:when>
+								<c:when test="${fn:substring(dto.type, 2, 3) == 'B'}">조용</c:when>
+							</c:choose>
+							</span>
+							<span class="type op4">
+							<c:choose>
+								<c:when test="${dto.season == 'S'}">봄</c:when>
+								<c:when test="${dto.season == 'U'}">여름</c:when>
+								<c:when test="${dto.season == 'F'}">가을</c:when>
+								<c:when test="${dto.season == 'W'}">봄</c:when>
+							</c:choose>
+							</span>
 							<span class="type">${dto.region}</span>
 							<ul class="post-info">
 								<li><i class="far fa-thumbs-up"></i> 25</li>
@@ -60,56 +80,6 @@
 	</c:choose>
 </div>
 
-<!--
-<nav aria-label="Page navigation example">
-	<ul class="pagination justify-content-center">
-		<li class="page-item"><a class="page-link" href="#"
-			aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
-				class="sr-only">Previous</span>
-		</a></li>
-		<li class="page-item"><a class="page-link" href="#">1</a></li>
-		<li class="page-item"><a class="page-link" href="#">2</a></li>
-		<li class="page-item"><a class="page-link" href="#">3</a></li>
-		<li class="page-item"><a class="page-link" href="#">4</a></li>
-		<li class="page-item"><a class="page-link" href="#">5</a></li>
-		<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span> 
-		<span class="sr-only">Next</span>
-		</a></li>
-	</ul>
-</nav>
--->
-<script>
-	$(document).ready(function() {
-		
-		$('.op2').each(function (index, item) {
-			if($(item).html() == 'A') {
-				$(item).html('주간')
-			} else {
-				$(item).html('야간')
-			}
-		});
-		
-		$('.op3').each(function (index, item) {
-			if($(item).html() == 'A') {
-				$(item).html('활기')
-			} else {
-				$(item).html('조용')
-			}
-		});
-		
-		$('.op4').each(function (index, item) {
-			if($(item).html() == 'S') {
-				$(item).html('봄')
-			} else if($(item).html() == 'U') {
-				$(item).html('여름')
-			} else if($(item).html() == 'F') {
-				$(item).html('가을')
-			} else {
-				$(item).html('겨울')
-			}
-		});
-	});
-</script>
 <script src="assets/js/infiscroll.js"></script>
 <script>
 var postWrapperId = 'card-wrapper';

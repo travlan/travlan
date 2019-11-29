@@ -78,10 +78,13 @@ public class PostController {
 	public String thumbnailPhotoUpload(MultipartHttpServletRequest multipartRequest) {
 		
 	    Iterator<String> itr =  multipartRequest.getFileNames();
-		
+		SimpleDateFormat formatter_folder = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("HH-mm-ss-SSS");
+		String today_folder = formatter_folder.format(new java.util.Date());
+		String today = formatter.format(new java.util.Date());
 		// 파일 경로설정
 		String dftFilePath = multipartRequest.getSession().getServletContext().getRealPath("/");
-		String filePath = dftFilePath + "storage" + File.separator + "photo_thumbnail" + File.separator;
+		String filePath = dftFilePath + "storage" + File.separator + "photo_thumbnail" + File.separator + today_folder;
 		
 		File file = new File(filePath);
 		String returnFilename = "";
@@ -93,9 +96,7 @@ public class PostController {
 		while (itr.hasNext()) {
 	        MultipartFile mpf = multipartRequest.getFile(itr.next());
 	        
-	        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-			String today = formatter.format(new java.util.Date());
-	        String originalFilename = today + "TN_" + mpf.getOriginalFilename();
+	        String originalFilename = "TN_" + today;
 	        String fileFullPath = filePath + File.separator + originalFilename;
 	        try {
 	            mpf.transferTo(new File(fileFullPath));
@@ -106,7 +107,7 @@ public class PostController {
 	            e.printStackTrace();
 	        }
 	    }
-		return returnFilename;
+		return today_folder + "/" + returnFilename;
 	}
 	
 	@ResponseBody
@@ -114,6 +115,11 @@ public class PostController {
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String sFileInfo = "";
+			
+			SimpleDateFormat formatter_folder = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat formatter = new SimpleDateFormat("HH-mm-ss-SSS");
+			String today_folder = formatter_folder.format(new java.util.Date());
+			String today = formatter.format(new java.util.Date());
 			
 			// 파일명을 받는다 - 일반 원본파일명
 			String filename = request.getHeader("file-name");
@@ -123,7 +129,7 @@ public class PostController {
 			
 			// 파일 경로설정
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
-			String filePath = dftFilePath + "storage" + File.separator + "photo_upload" + File.separator;
+			String filePath = dftFilePath + "storage" + File.separator + "photo_upload" + File.separator + today_folder;
 			
 			File file = new File(filePath);
 
@@ -132,8 +138,7 @@ public class PostController {
 			}
 
 			String realFileNm = "";
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-			String today = formatter.format(new java.util.Date());
+			
 			realFileNm = today + filename.substring(filename.lastIndexOf("."));
 			String rlFileNm = filePath + realFileNm;
 
@@ -158,7 +163,7 @@ public class PostController {
 			
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			sFileInfo += "&sFileName=" + filename;
-			sFileInfo += "&sFileURL=" + "../../travlan/storage/photo_upload/" + realFileNm;
+			sFileInfo += "&sFileURL=" + "../../travlan/storage/photo_upload/" + today_folder + "/" + realFileNm;
 			
 			PrintWriter print = response.getWriter();
 
@@ -182,8 +187,8 @@ public class PostController {
 			page = lastPage;
 		}
 		
-		int sno = (page-1) * pagePost + 1;
-		int eno = (page-1) * pagePost + 1 + pagePost;
+		int sno = (page-1) * pagePost;
+		int eno = (page-1) * pagePost + pagePost;
 		
 		if(eno > total) {
 			eno = total;

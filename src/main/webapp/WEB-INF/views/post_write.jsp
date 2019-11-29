@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-    <div class="container">
+    <div class="container pt-5">
     
         <form class="form-horizontal" action="post_write" method="post" enctype="multipart/form-data" id="post_write">
 			<input type="hidden" name="member_num" value="${sessionScope.num}">

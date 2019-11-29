@@ -10,7 +10,11 @@
   font-family: 'Chosunilbo_myungjo';
 }
 .content {
-  margin: 0 0 100px 0;
+  margin: 140px 0 100px 0;
+}
+/* TOP NAV */
+#top-main-nav {
+	transition: all 0.3s;
 }
 /* FOOTER STYLE */
 .footer-clean {
@@ -292,4 +296,10 @@ a.immutable:link, a.immutable:visited, a.immutable:hover {
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,.3);
+}
+.modal-content img, textarea {
+	width: 100%;
+}
+.modal-content textarea {
+	display: block;
 }

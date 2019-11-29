@@ -9,7 +9,8 @@
                 <div class="post-image" style="background-image:url(storage/photo_thumbnail/${post.thumbnail});"></div>
                 <div class="post-body">
                     <h3>${post.title}</h3>
-                    <div class="post-info"><span>By ${author.nickname}</span><span>${post.created_date}</span><button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#exampleModal" onclick="scrap()">스크랩</button></div>
+                    <div class="post-info"><span>By ${author.nickname}</span><span>${post.created_date}</span><span>0</span></div>
+					<button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#exampleModal" onclick="scrap()">스크랩</button>
                     <p>${post.content}</p>
                     <figure class="figure"></figure>
                 </div>
@@ -27,7 +28,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			<div id="mainModal" class="modal-body">
 				<p><img src="storage/photo_thumbnail/${post.thumbnail}" class="post-image"></p>
 				<div class="post-body">
 					<h3>${post.title}</h3>
@@ -36,7 +37,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary">스크랩하기</button>
+				<button id="postScrap" type="button" class="btn btn-secondary">스크랩하기</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
@@ -52,4 +53,42 @@
 	function scrap() {
 		$('#myModal').show();
 	}
+	
+	$('#myModal').on('shown.bs.modal', function () {
+		$("#memo").focus();
+	});
+	
+	var nextSContext = '<div>스크랩 성공</div>';
+	var nextFContext = '<div>스크랩 실패</div>';
+	var nextSButton = '<button class="btn btn-secondary" type="button" onclick="location.href='scraplist'">스크랩 목록 가기</button>';
+	var nextCButton = '<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>';
+	
+	postScrap.on("click", function() {
+		if($('#memo').val() == "") {
+			$('#memo').focus();
+			alert("메모를 입력하세요");
+			return;
+		}
+		else {
+			$.ajax({
+				url: "scrap",
+				data: { 'post_num' : ${post.post_num}, 'member_num' : ${author.num} },
+				type: "get",
+			}).done(function (data) {
+				if(data.flag == 'Y') {
+					$('#mainModal').html('');
+					$('#mainModal').append(nextSContext);
+					$('#mainModal').append(nextSButton);
+					$('#mainModal').append(nextCButton);
+					done = true;
+				} else {
+					$('#mainModal').html('');
+					$('#mainModal').append(nextFContext);
+					$('#mainModal').append(nextSButton);
+					$('#mainModal').append(nextCButton);
+					done = true;
+				}
+			});
+		}
+	})
 </script>
