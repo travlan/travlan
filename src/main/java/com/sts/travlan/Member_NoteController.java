@@ -46,9 +46,9 @@ public class Member_NoteController {
 		dto.setSend_user((Integer)session.getAttribute("num"));
 		
 		if (mapper.sendNote(dto) > 0) {
-			return "redirect:/";
+			return "<script>alert('메세지 전송 성공 :D');self.close();</script>";
 		} else {
-			return "redirect:/";
+			return "<script>alert('메세지 전송 실패 :(');self.close();</script>";
 		}
 	}
 	

@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.MemberMapper">
 
+	<update id="nicknamechange" parameterType="Map">
+		UPDATE member
+		SET nickname = #{nickname}
+		WHERE num = #{num}
+	</update>
+	
 	<delete id="secession" parameterType="String">
 		DELETE FROM member
 		WHERE id = #{id}

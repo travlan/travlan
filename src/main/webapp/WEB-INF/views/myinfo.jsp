@@ -25,8 +25,9 @@
 			<div class="col-sm-4" id="newnickname" style="display:none;">
 				<input type="text" class="form-control-plaintext card" id="nickname" value="${dto.nickname}">
 			</div>
+			<div id="nicknamecheck"></div>
 			<button class="btn btn-light" id="nickname_btn" type="button" onclick="updateNickname()">변경</button>
-			<button style="display:none;" class="btn btn-light" id="nicknameSave_btn" type="button" onclick="">저장</button>
+			<button style="display:none;" class="btn btn-light" id="nicknameSave_btn" type="button" onclick="saveNickname()">저장</button>
 			<button style="display:none;" class="btn btn-light" id="nicknameCancel_btn" type="button" onclick="cancelNickname()">취소</button>
 		</div>
 		<div class="form-group row">
@@ -192,6 +193,65 @@
 		$('#nicknameSave_btn').css('display', 'block');
 		$('#nicknameCancel_btn').css('display', 'block');
 	}
+	
+	function saveNickname() {
+		if($('#nickname').val() == "") {
+			$('#nickname').focus();
+			alert("닉네임을 입력하세요");
+			return;
+		}
+		else {
+			$.ajax({
+				url: "nicknamechange",
+				data: { 'nickname' : $('#nickname').val() },
+				type: "get",
+			}).done(function (data) {
+				if(data.flag == 'Y') {
+					$('#nickname_btn').css('display', 'block');
+					$('#oldnickname').css('display', 'block');
+					$('#oldnickname').html('');
+					$('#oldnickname').append('<label class="col-sm-4">' + data.nickname + '</label>');
+					$('#newnickname').css('display', 'none');
+					$("#nicknamecheck").css('display', 'none');
+					$('#nicknameSave_btn').css('display', 'none');
+					$('#nicknameCancel_btn').css('display', 'none');
+					done = true;
+				} else {
+					$('#nickname_btn').css('display', 'block');
+					$('#oldnickname').css('display', 'block');
+					$('#newnickname').css('display', 'none');
+					$('#nicknameSave_btn').css('display', 'none');
+					$('#nicknameCancel_btn').css('display', 'none');
+					done = true;
+				}
+			});
+		}
+	}
+	
+	$("#nickname").focusout(function(){
+    var nickname = $("#nickname").val();
+    if(nickname != "") {
+        $.ajax({
+            url: "nicknamecheck",
+            data: { "nickname" : $("#nickname").val() },
+            type: "get",
+        }).done(function (data) {
+            $("#nicknamecheck").addClass('alert');
+			$("#nicknamecheck").css('display', 'block');
+            if(data.flag == 'Y') {
+                $("#nicknamecheck").text("사용할 수 있는 닉네임입니다.");
+                $("#nicknamecheck").removeClass('alert-danger');
+                $("#nicknamecheck").addClass('alert-success');
+                $("#nickname").css('border', '1px solid #080');
+            } else {
+                $("#nicknamecheck").text("이미 등록된 닉네임입니다.");
+                $("#nicknamecheck").removeClass('alert-success');
+                $("#nicknamecheck").addClass('alert-danger');
+                $("#nickname").css('border', '1px solid #f00');
+            }
+        });
+    }
+});
 	
 	function cancelNickname() {
 		$('#nickname_btn').css('display', 'block');

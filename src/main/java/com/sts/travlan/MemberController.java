@@ -342,4 +342,26 @@ public class MemberController {
 		return util.isLoginFilter(session, "/bye");
 	}
 	
+	@ResponseBody
+	@GetMapping(value = "/nicknamechange", produces="application/json;charset=utf-8")
+	public Map<String, Object> nicknamechange(String nickname, HttpSession session){
+		
+		Map change = new HashMap();
+		change.put("num", (Integer)session.getAttribute("num"));
+		change.put("nickname", nickname);
+		
+		int nicknamechange = mapper.nicknamechange(change);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(nicknamechange > 0) {
+			map.put("flag", "Y");
+			map.put("nickname", nickname);
+		} else {
+			map.put("flag", "N");
+		}
+		
+		return map;
+	}
+	
 }

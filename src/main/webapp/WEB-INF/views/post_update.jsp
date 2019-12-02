@@ -135,7 +135,6 @@
 
 <script type="text/javascript" src="smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
 		//썸네일 업로드를 위한 data정보
 		var reader = new FileReader;
 		var formData = new FormData();
@@ -170,8 +169,6 @@
 	        });
 	        $("#region_num").val(${post.region_num}).prop("selected", true);
 		});
-		
-	});
 	
 	$("#province").change(function(){
 		$.ajax({
@@ -218,7 +215,7 @@
 	function submitContents() {
 	editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 	
-	if($("#thumbnail").val() != "default.jpg"){
+	if($("#thumbnail").val() != '${post.thumbnail}'){
 		thumbnailUpload();
 	} else {
 		$("#post_write").submit();
