@@ -4,10 +4,10 @@
 
 <div class="slide fill-half-display">
     <ul>
-      <li class="fill-img" style="background-image: url(assets/image/1.jpg);"><div class="dark-mask"></div></li>
-      <li class="fill-img" style="background-image: url(assets/image/2.jpg);"><div class="dark-mask"></div></li>
-      <li class="fill-img" style="background-image: url(assets/image/3.jpg);"><div class="dark-mask"></div></li>
-      <li class="fill-img" style="background-image: url(assets/image/4.jpg);"><div class="dark-mask"></div></li>
+      <li class="fill-image" style="background-image: url(assets/image/1.jpg);"><div class="dark-mask"></div></li>
+      <li class="fill-image" style="background-image: url(assets/image/2.jpg);"><div class="dark-mask"></div></li>
+      <li class="fill-image" style="background-image: url(assets/image/3.jpg);"><div class="dark-mask"></div></li>
+      <li class="fill-image" style="background-image: url(assets/image/4.jpg);"><div class="dark-mask"></div></li>
 	</ul>
 </div>
 <div class="main-title font-namyun">

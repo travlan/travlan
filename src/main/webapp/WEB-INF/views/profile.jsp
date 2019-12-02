@@ -9,6 +9,7 @@
 				<li class="active"><a class="immutable" href="profile?num=${sessionScope.num}">내가 쓴 글/댓글 목록</a></li>
 				<li><a class="immutable" href="myinfo">내 정보</a></li>
 				<li><a class="immutable" href="scraplist">스크랩 목록</a></li>
+				<li><a class="immutable" href="note">쪽지</a></li>
 				<li><a class="immutable" href="passwd_check">비밀번호 변경</a></li>
 				<li><a class="immutable" href="secession">회원탈퇴</a></li>
 			</c:when>
@@ -21,8 +22,8 @@
 	
 	<div>
 		<ul class="user-info-tab">
-			<li class="active"><a class="immutable" href="listpost()">글</a></li>
-			<li><a class="immutable" href="listcomment()">댓글</a></li>
+			<li class="active"><a class="immutable" href="javascript:listpost()">글</a></li>
+			<li><a class="immutable" href="javascript:listcomment()">댓글</a></li>
 		</ul>
 		
 		<div id="listpostshow">
@@ -87,8 +88,9 @@
 						<div class="post-list row aos-init aos-animate" data-aos="zoom-in">
 							<div class="post-thumb fill-img" style="background-image: url(storage/photo_thumbnail/${comment.thumbnail});"></div>
 							<div class="post-content font-myungjo">
-								<h4><a class="immutable" href="post_read?num=${comment.post_num}">${comment.title}</a></h4>
-								<p><a class="immutable" href="profile?num=${author.member_num}">${comment.nickname}</a></p>
+								<h4><a class="immutable" href="post_read?num=${comment.post_num}">${comment.posttitle}</a></h4>
+								<p><a class="immutable">${comment.nickname}</a></p>
+								<h5>${comment.title}</h5>
 								<div>${comment.content}</div>
 							</div>
 						</div>

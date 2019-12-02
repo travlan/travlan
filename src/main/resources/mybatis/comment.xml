@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.model.mapper.CommentMapper">
 
 	<select id="commentlist" parameterType="int" resultType="CommentDTO">
-		SELECT c.title, c.content, c.score, p.thumbnail, p.title, m.nickname
+		SELECT c.title, c.content, c.score, c.post_num, p.thumbnail, p.title AS posttitle, m.nickname
 		FROM comment AS c, post AS p, member AS m
 		WHERE c.member_num = #{num} AND c.post_num = p.post_num AND m.num = p.post_num
 	</select>
