@@ -14,6 +14,7 @@ public interface PostMapper {
 	public int update(PostDTO dto);
 	public int secessionPost(int member_num);
 	public int delete(int num);
+	public String getLocation(int num);
 	public List<PostDTO> list(Map map);
 	public int total();
 }

@@ -20,6 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM post WHERE post_num = #{num}
 	</select>
 	
+	<select id="getLocation" parameterType="int" resultType="String">
+		SELECT region FROM location WHERE num = #{num}
+	</select>
+	
 	<delete id="delete" parameterType="int">
 		DELETE FROM post WHERE post_num = #{post_num}
 	</delete>
