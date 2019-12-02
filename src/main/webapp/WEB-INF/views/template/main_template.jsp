@@ -20,6 +20,7 @@
 </head>
 <body>
 	<tiles:insertAttribute name="topnav" />
+	<div class="nav-back"></div>
 	<div class="content">
 		<tiles:insertAttribute name="body"/>
 	</div>

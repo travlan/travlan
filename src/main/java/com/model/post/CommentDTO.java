@@ -9,12 +9,16 @@ public class CommentDTO {
 	private String score;
 	private String created_date;
 	private String updated_date;
+	private String thumbnail;
+	private String posttitle;
+	private String nickname;
 	
 	@Override
 	public String toString() {
 		return "CommentDTO [num=" + num + ", post_num=" + post_num + ", member_num=" + member_num + ", title=" + title
 				+ ", content=" + content + ", score=" + score + ", created_date=" + created_date + ", updated_date="
-				+ updated_date + "]";
+				+ updated_date + ", thumbnail=" + thumbnail + ", posttitle=" + posttitle + ", nickname=" + nickname
+				+ "]";
 	}
 
 	public CommentDTO() {
@@ -22,7 +26,7 @@ public class CommentDTO {
 	}
 	
 	public CommentDTO(int num, int post_num, String member_num, String title, String content, String score,
-			String created_date, String updated_date) {
+			String created_date, String updated_date, String thumbnail, String posttitle, String nickname) {
 		super();
 		this.num = num;
 		this.post_num = post_num;
@@ -32,6 +36,9 @@ public class CommentDTO {
 		this.score = score;
 		this.created_date = created_date;
 		this.updated_date = updated_date;
+		this.thumbnail = thumbnail;
+		this.posttitle = posttitle;
+		this.nickname = nickname;
 	}
 
 	public String getCreated_date() {
@@ -84,5 +91,23 @@ public class CommentDTO {
 	}
 	public void setScore(String score) {
 		this.score = score;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	public String getPosttitle() {
+		return posttitle;
+	}
+	public void setPosttitle(String posttitle) {
+		this.posttitle = posttitle;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 }

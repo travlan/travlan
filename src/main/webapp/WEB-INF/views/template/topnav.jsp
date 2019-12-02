@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
-<nav id="top-main-nav" class="navbar navbar-light bg-light navbar-expand-md navigation-clean fixed-top"
+<nav id="top-main-nav" class="navbar navbar-dark bg-dark navbar-expand-md navigation-clean fixed-top"
 	style="padding: 50px; position: absolute;">
 	<div class="container">
-		<a class="navbar-brand" href="./">TRAVLAN</a>
+		<a class="navbar-brand font-classic" href="./">TRAVLAN</a>
 		<button data-toggle="collapse" class="navbar-toggler"
 			data-target="#navcol-1">
 			<span class="sr-only">Toggle navigation</span><span

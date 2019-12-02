@@ -5,6 +5,7 @@
 	<ul class="info-tab">
 		<li class="active"><a class="immutable" href="passwd_check">비밀번호 변경</a></li>
 		<li><a class="immutable" href="myinfo">내 정보</a></li>
+		<li><a class="immutable" href="profile?num=${sessionScope.num}">내가 쓴 글/댓글 목록</a></li>
 		<li><a class="immutable" href="scraplist">스크랩 목록</a></li>
 		<li><a class="immutable" href="secession">회원탈퇴</a></li>
 	</ul>

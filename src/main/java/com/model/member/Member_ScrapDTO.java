@@ -8,12 +8,13 @@ public class Member_ScrapDTO {
 	private String created_date;
 	private String nickname;
 	private String thumbnail;
+	private String title;
 	
 	public Member_ScrapDTO() {
 		super();
 	}
 	
-	public Member_ScrapDTO(int num, int member_num, int post_num, String memo, String created_date, String nickname, String thumbnail) {
+	public Member_ScrapDTO(int num, int member_num, int post_num, String memo, String created_date, String nickname, String thumbnail, String title) {
 		super();
 		this.num = num;
 		this.member_num = member_num;
@@ -22,12 +23,13 @@ public class Member_ScrapDTO {
 		this.created_date = created_date;
 		this.nickname = nickname;
 		this.thumbnail = thumbnail;
+		this.title = title;
 	}
 	
 	@Override
 	public String toString() {
 		return "Member_ScrapDTO [num=" + num + ", member_num=" + member_num + ", post_num=" + post_num + ", memo="
-				+ memo + ", created_date=" + created_date + ", nickname=" + nickname + ", thumbnail=" + thumbnail + "]";
+				+ memo + ", created_date=" + created_date + ", nickname=" + nickname + ", thumbnail=" + thumbnail + ", title=" + title + "]";
 	}
 	public String getCreated_date() {
 		return created_date;
@@ -82,6 +84,14 @@ public class Member_ScrapDTO {
 
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

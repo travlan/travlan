@@ -342,5 +342,4 @@ public class MemberController {
 		return util.isLoginFilter(session, "/bye");
 	}
 	
-	
 }

@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,9 +33,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.model.mapper.MemberMapper;
+import com.model.mapper.Member_ScrapMapper;
 import com.model.mapper.PostMapper;
+import com.model.mapper.CommentMapper;
 import com.model.member.MemberDTO;
 import com.model.post.PostDTO;
+import com.model.post.CommentDTO;
 
 @Controller
 public class PostController {
@@ -44,6 +48,10 @@ public class PostController {
 	private PostMapper post_mapper;
 	@Autowired
 	private MemberMapper member_mapper;
+	@Autowired
+	private Member_ScrapMapper scrap_mapper;
+	@Autowired
+	private CommentMapper comment_mapper;
 
 	@GetMapping("/post_write")
 	public String post(HttpSession session) {
@@ -53,7 +61,6 @@ public class PostController {
 	
 	@PostMapping("/post_write")
 	public String post(PostDTO dto, HttpServletRequest request){
-		
 		if (post_mapper.create(dto) > 0) {
 			return "redirect:/";
 		} else {
@@ -61,14 +68,39 @@ public class PostController {
 		}
 	}
 	
+	@GetMapping("/post_delete")
+	public String delete(HttpSession session, int num, Model model) {
+		PostDTO post = post_mapper.read(num);
+		int sessionNum = (Integer)session.getAttribute("num") != null ? (Integer)session.getAttribute("num") : -1;
+		
+		if(post.getMember_num() == sessionNum) {
+			return "/post_delete";
+		}else {
+		return util.isLoginFilter(session, "/post_delete");
+		}
+	}
+	
+	@PostMapping("/post_delete")
+	public String delete() {
+		
+		return "redirect:/";
+	}
+	
 	@GetMapping("/post_read")
-	public String post_read(int num, Model model) {
+	public String post_read(int num, Model model, HttpSession session) {
 		
 		PostDTO post = post_mapper.read(num);
 		MemberDTO author = member_mapper.getMember(post.getMember_num());
 		
+		Map map = new HashMap();
+		map.put("member_num", (Integer)session.getAttribute("num"));
+		map.put("post_num", num);
+		
+		int checkScrap = scrap_mapper.checkScrap(map);
+		
 		model.addAttribute("post", post);
 		model.addAttribute("author", author);
+		model.addAttribute("checkScrap", checkScrap);
 		
 		return "/post_read";
 	}
@@ -129,10 +161,10 @@ public class PostController {
 			
 			// 파일 경로설정
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
-			String filePath = dftFilePath + "storage" + File.separator + "photo_upload" + File.separator + today_folder;
+			String filePath = dftFilePath + "storage" + File.separator + "photo_upload" + File.separator + today_folder + File.separator;
 			
 			File file = new File(filePath);
-
+			
 			if (!file.exists()) {
 				file.mkdirs();
 			}
@@ -205,5 +237,21 @@ public class PostController {
 		model.addAttribute("lastPage", lastPage);
 		
 		return "/home";
+	}
+	
+	@GetMapping("/profile")
+	public String profile(Model model, int num) {
+		
+		List<PostDTO> list = post_mapper.postList(num);
+		MemberDTO author = member_mapper.getMember(num);
+		
+		List<CommentDTO> comment = comment_mapper.commentlist(num);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("num", num);
+		model.addAttribute("author", author);
+		model.addAttribute("comment", comment);
+		
+		return "/profile";
 	}
 }

@@ -34,11 +34,11 @@
 				<div class="articles" data-aos="zoom-in">
 					<div class="post-list row">
 						<a href="post_read?num=${dto.post_num}">
-							<div class="post-thumb fill-img" style="background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
+							<div class="post-thumb fill-image" style="background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
 						</a>
 						<div class="post-content font-myungjo">
 							<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
-							<p>${dto.nickname}</p>
+							<p><a class="immutable" href="profile?num=${dto.member_num}">${dto.nickname}</a></p>
 							<span class="type op1">
 							<c:choose>
 								<c:when test="${fn:substring(dto.type, 0, 1) == 'A'}">빡빡</c:when>

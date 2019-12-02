@@ -31,21 +31,49 @@ public class Member_ScrapController {
 	private Member_ScrapMapper mapper;
 	
 	@GetMapping("/scraplist")
-	public String scraplist(HttpSession session) {
+	public String scraplist(HttpSession session, Model model) {
+		
+		List<Member_ScrapDTO> list = mapper.list((Integer)session.getAttribute("num"));
+		
+		model.addAttribute("list", list);
 		
 		return util.isLoginFilter(session, "/scraplist");
 	}
 	
 	@ResponseBody
-	@GetMapping(value = "/scrap", produces = "application/json;charset=utf-8")
-	public Map<String, Object> scrap(Map<String, Object> map) {
+	@PostMapping(value = "/scrap", produces = "application/json;charset=utf-8")
+	public Map<String, Object> scrap(int post_num, String memo, HttpSession session) {
+		
 		Member_ScrapDTO dto = new Member_ScrapDTO();
 		
-		dto.setPost_num = (Integer) map.get("post_num");
-		dto.setMember_num = (Integer) map.get("member_num");
+		dto.setPost_num(post_num);
+		dto.setMember_num((Integer)session.getAttribute("num"));
+		dto.setMemo(memo);
 		
 		Map<String, Object> return_data = new HashMap<String, Object>();
+		
 		if(mapper.scrap(dto) > 0) {
+			return_data.put("flag", "Y");
+		} else {
+			return_data.put("flag", "N");
+		}
+		
+		return return_data;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/deleteScrap", produces = "application/json;charset=utf-8")
+	public Map<String, Object> deleteScrap(int post_num, HttpSession session) {
+		
+		Map map = new HashMap();
+		map.put("member_num", (Integer)session.getAttribute("num"));
+		map.put("post_num", post_num);
+		
+		int isDelete = mapper.deleteScrap(map);
+		
+		Map<String, Object> return_data = new HashMap<String, Object>();
+		
+		if(isDelete > 0) {
 			return_data.put("flag", "Y");
 		} else {
 			return_data.put("flag", "N");
