@@ -1,5 +1,6 @@
 package com.sts.travlan;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,10 +39,14 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model) {
-
-		int flag = mapper.login(map);
+	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model) throws NoSuchAlgorithmException {
+		String encpw = util.encryptPassword(map.get("password"));
 		
+		Map<String, String> loginmap = new HashMap<String, String>();
+		loginmap.put("id", map.get("id"));
+		loginmap.put("password", encpw);
+		
+		int flag = mapper.login(loginmap);
 		MemberDTO dto = mapper.getMember(mapper.get_unique_number(map.get("id")));
 		
 		if(flag > 0) {
@@ -71,7 +76,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("/register")
-	public String register(MemberDTO dto, HttpServletRequest request) {
+	public String register(MemberDTO dto, HttpServletRequest request) throws NoSuchAlgorithmException {
+		String pw = dto.getPassword();
+		dto.setPassword(util.encryptPassword(pw));
 		
 		if (mapper.create(dto) == 1) {
 			request.setAttribute("sys_msg", "회원가입 성공!");
@@ -232,11 +239,11 @@ public class MemberController {
 	
 	@ResponseBody
 	@GetMapping(value = "/currentpassword", produces = "application/json;charset=utf-8")
-	public Map<String, Object> currentpassword(String password, HttpSession session) {
+	public Map<String, Object> currentpassword(String password, HttpSession session) throws NoSuchAlgorithmException {
 		
 		Map<String, String> current = new HashMap<String, String>();
 		current.put("id", (String)session.getAttribute("id"));
-		current.put("password", password);
+		current.put("password", util.encryptPassword(password));
 		
 		int flag = mapper.passwd_check(current);
 		
@@ -260,11 +267,11 @@ public class MemberController {
 	}
 	
 	@PostMapping("/passwd_check")
-	public String passwd_check(String password, HttpSession session) {
+	public String passwd_check(String password, HttpSession session) throws NoSuchAlgorithmException {
 		
 		Map map = new HashMap();
 		map.put("id", session.getAttribute("id"));
-		map.put("password", password);
+		map.put("password", util.encryptPassword(password));
 		
 		int flag = mapper.passwd_check(map);
 		

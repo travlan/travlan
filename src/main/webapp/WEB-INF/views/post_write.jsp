@@ -133,27 +133,25 @@
 
 <script type="text/javascript" src="smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		//썸네일 업로드를 위한 data정보
-		var reader = new FileReader;
-		var formData = new FormData();
-		var fileList;
-		
-		// 스마트에디터 프레임생성
-		var editor_obj = [];
-		nhn.husky.EZCreator.createInIFrame({
-		    oAppRef: editor_obj,
-		    elPlaceHolder: "content",
-		    sSkinURI: "smarteditor2/SmartEditor2Skin.html",
-		    htParams : {
-		        // 툴바 사용 여부
-		        bUseToolbar : true,
-		        // 입력창 크기 조절바 사용 여부
-		        bUseVerticalResizer : false,
-		        // 모드 탭(Editor | HTML | TEXT) 사용 여부
-		        bUseModeChanger : true,
-		    }
-		});
+	//썸네일 업로드를 위한 data정보
+	var reader = new FileReader;
+	var formData = new FormData();
+	var fileList;
+	
+	// 스마트에디터 프레임생성
+	var editor_obj = [];
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef: editor_obj,
+		elPlaceHolder: "content",
+		sSkinURI: "smarteditor2/SmartEditor2Skin.html",
+		htParams : {
+		    // 툴바 사용 여부
+		    bUseToolbar : true,
+		    // 입력창 크기 조절바 사용 여부
+		    bUseVerticalResizer : false,
+		    // 모드 탭(Editor | HTML | TEXT) 사용 여부
+		    bUseModeChanger : true,
+		}
 	});
 	    
    $("#province").change(function(){
