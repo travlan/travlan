@@ -6,56 +6,58 @@
 		<li class="active"><a class="immutable" href="myinfo">내 정보</a></li>
 		<li><a class="immutable" href="profile?num=${sessionScope.num}">내가 쓴 글/댓글 목록</a></li>
 		<li><a class="immutable" href="scraplist">스크랩 목록</a></li>
+		<li><a class="immutable" href="note">쪽지</a></li>
 		<li><a class="immutable" href="passwd_check">비밀번호 변경</a></li>
 		<li><a class="immutable" href="secession">회원탈퇴</a></li>
 	</ul>
 	<div data-aos="fade-right">
 		<div class="form-group row">
-			<label for="staticEmail" class="col-sm-2 col-form-label">아이디</label>
+			<strong for="staticEmail" class="col-sm-2 col-form-label">아이디</strong>
 			<div class="col-sm-10">
-				<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${sessionScope.id}">
+				<label class="col-sm-10">${sessionScope.id}</label>
 			</div>
 		</div>
 		<div class="form-group row">
-			<label for="staticEmail" class="col-sm-2 col-form-label">닉네임</label>
-			<div class="col-sm-10">
-				<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${dto.nickname}">
+			<strong for="staticEmail" class="col-sm-2 col-form-label">닉네임</strong>
+			<div class="col-sm-4" id="oldnickname">
+				<label class="col-sm-4">${dto.nickname}</label>
 			</div>
+			<div class="col-sm-4" id="newnickname" style="display:none;">
+				<input type="text" class="form-control-plaintext card" id="nickname" value="${dto.nickname}">
+			</div>
+			<button class="btn btn-light" id="nickname_btn" type="button" onclick="updateNickname()">변경</button>
+			<button style="display:none;" class="btn btn-light" id="nicknameSave_btn" type="button" onclick="">저장</button>
+			<button style="display:none;" class="btn btn-light" id="nicknameCancel_btn" type="button" onclick="cancelNickname()">취소</button>
 		</div>
 		<div class="form-group row">
-			<label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
+			<strong for="staticEmail" class="col-sm-2 col-form-label">이메일</strong>
 			<div class="col-sm-10">
-				<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${dto.email}">
+				<label class="col-sm-10">${dto.email}</label>
 			</div>
 		</div>
 		<c:choose>
 			<c:when test="${is_info}">
 				<div class="form-group row">
-					<label for="staticEmail" class="col-sm-2 col-form-label">성별</label>
+					<strong for="staticEmail" class="col-sm-2 col-form-label">성별</strong>
 					<div class="col-sm-10">
-						<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${idto.gender}">
+						<label class="col-sm-10">${idto.gender}</label>
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="staticEmail" class="col-sm-2 col-form-label">나이</label>
+					<strong for="staticEmail" class="col-sm-2 col-form-label">나이</strong>
 					<div class="col-sm-10">
-						<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${idto.age}대">
+						<label class="col-sm-10">${idto.age}대</label>
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="staticEmail" class="col-sm-2 col-form-label">선호도</label>
+					<strong for="staticEmail" class="col-sm-2 col-form-label">사는곳</strong>
 					<div class="col-sm-10">
-						<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="">
+						<label class="col-sm-10">${idto.region}</label>
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="staticEmail" class="col-sm-2 col-form-label">사는곳</label>
-					<div class="col-sm-10">
-						<input type="text" readonly class="form-control-plaintext card" id="staticEmail" value="${idto.region}">
-					</div>
-				</div>
-				<div>
-					<strong>선호도</strong><label>
+					<strong for="staticEmail" class="col-sm-2 col-form-label">선호도</strong>
+					<label class="col-sm-10">
 						<div id="type"></div>
 					</label>
 				</div>
@@ -67,7 +69,6 @@
 						<div class="col-xs-3" id="addtional">
 							<input type="hidden" name="num" value="${num}">
 							
-
 							<div class="form-group row">
 								<div class="form-check form-check-inline">
 									<input type="radio" name="gender" value="M" checked>남자<br>
@@ -183,4 +184,20 @@
             });
 		});
 	});
+	
+	function updateNickname() {
+		$('#nickname_btn').css('display', 'none');
+		$('#oldnickname').css('display', 'none');
+		$('#newnickname').css('display', 'block');
+		$('#nicknameSave_btn').css('display', 'block');
+		$('#nicknameCancel_btn').css('display', 'block');
+	}
+	
+	function cancelNickname() {
+		$('#nickname_btn').css('display', 'block');
+		$('#oldnickname').css('display', 'block');
+		$('#newnickname').css('display', 'none');
+		$('#nicknameSave_btn').css('display', 'none');
+		$('#nicknameCancel_btn').css('display', 'none');
+	}
 </script>

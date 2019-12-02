@@ -20,6 +20,7 @@
 								<button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#cancelModal">스크랩 취소</button>
 							</c:otherwise>
 						</c:choose>
+						<button class="btn btn-primary btn-block" type="button" onclick="sendMessage(${author.num})">쪽지 보내기</button>
 					</c:if>
 					<c:if test="${author.nickname == sessionScope.id}">
 						<button class="btn btn-primary btn-block" type="button" >글삭제</button>
@@ -150,5 +151,10 @@
 				done = true;
 			}
 		});
+	}
+
+	function sendMessage(num) {
+		window.open('note/send?user=' + num, '쪽지 보내기', 'width=300, height=700');
+		return false;
 	}
 </script>

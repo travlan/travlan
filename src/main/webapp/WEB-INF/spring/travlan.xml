@@ -9,6 +9,9 @@
         <put-attribute name="topnav" value="/WEB-INF/views/template/topnav.jsp" /> 
         <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" /> 
     </definition> 
+	
+	<definition name="window" template="/WEB-INF/views/template/window_template.jsp"> 
+    </definition>
     
     <!-- topnav랑 footer 없어야 되는 페이지 -->
     <definition name="single" template="/WEB-INF/views/template/single_template.jsp"> 
@@ -78,6 +81,16 @@
 	<definition name="/profile" extends="main"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/profile.jsp" /> 
+    </definition>
+	
+	<definition name="/message/send" extends="window"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/window/note.jsp" /> 
+    </definition>
+    
+    <definition name="/message" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/notelist.jsp" /> 
     </definition>
     
 </tiles-definitions>
