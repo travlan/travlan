@@ -28,6 +28,16 @@
         <put-attribute name="body" value="/WEB-INF/views/post_write.jsp" /> 
     </definition>
     
+    <definition name="/post_delete" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/post_delete.jsp" /> 
+    </definition>
+    
+    <definition name="/post_update" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/post_update.jsp" /> 
+    </definition>
+    
     <definition name="/post_read" extends="main"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/post_read.jsp" /> 

@@ -105,6 +105,20 @@ public class PostController {
 		return "/post_read";
 	}
 	
+	@GetMapping("/post_update")
+	public String update(HttpSession session, int num, Model model) {
+		PostDTO post = post_mapper.read(num);
+		int sessionNum = (Integer)session.getAttribute("num") != null ? (Integer)session.getAttribute("num") : -1;
+		
+		if(post.getMember_num() == sessionNum) {
+			model.addAttribute("post", post);
+			model.addAttribute("region", post_mapper.getLocation(post.getRegion_num()));
+			return "/post_update";
+		}else {
+		return util.isLoginFilter(session, "/post_update");
+		}
+	}
+	
 	@ResponseBody
 	@RequestMapping("/utility/thumbnail_uploader")
 	public String thumbnailPhotoUpload(MultipartHttpServletRequest multipartRequest) {
