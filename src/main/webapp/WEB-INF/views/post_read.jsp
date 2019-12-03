@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
  <link rel="stylesheet" href="assets/css/read.css">
- <main class="page blog-post">
+ <div class="page blog-post">
     <section class="clean-block clean-post dark">
         <div class="container">
             <div class="block-content">
@@ -29,9 +29,70 @@
                     <figure class="figure"></figure>
                 </div>
             </div>
+			
+			<style>
+				.start-5::before {
+					content: '⭐⭐⭐⭐⭐';
+				}
+				.start-4::before {
+					content: '⭐⭐⭐⭐';
+				}
+				.start-3::before {
+					content: '⭐⭐⭐';
+				}
+				.start-2::before {
+					content: '⭐⭐';
+				}
+				.start-1::before {
+					content: '⭐';
+				}
+			</style>
+			
+			<div class="block-content mt-4" data-aos="fade-up-right">
+				<div class="row">
+					<div class="col-lg-6 p-5">
+						<dic class="start-5">
+						<div class="box">
+							<p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est.</p>
+						</div>
+						<div class="author">
+							<h5 class="name">Ben Johnson</h5>
+							<p class="title">CEO of Company Inc.</p>
+						</div>
+					</div>
+					<div class="col-lg-6 p-5">
+						<dic class="start-1">
+						<div class="box">
+							<p class="description">Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, et interdum justo suscipit id.</p>
+						</div>
+						<div class="author">
+							<h5 class="name">Carl Kent</h5>
+							<p class="title">Founder of Style Co.</p>
+						</div>
+					</div>
+				</div>
+            </div>
+			
+			<div class="block-content mt-4" data-aos="fade-up-right">
+				<div class="text-center font-weight-bold p-4">
+					더 보기 💬
+				</div>
+            </div>
+					
+			<div class="block-content mt-4" data-aos="fade-up-right">
+				<div class="form-group">
+					<textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+					<button class="btn btn-dark btn-block">
+						댓글 작성
+					</button>
+			    </div>
+            </div>
         </div>
     </section>
-</main>
+</div>
+		
+<script>
+</script>
 
 <!-- Modal -->
 <c:choose>

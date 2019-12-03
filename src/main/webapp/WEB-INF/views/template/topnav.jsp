@@ -3,7 +3,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
 <nav id="top-main-nav" class="navbar navbar-dark bg-dark navbar-expand-md navigation-clean fixed-top"
-	style="padding: 50px; position: absolute;">
+	style="padding: 50px 10px 50px 10px; position: absolute;">
 	<div class="container">
 		<a class="navbar-brand font-classic" href="./">TRAVLAN</a>
 		<button data-toggle="collapse" class="navbar-toggler"

@@ -14,7 +14,7 @@
   font-family: 'classic';
 }
 .content {
-  margin: 0 0 100px 0;
+	
 }
 /* TOP NAV */
 #top-main-nav {
@@ -133,6 +133,7 @@ a.immutable:link, a.immutable:visited, a.immutable:hover {
   text-decoration: none;
 }
 .info-tab {
+  margin-top: 1rem
   padding-left: 0;
   list-style: none;
   border-bottom: 2px solid #000;

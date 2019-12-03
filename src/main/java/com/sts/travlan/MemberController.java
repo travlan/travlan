@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.model.mapper.MemberMapper;
 import com.model.member.MemberDTO;
@@ -198,11 +195,10 @@ public class MemberController {
 		String fpasswd = mapper.find_passwd(find);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		if(fpasswd == null) {
 			map.put("result", "N");
 		} else {
-			map.put("result", fpasswd);
+			map.put("result", "Y");
 		}
 		
 		return map;
@@ -211,9 +207,13 @@ public class MemberController {
 	
 	@RequestMapping("/myinfo")
 	public String myinfo(HttpSession session, Model model) {
-		MemberDTO dto = mapper.getMember((Integer)session.getAttribute("num"));
+		if(session.getAttribute("num") == null) {
+			return util.isLoginFilter(session, "/myinfo");
+		}
 		
+		MemberDTO dto = mapper.getMember((Integer)session.getAttribute("num"));
 		boolean is_info = mapper.is_info((String)session.getAttribute("id")) > 0 ? true : false;
+		
 		if(is_info) {
 			Member_InfoDTO idto = mapper.getMemberInfo(dto.getNum());
 			
@@ -290,11 +290,11 @@ public class MemberController {
 	
 	@ResponseBody
 	@GetMapping(value = "/oldpassword", produces="application/json;charset=utf-8")
-	public Map<String, Object> oldpassword(String password, HttpSession session) {
+	public Map<String, Object> oldpassword(String password, HttpSession session) throws NoSuchAlgorithmException {
 		
 		Map<String, String> old = new HashMap<String, String>();
 		old.put("id", (String) session.getAttribute("id"));
-		old.put("password", password);
+		old.put("password", util.encryptPassword(password));
 			
 		int flag = mapper.passwd_check(old);
 		
@@ -310,11 +310,11 @@ public class MemberController {
 	}
 	
 	@PostMapping("/passwd_change")
-	public String passwd_change(String password, HttpSession session) {
+	public String passwd_change(String password, HttpSession session) throws NoSuchAlgorithmException {
 		
 		Map map = new HashMap();
 		map.put("id", session.getAttribute("id"));
-		map.put("password", password);
+		map.put("password", util.encryptPassword(password));
 		
 		int flag = mapper.passwd_change(map);
 		

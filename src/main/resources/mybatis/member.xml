@@ -5,6 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.MemberMapper">
 
+	<update id="additionalchange" parameterType="Map">
+		UPDATE member
+		<set>
+			age = #{age}, type = #{type}, gender = #{gender}, region_num = #{region_num}
+		</set> 
+		WHERE num = #{num}
+	</update>
+	
 	<update id="nicknamechange" parameterType="Map">
 		UPDATE member
 		SET nickname = #{nickname}
@@ -36,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMemberInfo" parameterType="int" resultType="Member_InfoDTO">
-		SELECT i.age, i.`type`, i.gender, l.region
+		SELECT i.age, i.`type`, i.gender, l.region, i.region_num
 		FROM member_info AS i, location AS l
 		WHERE i.num = #{num} AND i.region_num = l.num
 	</select>

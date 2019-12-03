@@ -22,8 +22,6 @@ public class Utility {
 			return "redirect:home";
 		}
 	}
-<<<<<<< HEAD
-=======
 	
 	public String encryptPassword(String password) throws NoSuchAlgorithmException {
 
@@ -44,7 +42,5 @@ public class Utility {
         }
         return new String(hexChars);
 	}  
-	
->>>>>>> 7c9e5058d7b78d48f5cdcc9b178430fdcfb0622d
 }
 

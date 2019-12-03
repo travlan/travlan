@@ -1,37 +1,38 @@
 <%@ page contentType = "text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="container">
-	<ul class="info-tab">
-		<li class="active"><a class="immutable" href="scraplist">스크랩 목록</a></li>
-		<li><a class="immutable" href="myinfo">내 정보</a></li>
-		<li><a class="immutable" href="profile?num=${sessionScope.num}">내가 쓴 글/댓글 목록</a></li>
-		<li><a class="immutable" href="note">쪽지</a></li>
-		<li><a class="immutable" href="passwd_check">비밀번호 변경</a></li>
-		<li><a class="immutable" href="secession">회원탈퇴</a></li>
-	</ul>
-	<div class="row">
+<section class="clean-block clean-post dark">
+	<div class="container">
+		<%@ include file="include/menutop.jsp" %>
+		
 		<c:choose>
 			<c:when test="${empty list}">
+				<div class="block-content mt-4 p-4" data-aos="fade-up-right">
 				스크랩한 글이 없습니다.
+				</div>
 			</c:when>
 			
 			<c:otherwise>
+				<div id="card-wrapper" class="row mt-4">
 				<c:forEach var="dto" items="${list}">
-					<div class="col-md-4 mb-4" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
-						<div class="card">
+					<div class="col-lg-4" data-aos="fade-up-right">
+						<div class="block-content mb-4">
 							<a href="post_read?num=${dto.post_num}">
-								<img class="card-img-top" src="storage/photo_thumbnail/${dto.thumbnail}">
+								<div class="post-thumb fill-image" style="width: 100%; height: 300px; background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
 							</a>
-							<div class="card-body">
-								<a href="post_read?num=${dto.post_num}"><h5 class="card-title">${dto.title}</h5></a>
-								<h6>${dto.nickname}</h6>
-								<p class="card-text">${dto.memo}(${dto.created_date})</p>
+							<div class="p-4">
+								<div class="post-content font-myungjo">
+									<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
+									<p><a class="immutable" href="profile?num=${dto.member_num}">${dto.nickname}</a></p>
+									<p>${dto.memo}</p>
+								</div>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
+				</div>
 			</c:otherwise>
 		</c:choose>
+		</div>
 	</div>
-</div>
+</section>
