@@ -37,7 +37,7 @@ public class Member_NoteController {
 		model.addAttribute("num", memberNumber);
 		model.addAttribute("username", member.getNickname());
 		
-		return util.isLoginFilter(session, "/message/send");
+		return util.isLoginFilter(session, "/note/send");
 	}
 	
 	@PostMapping("/note/send")
@@ -46,9 +46,9 @@ public class Member_NoteController {
 		dto.setSend_user((Integer)session.getAttribute("num"));
 		
 		if (mapper.sendNote(dto) > 0) {
-			return "<script>alert('메세지 전송 성공 :D');self.close();</script>";
+			return "/window/close";
 		} else {
-			return "<script>alert('메세지 전송 실패 :(');self.close();</script>";
+			return "/window/close";
 		}
 	}
 	
@@ -56,7 +56,7 @@ public class Member_NoteController {
 	public String readMessage(HttpSession session) {
 		
 		
-		return util.isLoginFilter(session, "/message/read");
+		return util.isLoginFilter(session, "/note/read");
 	}
 	
 	@GetMapping("/note")
@@ -66,7 +66,7 @@ public class Member_NoteController {
 		
 		model.addAttribute("list", list);
 		
-		return util.isLoginFilter(session, "/message");
+		return util.isLoginFilter(session, "/note");
 	}
 	
 	

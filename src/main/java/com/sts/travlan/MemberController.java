@@ -351,7 +351,7 @@ public class MemberController {
 	
 	@ResponseBody
 	@GetMapping(value = "/nicknamechange", produces="application/json;charset=utf-8")
-	public Map<String, Object> nicknamechange(String nickname, HttpSession session){
+	public Map<String, Object> nicknamechange(String nickname, MemberDTO dto, HttpSession session){
 		
 		Map change = new HashMap();
 		change.put("num", (Integer)session.getAttribute("num"));
@@ -362,6 +362,9 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(nicknamechange > 0) {
+			session.removeAttribute("nickname");
+			session.setAttribute("nickname", dto.getNickname());
+			
 			map.put("flag", "Y");
 			map.put("nickname", nickname);
 		} else {
@@ -369,6 +372,27 @@ public class MemberController {
 		}
 		
 		return map;
+	}
+		
+	@GetMapping("/updateAdditionalInfo")
+	public String updateAdditionalInfo(){
+		
+		return "/updateAdditionalInfo";
+	}
+	
+	@PostMapping("/updateAdditionalInfo")
+	public String updateAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request){
+		String type = "";
+		type += request.getParameter("type1");
+		type += request.getParameter("type2");
+		type += request.getParameter("type3");
+		dto.setType(type);
+		
+		if(mapper.additionalchange(dto) > 0) {
+			return "redirect:/myinfo";
+		}else {
+			return "";
+		}
 	}
 	
 }

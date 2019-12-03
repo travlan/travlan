@@ -4,9 +4,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.model.mapper.MemberMapper">
-
-	<update id="additionalchange" parameterType="Map">
-		UPDATE member
+	
+	<update id="additionalchange" parameterType="Member_InfoDTO">
+		UPDATE member_info
 		<set>
 			age = #{age}, type = #{type}, gender = #{gender}, region_num = #{region_num}
 		</set> 

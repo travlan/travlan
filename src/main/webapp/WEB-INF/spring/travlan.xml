@@ -93,14 +93,19 @@
         <put-attribute name="body" value="/WEB-INF/views/profile.jsp" /> 
     </definition>
 	
-	<definition name="/message/send" extends="window"> 
+	<definition name="/note/send" extends="window"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/window/note.jsp" /> 
     </definition>
     
-    <definition name="/message" extends="main"> 
+    <definition name="/note" extends="main"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/notelist.jsp" /> 
+    </definition>
+	
+	<definition name="/window/close" extends="window"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/close.jsp" /> 
     </definition>
     
 </tiles-definitions>

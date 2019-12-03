@@ -6,75 +6,73 @@
 	<div class="container">
 		<%@ include file="include/menutop.jsp" %>
 		
-		<div class="block-content mt-4" data-aos="fade-up-right">
-			<div class="p-4">
-				<div class="form-group row">
-					<strong for="staticEmail" class="col-sm-2 col-form-label">아이디</strong>
-					<div class="col-sm-10">
-						<label class="col-sm-10">${sessionScope.id}</label>
-					</div>
+		<div class="block-content mt-4 p-4" data-aos="fade-up-right">
+			<div class="form-group row">
+				<strong for="staticEmail" class="col-sm-2 col-form-label">아이디</strong>
+				<div class="col-sm-10">
+					<label class="col-sm-10">${sessionScope.id}</label>
 				</div>
-				<div class="form-group row">
-					<strong for="staticEmail" class="col-sm-2 col-form-label">닉네임</strong>
-					<div class="col-sm-4" id="oldnickname">
-						<label class="col-sm-4">${dto.nickname}</label>
-					</div>
-					<div class="col-sm-4" id="newnickname" style="display:none;">
-						<input type="text" class="form-control-plaintext card" id="nickname" value="${dto.nickname}">
-					</div>
-					<div id="nicknamecheck"></div>
-					<button class="btn btn-light" id="nickname_btn" type="button" onclick="updateNickname()">변경</button>
-					<button style="display:none;" class="btn btn-light" id="nicknameSave_btn" type="button" onclick="saveNickname()">저장</button>
-					<button style="display:none;" class="btn btn-light" id="nicknameCancel_btn" type="button" onclick="cancelNickname()">취소</button>
+			</div>
+			<div class="form-group row">
+				<strong for="staticEmail" class="col-sm-2 col-form-label">닉네임</strong>
+				<div class="col-sm-4" id="oldnickname">
+					<label class="col-sm-4">${dto.nickname}</label>
 				</div>
-				<div class="form-group row">
-					<strong for="staticEmail" class="col-sm-2 col-form-label">이메일</strong>
-					<div class="col-sm-10">
-						<label class="col-sm-10">${dto.email}</label>
-					</div>
+				<div class="col-sm-4" id="newnickname" style="display:none;">
+					<input type="text" class="form-control-plaintext card" id="nickname" value="${dto.nickname}">
+				</div>
+				<div id="nicknamecheck"></div>
+				<button class="btn btn-light" id="nickname_btn" type="button" onclick="updateNickname()">변경</button>
+				<button style="display:none;" class="btn btn-light" id="nicknameSave_btn" type="button" onclick="saveNickname()">저장</button>
+				<button style="display:none;" class="btn btn-light" id="nicknameCancel_btn" type="button" onclick="cancelNickname()">취소</button>
+			</div>
+			<div class="form-group row">
+				<strong for="staticEmail" class="col-sm-2 col-form-label">이메일</strong>
+				<div class="col-sm-10">
+					<label class="col-sm-10">${dto.email}</label>
 				</div>
 			</div>
 			<c:choose>
 				<c:when test="${!is_info}">
-					<button class="btn btn-dark btn-block" id="infobox_btn" type="button" onclick="showInfobox()">추가정보를 입력하세요! 더 다양한 정보를 얻을 수 있습니다!</button>
+					<button class="btn btn-light" id="infobox_btn" type="button" onclick="showInfobox()">추가정보를 입력하세요!</button>
 				</c:when>
 			</c:choose>
 		</div>
-		
-		<c:choose>
-			<!-- 추가 정보가 존재하는 유저 -->
-			<c:when test="${is_info}">
-				<div class="block-content mt-4" data-aos="fade-up-right">
-					<div class="p-4">
-						<div class="form-group row" id="oldgender">
-							<strong for="staticEmail" class="col-sm-2 col-form-label">성별</strong>
-							<div class="col-sm-10">
-								<label class="col-sm-10">${idto.gender}</label>
-							</div>
-						</div>
-						<div class="form-group row" id="oldage">
-							<strong for="staticEmail" class="col-sm-2 col-form-label">나이</strong>
-							<div class="col-sm-10">
-								<label class="col-sm-10">${idto.age}대</label>
-							</div>
-						</div>
-						<div class="form-group row" id="oldregion">
-							<strong for="staticEmail" class="col-sm-2 col-form-label">사는곳</strong>
-							<div class="col-sm-10">
-								<label class="col-sm-10">${idto.region}</label>
-							</div>
-						</div>
-						<div class="form-group row" id="oldtype">
-							<strong for="staticEmail" class="col-sm-2 col-form-label">선호도</strong>
-							<label class="col-sm-10">
-								<div id="type"></div>
-							</label>
-						</div>
-					</div>
-					<button class="btn btn-dark btn-block" id="additional_btn" type="button" onclick="updateAdditional()">추가정보 변경</button>
-					<div id="addInfo" style="display: none;" data-aos="flip-up">
+			<c:choose>
+				<c:when test="${is_info}">
+					<div id="addInfo" class="block-content mt-4" data-aos="fade-up-right">
 						<div class="p-4">
-							<form method="post" action="register_additional_info">
+							<div class="form-group row" id="oldgender">
+								<strong for="staticEmail" class="col-sm-2 col-form-label">성별</strong>
+								<div class="col-sm-10">
+									<label class="col-sm-10">${idto.gender}</label>
+								</div>
+							</div>
+							<div class="form-group row" id="oldage">
+								<strong for="staticEmail" class="col-sm-2 col-form-label">나이</strong>
+								<div class="col-sm-10">
+									<label class="col-sm-10">${idto.age}대</label>
+								</div>
+							</div>
+							<div class="form-group row" id="oldregion">
+								<strong for="staticEmail" class="col-sm-2 col-form-label">사는곳</strong>
+								<div class="col-sm-10">
+									<label class="col-sm-10">${idto.region}</label>
+								</div>
+							</div>
+							<div class="form-group row" id="oldtype">
+								<strong for="staticEmail" class="col-sm-2 col-form-label">선호도</strong>
+								<label class="col-sm-10">
+									<div id="type"></div>
+								</label>
+							</div>
+						</div>
+						<button class="btn btn-dark btn-block" id="additional_btn" type="button" onclick="updateAdditional()">추가정보 변경</button>
+					</div>
+					
+					<div id="updateInfo" class="block-content mt-4" data-aos="fade-up-right" style="display: none;">
+						<div class="p-4">
+							<form method="post" action="updateAdditionalInfo">
 								<div class="col-xs-3" id="addtional">
 									<input type="hidden" name="num" value="${num}">
 									<strong>성별</strong>
@@ -143,22 +141,19 @@
 										</select>
 									</div>
 								</div>
-							</div>
-							<div id="done" class="form-group">
-								<button class="btn btn-dark btn-block" type="submit">변경완료</button>
-							</div>
-							<div class="form-group">
-								<button class="btn btn-dark btn-block" id="cancel" type="button" onclick="cancelInfo()">취소</button>
-							</div>
-						</form>
+								<div id="done" class="form-group">
+									<button class="btn btn-dark btn-block" type="submit">변경완료</button>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-dark btn-block" id="cancel" type="button" onclick="cancelInfo()">취소</button>
+								</div>
+							</form>
+						</div>
 					</div>
-				</div>
-			</c:when>
-			
-			<!-- 추가 정보가 없는 유저 -->
-			<c:otherwise>
-				<div id="infobox" style="display: none;" class="block-content mt-4" data-aos="fade-up-right">
-					<div class="p-4">
+				</c:when>
+
+				<c:otherwise>
+					<div id="infobox" style="display: none;" data-aos="flip-up">
 						<form method="post" action="register_additional_info">
 							<div class="col-xs-3" id="addtional">
 								<input type="hidden" name="num" value="${num}">
@@ -233,9 +228,9 @@
 							</div>
 						</form>
 					</div>
-				</div>
-			</c:otherwise>
-		</c:choose>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
 </section>
 
@@ -358,11 +353,8 @@
 	}
 	
 	function updateAdditional() {
-		$('#oldgender').css('display', 'none');
-		$('#oldage').css('display', 'none');
-		$('#oldregion').css('display', 'none');
-		$('#oldtype').css('display', 'none');
-		$('#addInfo').css('display', 'block');
+		$('#addInfo').css('display', 'none');
+		$('#updateInfo').css('display', 'block');
 		$('#additional_btn').css('display', 'none');
 
 		$.ajax({
@@ -381,11 +373,8 @@
 	}
 	
 	function cancelInfo() {
-		$('#oldgender').css('display', 'block');
-		$('#oldage').css('display', 'block');
-		$('#oldregion').css('display', 'block');
-		$('#oldtype').css('display', 'block');
-		$('#addInfo').css('display', 'none');
+		$('#addInfo').css('display', 'block');
+		$('#updateInfo').css('display', 'none');
 		$('#additional_btn').css('display', 'block');
 	}
 </script>

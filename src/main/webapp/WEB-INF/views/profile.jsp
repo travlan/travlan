@@ -2,46 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<style>
-    .user-info-top {
-        border-bottom: 1px solid #ccc;
-    }
-    .user-info h3 {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-    .user-info h5 {
-        font-size: 0.8rem;
-    }
-    ul.user-action {
-        margin-top: 20px;
-        padding: 0;
-    }
-    ul.user-action li {
-        width: 38px;
-        padding: 5px;
-        font-size: 18px;
-        text-align: center;
-        display: inline-block;
-        border-radius: 100%;
-    }
-    .user-info-tab {
-        list-style: none;
-        padding: 0;
-        width: 100%;
-    }
-    .user-info-tab li {
-        display: inline-block;
-        text-align: center;
-        width: 49%;
-        padding-top: 10px;
-        font-size: 1rem;
-    }
-    .user-info-tab li.active {
-        border-top: 1px solid #000;
-    }
-</style>
-
 <section class="clean-block clean-post dark">
 	<div class="container">
 		<c:choose>

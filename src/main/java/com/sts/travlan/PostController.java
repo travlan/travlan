@@ -52,7 +52,8 @@ public class PostController {
 	private Member_ScrapMapper scrap_mapper;
 	@Autowired
 	private CommentMapper comment_mapper;
-
+	
+	
 	@GetMapping("/post_write")
 	public String post(HttpSession session) {
 	
@@ -87,21 +88,45 @@ public class PostController {
 	}
 	
 	@GetMapping("/post_read")
-	public String post_read(int num, Model model, HttpSession session) {
+	public String post_read(int num, Model model, HttpSession session, HttpServletRequest request) {
 		
 		PostDTO post = post_mapper.read(num);
 		MemberDTO author = member_mapper.getMember(post.getMember_num());
 		
-		Map map = new HashMap();
-		map.put("member_num", (Integer)session.getAttribute("num"));
-		map.put("post_num", num);
+		int pageComment = 5;
+		int nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		int total = comment_mapper.total(num);
+		int lastPage = (total - (total % pageComment)) / pageComment;
+		int no = 0;
 		
-		int checkScrap = scrap_mapper.checkScrap(map);
+		if(nowPage > lastPage) { nowPage = lastPage; }
+		no += (nowPage) * pageComment;
+		if(no > total) { no = total; }
+		
+		System.out.println("Paging : nowPage = " + nowPage + " no = " + no);
+		
+		Map map = new HashMap();
+		map.put("post_num", num);
+		map.put("pageComment", pageComment);
+		map.put("no", no);
+		
+		List<CommentDTO> commentList = comment_mapper.list(map);
+		CommentDTO commenthigh = comment_mapper.highestRate(num);
+		CommentDTO commentlow = comment_mapper.lowestRate(num);
+		
+		Map scrapMap = new HashMap();
+		
+		scrapMap.put("member_num", (Integer)session.getAttribute("num"));
+		scrapMap.put("post_num", num);
+		
+		int checkScrap = scrap_mapper.checkScrap(scrapMap);
 		
 		model.addAttribute("post", post);
 		model.addAttribute("author", author);
 		model.addAttribute("checkScrap", checkScrap);
-		
+		model.addAttribute("comment", commentList);
+		model.addAttribute("commenthigh", commenthigh);
+		model.addAttribute("commentlow", commentlow);
 		return "/post_read";
 	}
 	
@@ -224,30 +249,26 @@ public class PostController {
 	@RequestMapping("/")
 	public String post_list(HttpServletRequest request, Model model) {
 		
-		int pagePost = 8;
-		int page = request.getParameter("page")==null? 1 : Integer.parseInt(request.getParameter("page"));
+		int pagePost = 9;
+		int nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
 		int total = post_mapper.total();
 		int lastPage = (total-(total%pagePost))/pagePost;
+		int no = 0;
 		
-		if(page > lastPage) {
-			page = lastPage;
-		}
-		
-		int sno = (page-1) * pagePost;
-		int eno = (page-1) * pagePost + pagePost;
-		
-		if(eno > total) {
-			eno = total;
-		}
+		if(nowPage > lastPage) { nowPage = lastPage; }
+		no += (nowPage - 1) * pagePost;
+		if(no > total) { no = total; }
 		
 		Map map = new HashMap();
-		map.put("sno", sno);
-		map.put("eno", eno);
+		
+		map.put("pagePost", pagePost);
+		map.put("no", no);
+		System.out.println("Paging : nowPage = " + nowPage + " no = " + no);
 		
 		List<PostDTO> list = post_mapper.list(map);
 		
 		model.addAttribute("list", list);
-		model.addAttribute("page", page);
+		model.addAttribute("page", nowPage);
 		model.addAttribute("lastPage", lastPage);
 		
 		return "/home";

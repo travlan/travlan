@@ -5,70 +5,94 @@
  <div class="page blog-post">
     <section class="clean-block clean-post dark">
         <div class="container">
+			<style>
+				.post-action {
+					position: absolute;
+					right: 20px;
+    				bottom: 5px;
+				}
+				.post-action ul li {
+					cursor: pointer;
+					font-size: 18px;
+					color: #fff;
+					margin: 5px;
+				}
+				.post-action ul li.active {
+					color: rgb(255, 38, 139);
+				}
+			</style>
             <div class="block-content">
-                <div class="post-image" style="background-image:url(storage/photo_thumbnail/${post.thumbnail});"></div>
+                <div class="post-image" style="background-image:url(storage/photo_thumbnail/${post.thumbnail});">
+					<div class="dark-mask">
+						<h3 class="post-title font-myungjo">${post.title}</h3>
+						<div class="post-action">
+							<ul class="list-none">
+								<c:if test="${post.member_num != sessionScope.num}">
+									<c:choose>
+										<c:when test="${checkScrap == 0}">
+											<li data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
+										</c:when>
+										
+										<c:otherwise>
+											<li class="active" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-heart"></i></li>
+										</c:otherwise>
+									</c:choose>
+                    				<li onclick="sendMessage(${author.num})"><i class="far fa-comment-alt"></i></li>
+									<li><i class="fas fa-user-alt-slash"></i></li>
+								</c:if>
+								<c:otherwise>
+									<li><i class="far fa-edit"></i></li>
+									<li><i class="far fa-trash-alt"></i></li>
+								</c:otherwise>
+							</ul>
+						</div>
+					</div>
+				</div>
                 <div class="post-body">
-                    <h3>${post.title}</h3>
                     <div class="post-info"><span>By ${author.nickname}</span><span>${post.created_date}</span></div>
-					<c:if test="${post.member_num != sessionScope.num}">
-						<c:choose>
-							<c:when test="${checkScrap == 0}">
-								<button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#exampleModal">스크랩</button>
-							</c:when>
-						
-							<c:otherwise>
-								<button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#cancelModal">스크랩 취소</button>
-							</c:otherwise>
-						</c:choose>
-						<button class="btn btn-primary btn-block" type="button" onclick="sendMessage(${author.num})">쪽지 보내기</button>
-					</c:if>
-					<c:if test="${author.nickname == sessionScope.id}">
-						<button class="btn btn-primary btn-block" type="button" >글삭제</button>
-					</c:if>
                     <p>${post.content}</p>
                     <figure class="figure"></figure>
                 </div>
             </div>
 			
-			<style>
-				.start-5::before {
-					content: '⭐⭐⭐⭐⭐';
-				}
-				.start-4::before {
-					content: '⭐⭐⭐⭐';
-				}
-				.start-3::before {
-					content: '⭐⭐⭐';
-				}
-				.start-2::before {
-					content: '⭐⭐';
-				}
-				.start-1::before {
-					content: '⭐';
-				}
-			</style>
-			
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="row">
 					<div class="col-lg-6 p-5">
-						<dic class="start-5">
+					<c:choose>
+					<c:when test="${commenthigh != null}">
+						<dic class="start-${commenthigh.score}">
 						<div class="box">
-							<p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est.</p>
+							<h5 class="name"><strong>${commenthigh.title}</strong></h5>
+							<p class="description">${commenthigh.content}</p>
 						</div>
+						
 						<div class="author">
-							<h5 class="name">Ben Johnson</h5>
-							<p class="title">CEO of Company Inc.</p>
+							<p class="title">${commenthigh.member_num}</p>
 						</div>
+					</c:when>
+					<c:otherwise>
+						내용없으니 꺼지셈
+					</c:otherwise>
+					</c:choose>
 					</div>
+					
 					<div class="col-lg-6 p-5">
-						<dic class="start-1">
+					<c:choose>
+					<c:when test="${commentlow != null}">
+						<dic class="start-${commentlow.score}">
 						<div class="box">
-							<p class="description">Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, et interdum justo suscipit id.</p>
+							<h5 class="name"><strong>${commentlow.title}</strong></h5>
+							<p class="description">${commentlow.content}</p>
 						</div>
+						
 						<div class="author">
-							<h5 class="name">Carl Kent</h5>
-							<p class="title">Founder of Style Co.</p>
+							<p class="title">${commentlow.member_num}</p>
 						</div>
+					</c:when>
+					<c:otherwise>
+						내용없으니 꺼지셈
+					</c:otherwise>
+					</c:choose>
 					</div>
 				</div>
             </div>
@@ -78,10 +102,19 @@
 					더 보기 💬
 				</div>
             </div>
-					
+
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="form-group">
-					<textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+					<div class="select-star-form">
+						<h4 class="font-namyun">이 여행을 평가해주세요!</h4>
+						<input id="check-star-1" class="select-star" type="checkbox" onclick="checkStar(1)"><label for="check-star-1"></label>
+						<input id="check-star-2" class="select-star" type="checkbox" onclick="checkStar(2)"><label for="check-star-2"></label>
+						<input id="check-star-3" class="select-star" type="checkbox" onclick="checkStar(3)"><label for="check-star-3"></label>
+						<input id="check-star-4" class="select-star" type="checkbox" onclick="checkStar(4)"><label for="check-star-4"></label>
+						<input id="check-star-5" class="select-star" type="checkbox" onclick="checkStar(5)"><label for="check-star-5"></label>
+					</div>
+					<input type="text" class="form-control" id="formGroupExampleInput" placeholder="제목을 입력해주세요!">
+					<textarea class="form-control" id="exampleFormControlTextarea1" placeholder="후기를 남겨주세요!" rows="5"></textarea>
 					<button class="btn btn-dark btn-block">
 						댓글 작성
 					</button>
@@ -116,7 +149,7 @@
 					</div>
 					<div id="footerModal" class="modal-footer">
 						<button id="postScrap" type="button" class="btn btn-secondary" onclick="doScrap()">스크랩하기</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal"        >닫기</button>
 					</div>
 				</div>
 			</div>
@@ -215,7 +248,17 @@
 	}
 
 	function sendMessage(num) {
-		window.open('note/send?user=' + num, '쪽지 보내기', 'width=300, height=700');
+		window.open('note/send?user=' + num, '쪽지 보내기', 'width=580, height=280');
 		return false;
+	}
+	
+	function checkStar(num) {
+		var starID = 'check-star-';
+		for(var i=1; i<=5; i++) {
+			$('#' + starID + i).prop('checked', false);
+		}
+		for(var i=1; i<=num; i++) {
+			$('#' + starID + i).prop('checked', true);
+		}
 	}
 </script>

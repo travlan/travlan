@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE p.member_num = m.num AND p.region_num = l.num
 		) R1
 		ORDER BY post_num DESC
-		LIMIT #{sno}, #{eno}
+		LIMIT #{no}, #{pagePost}
 	</select>
 	
 	<select id="total" resultType="int">

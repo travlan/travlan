@@ -10,4 +10,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM comment AS c, post AS p, member AS m
 		WHERE c.member_num = #{num} AND c.post_num = p.post_num AND m.num = p.post_num
 	</select>
+	
+	<insert id="insert" parameterType="CommentDTO">
+		INSERT INTO comment(post_num, title, content, score, member_num, created_date)
+		VALUES(#{post_num}, #{title}, #{content}, #{score}, #{member_num}, NOW())
+	</insert>
+	
+	<select id="list" parameterType="Map" resultType="CommentDTO">
+		SELECT R1.*
+		FROM(
+			SELECT c.num, c.post_num, c.title, c.content, c.score, m.nickname AS member_num, c.created_date, c.updated_date
+			FROM comment AS c, member AS m
+			WHERE post_num = #{post_num} AND c.member_num = m.num
+		) R1
+		ORDER BY num DESC
+		LIMIT #{no} , #{pageComment}
+	</select>
+	
+	<select id="total" parameterType="int" resultType="int">
+		SELECT COUNT(*) 
+		FROM comment
+		WHERE post_num = #{post_num}
+	</select>
+	
+	<select id="highestRate" parameterType="int" resultType="CommentDTO">
+		SELECT c.num, c.post_num, c.title, c.content, c.score, m.nickname AS member_num, c.created_date, c.updated_date
+		FROM comment AS c, member AS m
+		WHERE post_num = #{post_num} AND c.member_num = m.num AND score &gt; 4
+		LIMIT 1
+	</select>
+	
+	<select id="lowestRate" parameterType="int" resultType="CommentDTO">
+		SELECT c.num, c.post_num, c.title, c.content, c.score, m.nickname AS member_num, c.created_date, c.updated_date
+		FROM comment AS c, member AS m
+		WHERE post_num = #{post_num} AND c.member_num = m.num AND score &lt; 2
+		LIMIT 1
+	</select>
+	
 </mapper>
