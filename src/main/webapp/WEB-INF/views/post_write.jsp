@@ -166,7 +166,7 @@
                 codes += "<option value=" + item.num + ">" + item.region + "</option>"
             	$("#region_num").html(codes);
             });
-   	});
+   		});
    });
 
    $("#thumbnail_upload").change(function() {
@@ -174,10 +174,10 @@
    	    reader.onload = function(data) {
    	    	$(".select_img img").attr("src", data.target.result).width(455);        
    	    }
-   	    fileList = this.files;
-   		reader.readAsDataURL(this.files[0]);
-   		$("#thumbnail").val(this.files[0].name);
-   	}
+   	    	fileList = this.files;
+   			reader.readAsDataURL(this.files[0]);
+   			$("#thumbnail").val(this.files[0].name);
+   		}
    });
     	
     function thumbnailUpload(){
@@ -195,7 +195,7 @@
         });
 	}
 
-	
+
 	function submitContents() {
 		editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 		

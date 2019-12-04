@@ -103,7 +103,7 @@ public class PostController {
 		no += (nowPage) * pageComment;
 		if(no > total) { no = total; }
 		
-		System.out.println("Paging : nowPage = " + nowPage + " no = " + no);
+		System.out.println("Paging : lastPage = " + lastPage + " nowPage = " + nowPage + " no = " + no);
 		
 		Map map = new HashMap();
 		map.put("post_num", num);
@@ -141,6 +141,25 @@ public class PostController {
 			return "/post_update";
 		}else {
 		return util.isLoginFilter(session, "/post_update");
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("/comment_write")
+	public String commentWrite(CommentDTO dto, HttpServletRequest request) {
+		int score = 0;
+		for(int i = 1; i < 6 ; i++) {
+			if(request.getParameter("rate" + i) != null) {
+				score = i;
+			}
+		}
+		dto.setScore(score);
+		int flag = comment_mapper.create(dto);
+		
+		if(flag > 0) {
+			return "true";
+		}else {
+			return "false";
 		}
 	}
 	
@@ -250,20 +269,21 @@ public class PostController {
 	public String post_list(HttpServletRequest request, Model model) {
 		
 		int pagePost = 9;
-		int nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
-		int total = post_mapper.total();
-		int lastPage = (total-(total%pagePost))/pagePost;
+		double nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		double total = post_mapper.total();
+		int lastPage = (int) Math.ceil(total / pagePost);
 		int no = 0;
 		
 		if(nowPage > lastPage) { nowPage = lastPage; }
 		no += (nowPage - 1) * pagePost;
-		if(no > total) { no = total; }
+		if(no > total) { no = (int)total; }
 		
 		Map map = new HashMap();
 		
 		map.put("pagePost", pagePost);
 		map.put("no", no);
-		System.out.println("Paging : nowPage = " + nowPage + " no = " + no);
+		System.out.println("total : " + total);
+		System.out.println("Paging : lastPage = " + lastPage + " nowPage = " + nowPage + " no = " + no);
 		
 		List<PostDTO> list = post_mapper.list(map);
 		

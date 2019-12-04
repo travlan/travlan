@@ -27,23 +27,24 @@
 						<h3 class="post-title font-myungjo">${post.title}</h3>
 						<div class="post-action">
 							<ul class="list-none">
-								<c:if test="${post.member_num != sessionScope.num}">
+							<c:choose>
+								<c:when test="${post.member_num != sessionScope.num}">
 									<c:choose>
 										<c:when test="${checkScrap == 0}">
 											<li data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
 										</c:when>
-										
 										<c:otherwise>
 											<li class="active" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-heart"></i></li>
 										</c:otherwise>
 									</c:choose>
                     				<li onclick="sendMessage(${author.num})"><i class="far fa-comment-alt"></i></li>
 									<li><i class="fas fa-user-alt-slash"></i></li>
-								</c:if>
+								</c:when>
 								<c:otherwise>
 									<li><i class="far fa-edit"></i></li>
 									<li><i class="far fa-trash-alt"></i></li>
 								</c:otherwise>
+							</c:choose>
 							</ul>
 						</div>
 					</div>
@@ -105,19 +106,21 @@
 
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="form-group">
-					<div class="select-star-form">
-						<h4 class="font-namyun">이 여행을 평가해주세요!</h4>
-						<input id="check-star-1" class="select-star" type="checkbox" onclick="checkStar(1)"><label for="check-star-1"></label>
-						<input id="check-star-2" class="select-star" type="checkbox" onclick="checkStar(2)"><label for="check-star-2"></label>
-						<input id="check-star-3" class="select-star" type="checkbox" onclick="checkStar(3)"><label for="check-star-3"></label>
-						<input id="check-star-4" class="select-star" type="checkbox" onclick="checkStar(4)"><label for="check-star-4"></label>
-						<input id="check-star-5" class="select-star" type="checkbox" onclick="checkStar(5)"><label for="check-star-5"></label>
-					</div>
-					<input type="text" class="form-control" id="formGroupExampleInput" placeholder="제목을 입력해주세요!">
-					<textarea class="form-control" id="exampleFormControlTextarea1" placeholder="후기를 남겨주세요!" rows="5"></textarea>
-					<button class="btn btn-dark btn-block">
-						댓글 작성
-					</button>
+					<form class="form-horizontal" id="commentform" name="commentform">
+					<input type="hidden" name="member_num" value="${sessionScope.num}">
+					<input type="hidden" name="post_num" value="${param.num}">
+						<div class="select-star-form">
+							<h4 class="font-namyun">이 여행을 평가해주세요!</h4>
+							<input id="check-star-1" class="select-star" name="rate1" type="checkbox" onclick="checkStar(1)"><label for="check-star-1"></label>
+							<input id="check-star-2" class="select-star" name="rate2" type="checkbox" onclick="checkStar(2)"><label for="check-star-2"></label>
+							<input id="check-star-3" class="select-star" name="rate3" type="checkbox" onclick="checkStar(3)"><label for="check-star-3"></label>
+							<input id="check-star-4" class="select-star" name="rate4" type="checkbox" onclick="checkStar(4)"><label for="check-star-4"></label>
+							<input id="check-star-5" class="select-star" name="rate5" type="checkbox" onclick="checkStar(5)"><label for="check-star-5"></label>
+						</div>
+						<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요!">
+						<textarea class="form-control" id="content" name="content" placeholder="후기를 남겨주세요!" rows="5"></textarea>
+						<button class="btn btn-dark btn-block" type="button" onclick="postComment();">댓글 작성</button>
+					</form>
 			    </div>
             </div>
         </div>
@@ -261,4 +264,18 @@
 			$('#' + starID + i).prop('checked', true);
 		}
 	}
+
+	function postComment(){
+		var formData = $("#commentform").serialize();
+
+		$.ajax({
+            url: "comment_write",
+            data: formData,
+            type: 'POST'
+        }).done(function (data) {
+        	alert(data);
+        	location.reload();
+        });
+	}
+	
 </script>
