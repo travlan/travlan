@@ -27,6 +27,7 @@
 						<h3 class="post-title font-myungjo">${post.title}</h3>
 						<div class="post-action">
 							<ul class="list-none">
+<<<<<<< HEAD
 							<c:choose>
 								<c:when test="${post.member_num != sessionScope.num}">
 									<c:choose>
@@ -45,6 +46,27 @@
 									<li><i class="far fa-trash-alt"></i></li>
 								</c:otherwise>
 							</c:choose>
+=======
+								<c:choose>
+									<c:when test="${post.member_num != sessionScope.num}">
+										<c:choose>
+											<c:when test="${checkScrap == 0}">
+												<li data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
+											</c:when>
+										
+											<c:otherwise>
+												<li class="active" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-heart"></i></li>
+											</c:otherwise>
+										</c:choose>
+                    					<li onclick="sendMessage(${author.num})"><i class="far fa-comment-alt"></i></li>
+										<li><i class="fas fa-user-alt-slash"></i></li>
+									</c:when>
+									<c:otherwise>
+										<li><i class="far fa-edit"></i></li>
+										<li><i class="far fa-trash-alt"></i></li>
+									</c:otherwise>
+								</c:choose>
+>>>>>>> 45061adfd69e4e390a21286342b061bfed34149b
 							</ul>
 						</div>
 					</div>
@@ -147,12 +169,12 @@
 						<div class="post-body">
 							<h3>${post.title}</h3>
 							<span>${author.nickname}</span>
-							<textarea id="memo" cols="10" rows="3" name="memo" style="resize: none;"></textarea>
+							<textarea id="memo" class="form-control" cols="10" rows="5" name="memo" style="resize: none;"></textarea>
 						</div>
 					</div>
 					<div id="footerModal" class="modal-footer">
 						<button id="postScrap" type="button" class="btn btn-secondary" onclick="doScrap()">스크랩하기</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal"        >닫기</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 			</div>
@@ -211,6 +233,7 @@
 					$('#footerModal').append(nextSButton);
 					$('#footerModal').append(nextCButton);
 					done = true;
+					location.reload();
 				} else {
 					$('#mainModal').html('');
 					$('#footerModal').html('');
@@ -239,6 +262,7 @@
 				$('#footerModal').append(nextSButton);
 				$('#footerModal').append(nextCButton);
 				done = true;
+				location.reload();
 			} else {
 				$('#mainModal').html('');
 				$('#footerModal').html('');
