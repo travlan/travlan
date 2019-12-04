@@ -6,22 +6,6 @@
  <div class="page blog-post">
     <section class="clean-block clean-post dark">
         <div class="container">
-			<style>
-				.post-action {
-					position: absolute;
-					right: 20px;
-    				bottom: 5px;
-				}
-				.post-action ul li {
-					cursor: pointer;
-					font-size: 18px;
-					color: #fff;
-					margin: 5px;
-				}
-				.post-action ul li.active {
-					color: rgb(255, 38, 139);
-				}
-			</style>
             <div class="block-content">
                 <div class="post-image" style="background-image:url(storage/photo_thumbnail/${post.thumbnail});">
 					<div class="dark-mask">
@@ -32,10 +16,10 @@
 								<c:when test="${post.member_num != sessionScope.num}">
 									<c:choose>
 										<c:when test="${checkScrap == 0}">
-											<li data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
+											<li id="heart-icon" data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
 										</c:when>
 										<c:otherwise>
-											<li class="active" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-heart"></i></li>
+											<li id="heart-icon" class="active" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-heart"></i></li>
 										</c:otherwise>
 									</c:choose>
                     				<li onclick="sendMessage(${author.num})"><i class="far fa-comment-alt"></i></li>
@@ -73,7 +57,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						내용없으니 꺼지셈
+						댓글이 없습니다!
 					</c:otherwise>
 					</c:choose>
 					</div>
@@ -92,7 +76,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						내용없으니 꺼지셈
+						댓글이 없습니다!
 					</c:otherwise>
 					</c:choose>
 					</div>
@@ -103,14 +87,14 @@
 			<c:choose>
 			<c:when test="${not empty comment}">
 			<c:forEach var="comment" items="${comment}" varStatus="i">
-				<div class="box" id="commentBox${i.count}">
-					<dic class="start-${comment.score}">
+				<div class="box p-4" id="commentBox${i.count}" style="display: none; border-bottom: 1px solid #ccc;">
+					<div class="start-${comment.score}"></div>
 					<h5 class="title"><strong>${comment.title}</strong></h5>
 					<p>${comment.content}</p>
 					<p>${comment.member_num}</p>
 				</div>
 			</c:forEach>
-				<div class="text-center font-weight-bold p-4">더 보기 💬</div>
+				<div style="cursor: pointer;" class="text-center font-weight-bold p-4" onclick="viewMoreComment()">💬 더 보기 (<span id="commentCount">0</span>/${fn:length(comment)})</div>
 			</c:when>
 			<c:otherwise>
 				<div class="text-center font-weight-bold p-4">댓글이 없습니다.</div>
@@ -120,19 +104,21 @@
 
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="form-group">
+					<form class="form-horizontal" id="commentform" name="commentform">
 					<div class="select-star-form">
 						<h4 class="font-namyun">이 여행을 평가해주세요!</h4>
-						<input id="check-star-1" class="select-star" type="checkbox" onclick="checkStar(1)"><label for="check-star-1"></label>
-						<input id="check-star-2" class="select-star" type="checkbox" onclick="checkStar(2)"><label for="check-star-2"></label>
-						<input id="check-star-3" class="select-star" type="checkbox" onclick="checkStar(3)"><label for="check-star-3"></label>
-						<input id="check-star-4" class="select-star" type="checkbox" onclick="checkStar(4)"><label for="check-star-4"></label>
-						<input id="check-star-5" class="select-star" type="checkbox" onclick="checkStar(5)"><label for="check-star-5"></label>
+						<input id="check-star-1" class="select-star" name="rate1" type="checkbox" onclick="checkStar(1)"><label for="check-star-1"></label>
+						<input id="check-star-2" class="select-star" name="rate2" type="checkbox" onclick="checkStar(2)"><label for="check-star-2"></label>
+						<input id="check-star-3" class="select-star" name="rate3" type="checkbox" onclick="checkStar(3)"><label for="check-star-3"></label>
+						<input id="check-star-4" class="select-star" name="rate4" type="checkbox" onclick="checkStar(4)"><label for="check-star-4"></label>
+						<input id="check-star-5" class="select-star" name="rate5" type="checkbox" onclick="checkStar(5)"><label for="check-star-5"></label>
 					</div>
-					<input type="text" class="form-control" id="formGroupExampleInput" placeholder="제목을 입력해주세요!">
-					<textarea class="form-control" id="exampleFormControlTextarea1" placeholder="후기를 남겨주세요!" rows="5"></textarea>
-					<button class="btn btn-dark btn-block">
-						댓글 작성
-					</button>
+					<input type="hidden" name="member_num" value="${sessionScope.num}">
+					<input type="hidden" name="post_num" value="${param.num}">
+					<input type="text" class="comment-form" id="title" name="title" placeholder="제목을 입력해주세요!">
+					<textarea class="comment-form" id="content" title="content" placeholder="후기를 남겨주세요!" rows="5"></textarea>
+					<button class="btn btn-dark btn-block" type="button" onclick="postComment();">댓글 작성</button>
+					</form>
 			    </div>
             </div>
         </div>
@@ -223,7 +209,9 @@
 					$('#footerModal').append(nextSButton);
 					$('#footerModal').append(nextCButton);
 					done = true;
-					location.reload();
+					$('#heart-icon').removeClass('active');
+					$('#heart-icon').html('<i class=\"far fa-heart\"></i>');
+					$('#heart-icon').attr('data-target', '#cancelModal');
 				} else {
 					$('#mainModal').html('');
 					$('#footerModal').html('');
@@ -252,7 +240,9 @@
 				$('#footerModal').append(nextSButton);
 				$('#footerModal').append(nextCButton);
 				done = true;
-				location.reload();
+				$('#heart-icon').addClass('active');
+				$('#heart-icon').html('<i class=\"fas fa-heart\"></i>');
+				$('#heart-icon').attr('data-target', '#exampleModal');
 			} else {
 				$('#mainModal').html('');
 				$('#footerModal').html('');
@@ -276,6 +266,33 @@
 		}
 		for(var i=1; i<=num; i++) {
 			$('#' + starID + i).prop('checked', true);
+		}
+	}
+	
+	function postComment(){
+		var formData = $("#commentform").serialize();
+		$.ajax({
+            url: "comment_write",
+            data: formData,
+            type: 'POST'
+        }).done(function (data) {
+        	alert(data);
+        	location.reload();
+        });
+	}
+	
+	var nextComment = 0;
+	var totalComment = ${fn:length(comment)};
+	function viewMoreComment() {
+		if(nextComment < totalComment) {
+			for(var i=nextComment; i < nextComment + 5; i++){
+				$('#commentBox' + i).css('display', 'block');
+			}
+			nextComment += 5;
+			if (nextComment > totalComment) {
+				nextComment = totalComment;
+			}
+			$('#commentCount').text(nextComment);
 		}
 	}
 </script>

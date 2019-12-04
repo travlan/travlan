@@ -128,6 +128,25 @@ public class PostController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("/comment_write")
+	public String commentWrite(CommentDTO dto, HttpServletRequest request) {
+		int score = 0;
+		for(int i = 1; i < 6 ; i++) {
+			if(request.getParameter("rate" + i) != null) {
+				score = i;
+			}
+		}
+		dto.setScore(score);
+		int flag = comment_mapper.create(dto);
+
+		if(flag > 0) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	
+	@ResponseBody
 	@RequestMapping("/utility/thumbnail_uploader")
 	public String thumbnailPhotoUpload(MultipartHttpServletRequest multipartRequest) {
 		

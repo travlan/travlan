@@ -92,8 +92,9 @@
 
 <script src="assets/js/infiscroll.js"></script>
 <script>
-var postWrapperId = 'card-wrapper';
-var paginatePath = '/travlan/?page=';
-var lastPage = ${lastPage};
-new InfiniteScroll(paginatePath, postWrapperId, lastPage);
+	var postWrapperId = 'card-wrapper';
+	var paginatePath = '/travlan/?page=';
+	var lastPage = ${lastPage};
+	new InfiniteScroll(paginatePath, postWrapperId, lastPage);
+
 </script>
