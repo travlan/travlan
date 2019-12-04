@@ -36,15 +36,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="highestRate" parameterType="int" resultType="CommentDTO">
 		SELECT c.num, c.post_num, c.title, c.content, c.score, m.nickname AS member_num, c.created_date, c.updated_date
 		FROM comment AS c, member AS m
-		WHERE post_num = #{post_num} AND c.member_num = m.num AND score &gt; 4
+		WHERE post_num = #{post_num} AND c.member_num = m.num AND score &gt; 3
 		LIMIT 1
 	</select>
 	
 	<select id="lowestRate" parameterType="int" resultType="CommentDTO">
 		SELECT c.num, c.post_num, c.title, c.content, c.score, m.nickname AS member_num, c.created_date, c.updated_date
 		FROM comment AS c, member AS m
-		WHERE post_num = #{post_num} AND c.member_num = m.num AND score &lt; 2
+		WHERE post_num = #{post_num} AND c.member_num = m.num AND score &lt; 3
 		LIMIT 1
 	</select>
+	
+	<insert id="create" parameterType="CommentDTO">
+		INSERT INTO comment(post_num, title, content, score, member_num, created_date)
+		VALUES(#{post_num}, #{title}, #{content}, #{score}, #{member_num}, NOW());
+	</insert>
 	
 </mapper>

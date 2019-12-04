@@ -6,7 +6,7 @@ public class CommentDTO {
 	private String member_num;
 	private String title;
 	private String content;
-	private String score;
+	private int score;
 	private String created_date;
 	private String updated_date;
 	private String thumbnail;
@@ -25,7 +25,7 @@ public class CommentDTO {
 		super();
 	}
 	
-	public CommentDTO(int num, int post_num, String member_num, String title, String content, String score,
+	public CommentDTO(int num, int post_num, String member_num, String title, String content, int score,
 			String created_date, String updated_date, String thumbnail, String posttitle, String nickname) {
 		super();
 		this.num = num;
@@ -86,10 +86,10 @@ public class CommentDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getScore() {
+	public int getScore() {
 		return score;
 	}
-	public void setScore(String score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 	public String getThumbnail() {
