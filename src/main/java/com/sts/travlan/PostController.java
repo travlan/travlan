@@ -92,25 +92,7 @@ public class PostController {
 		
 		PostDTO post = post_mapper.read(num);
 		MemberDTO author = member_mapper.getMember(post.getMember_num());
-		
-		int pageComment = 5;
-		int nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
-		int total = comment_mapper.total(num);
-		int lastPage = (total - (total % pageComment)) / pageComment;
-		int no = 0;
-		
-		if(nowPage > lastPage) { nowPage = lastPage; }
-		no += (nowPage) * pageComment;
-		if(no > total) { no = total; }
-		
-		System.out.println("Paging : lastPage = " + lastPage + " nowPage = " + nowPage + " no = " + no);
-		
-		Map map = new HashMap();
-		map.put("post_num", num);
-		map.put("pageComment", pageComment);
-		map.put("no", no);
-		
-		List<CommentDTO> commentList = comment_mapper.list(map);
+		List<CommentDTO> commentList = comment_mapper.list(num);
 		CommentDTO commenthigh = comment_mapper.highestRate(num);
 		CommentDTO commentlow = comment_mapper.lowestRate(num);
 		
@@ -127,6 +109,7 @@ public class PostController {
 		model.addAttribute("comment", commentList);
 		model.addAttribute("commenthigh", commenthigh);
 		model.addAttribute("commentlow", commentlow);
+		
 		return "/post_read";
 	}
 	
@@ -141,25 +124,6 @@ public class PostController {
 			return "/post_update";
 		}else {
 		return util.isLoginFilter(session, "/post_update");
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping("/comment_write")
-	public String commentWrite(CommentDTO dto, HttpServletRequest request) {
-		int score = 0;
-		for(int i = 1; i < 6 ; i++) {
-			if(request.getParameter("rate" + i) != null) {
-				score = i;
-			}
-		}
-		dto.setScore(score);
-		int flag = comment_mapper.create(dto);
-		
-		if(flag > 0) {
-			return "true";
-		}else {
-			return "false";
 		}
 	}
 	
@@ -269,34 +233,33 @@ public class PostController {
 	public String post_list(HttpServletRequest request, Model model) {
 		
 		int pagePost = 9;
-		double nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
-		double total = post_mapper.total();
-		int lastPage = (int) Math.ceil(total / pagePost);
+		int nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		int total = post_mapper.total();
+		int lastPage = (total-(total%pagePost))/pagePost;
 		int no = 0;
 		
 		if(nowPage > lastPage) { nowPage = lastPage; }
 		no += (nowPage - 1) * pagePost;
-		if(no > total) { no = (int)total; }
+		if(no > total) { no = total; }
 		
 		Map map = new HashMap();
 		
 		map.put("pagePost", pagePost);
 		map.put("no", no);
-		
-		System.out.println("total : " + total);
-		System.out.println("Paging : lastPage = " + lastPage + " nowPage = " + nowPage + " no = " + no);
+		System.out.println("Paging : nowPage = " + nowPage + " no = " + no);
 		
 		List<PostDTO> list = post_mapper.list(map);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("page", nowPage);
 		model.addAttribute("lastPage", lastPage);
+		request.setAttribute("comment_mapper", comment_mapper);
 		
 		return "/home";
 	}
 	
 	@GetMapping("/profile")
-	public String profile(Model model, int num) {
+	public String profile(HttpServletRequest request, Model model, int num) {
 		
 		List<PostDTO> list = post_mapper.postList(num);
 		MemberDTO author = member_mapper.getMember(num);
@@ -307,6 +270,7 @@ public class PostController {
 		model.addAttribute("num", num);
 		model.addAttribute("author", author);
 		model.addAttribute("comment", comment);
+		request.setAttribute("comment_mapper", comment_mapper);
 		
 		return "/profile";
 	}

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="util" uri="/ELFunctions"%>
 
 <div class="slide fill-half-display">
     <ul>
@@ -72,9 +73,10 @@
 									</li>
 									<li>${dto.region}</li>
 								</ul>
+								<c:set var="count" value="${util:count(dto.post_num, comment_mapper) }"/>
 								<ul class="post-info list-none">
 									<li><i class="far fa-thumbs-up"></i> 25</li>
-									<li><i class="far fa-comment"></i> 25</li>
+									<li><i class="far fa-comment"></i> ${count }</li>
 									<li><i class="far fa-heart"></i></li>
 								</ul>
 							</div>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
  <link rel="stylesheet" href="assets/css/read.css">
  <div class="page blog-post">
@@ -99,9 +100,22 @@
             </div>
 			
 			<div class="block-content mt-4" data-aos="fade-up-right">
-				<div class="text-center font-weight-bold p-4">
-					더 보기 💬
+			<c:choose>
+			<c:when test="${not empty comment}">
+			<c:forEach var="comment" items="${comment}" varStatus="i">
+				<div class="box" id="commentBox${i.count}">
+					<dic class="start-${comment.score}">
+					<h5 class="title"><strong>${comment.title}</strong></h5>
+					<p>${comment.content}</p>
+					<p>${comment.member_num}</p>
 				</div>
+			</c:forEach>
+				<div class="text-center font-weight-bold p-4">더 보기 💬</div>
+			</c:when>
+			<c:otherwise>
+				<div class="text-center font-weight-bold p-4">댓글이 없습니다.</div>
+			</c:otherwise>
+			</c:choose>
             </div>
 
 			<div class="block-content mt-4" data-aos="fade-up-right">

@@ -6,9 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.model.mapper.PostMapper">
 
 	<select id="postList" parameterType="int" resultType="PostDTO">
-		SELECT p.member_num, p.post_num, p.thumbnail, p.title, p.season, p.`type`, m.nickname, l.region
+		SELECT p.member_num, p.post_num, p.thumbnail, p.title, p.season, p.`type`, p.created_date, m.nickname, l.region
 		FROM post AS p, member AS m, location AS l
 		WHERE p.member_num = #{num} AND p.member_num = m.num AND p.region_num = l.num
+		ORDER BY p.post_num DESC
 	</select>
 	
 	<insert id="create" parameterType="PostDTO">

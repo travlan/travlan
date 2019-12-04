@@ -8,7 +8,7 @@ import com.model.post.CommentDTO;
 public interface CommentMapper {
 	
 	public List<CommentDTO> commentlist(int num);
-	public List<CommentDTO> list(Map map);
+	public List<CommentDTO> list(int num);
 	public CommentDTO highestRate(int post_num);
 	public CommentDTO lowestRate(int post_num);
 	public int total(int post_num);

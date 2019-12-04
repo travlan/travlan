@@ -1,6 +1,7 @@
 <%@ page contentType = "text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="util" uri="/ELFunctions"%>
 
 <section class="clean-block clean-post dark">
 	<div class="container">
@@ -46,6 +47,7 @@
 								<div class="post-content font-myungjo">
 									<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
 									<p><a class="immutable" href="profile?num=${dto.member_num}">${dto.nickname}</a></p>
+									<p>${dto.created_date}</p>
 									<ul class="post-type list-none">
 										<li>
 										<c:choose>
@@ -75,9 +77,10 @@
 										</li>
 										<li>${dto.region}</li>
 									</ul>
+									<c:set var="count" value="${util:count(dto.post_num, comment_mapper) }"/>
 									<ul class="post-info list-none">
 										<li><i class="far fa-thumbs-up"></i> 25</li>
-										<li><i class="far fa-comment"></i> 25</li>
+										<li><i class="far fa-comment"></i> ${count }</li>
 										<li><i class="far fa-heart"></i></li>
 									</ul>
 								</div>
@@ -105,8 +108,10 @@
 								<p><a class="immutable">${comment.nickname}</a></p>
 								<h5>${comment.title}</h5>
 								<div>${comment.content}</div>
+								<p>${comment.created_date}</p>
 							</div>
 						</div>
+						<hr>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>

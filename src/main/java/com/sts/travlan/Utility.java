@@ -4,8 +4,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpSession;
+import com.model.mapper.CommentMapper;
 
 public class Utility {
+	
+	public static int count(int post_num, CommentMapper comment_mapper) {
+		return comment_mapper.total(post_num);
+	}
 	
 	public String isLoginFilter(HttpSession session, String uri) {
 	if ((String)session.getAttribute("id") == null) {

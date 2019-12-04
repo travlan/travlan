@@ -199,6 +199,12 @@ ul.user-action li {
 	background-color: rgba(0, 0, 0, 0.8);
 	transition: opacity 0.5s ease;
 }
+.comment-form {
+	width: 100%;
+    border: none;
+    border-top: 1px solid #555;
+    padding: 20px;
+}
 #baguetteBox-overlay.visible {
 	opacity: 1;
 }

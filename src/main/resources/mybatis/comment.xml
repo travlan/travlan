@@ -16,15 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{post_num}, #{title}, #{content}, #{score}, #{member_num}, NOW())
 	</insert>
 	
-	<select id="list" parameterType="Map" resultType="CommentDTO">
-		SELECT R1.*
-		FROM(
-			SELECT c.num, c.post_num, c.title, c.content, c.score, m.nickname AS member_num, c.created_date, c.updated_date
-			FROM comment AS c, member AS m
-			WHERE post_num = #{post_num} AND c.member_num = m.num
-		) R1
-		ORDER BY num DESC
-		LIMIT #{no} , #{pageComment}
+	<select id="list" parameterType="int" resultType="CommentDTO">
+		SELECT c.num, c.post_num, c.title, c.content, c.score, m.nickname AS member_num, c.created_date, c.updated_date
+		FROM comment AS c, member AS m
+		WHERE post_num = #{post_num} AND c.member_num = m.num
 	</select>
 	
 	<select id="total" parameterType="int" resultType="int">
