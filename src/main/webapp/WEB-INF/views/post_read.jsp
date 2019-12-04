@@ -27,6 +27,29 @@
 						<h3 class="post-title font-myungjo">${post.title}</h3>
 						<div class="post-action">
 							<ul class="list-none">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+							<c:choose>
+								<c:when test="${post.member_num != sessionScope.num}">
+									<c:choose>
+										<c:when test="${checkScrap == 0}">
+											<li data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
+										</c:when>
+										<c:otherwise>
+											<li class="active" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-heart"></i></li>
+										</c:otherwise>
+									</c:choose>
+                    				<li onclick="sendMessage(${author.num})"><i class="far fa-comment-alt"></i></li>
+									<li><i class="fas fa-user-alt-slash"></i></li>
+								</c:when>
+								<c:otherwise>
+									<li><i class="far fa-edit"></i></li>
+									<li><i class="far fa-trash-alt"></i></li>
+								</c:otherwise>
+							</c:choose>
+=======
+>>>>>>> 99f23945eb060710f9c066071504deeb5919b04c
 								<c:choose>
 									<c:when test="${post.member_num != sessionScope.num}">
 										<c:choose>
@@ -46,6 +69,10 @@
 										<li><i class="far fa-trash-alt"></i></li>
 									</c:otherwise>
 								</c:choose>
+<<<<<<< HEAD
+=======
+>>>>>>> 45061adfd69e4e390a21286342b061bfed34149b
+>>>>>>> 99f23945eb060710f9c066071504deeb5919b04c
 							</ul>
 						</div>
 					</div>
