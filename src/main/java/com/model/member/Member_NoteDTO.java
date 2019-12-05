@@ -7,13 +7,13 @@ public class Member_NoteDTO {
 	private String created_date;
 	private String content;
 	private String is_read;
+	private String send_user_name;
 	
 	public Member_NoteDTO() {
 		super();
 	}
-	
-	public Member_NoteDTO(int num, int send_user, int revice_user, String created_date, String content,
-			String is_read) {
+	public Member_NoteDTO(int num, int send_user, int revice_user, String created_date, String content, String is_read,
+			String send_user_name) {
 		super();
 		this.num = num;
 		this.send_user = send_user;
@@ -21,14 +21,21 @@ public class Member_NoteDTO {
 		this.created_date = created_date;
 		this.content = content;
 		this.is_read = is_read;
+		this.send_user_name = send_user_name;
 	}
-	
 	@Override
 	public String toString() {
 		return "Member_NoteDTO [num=" + num + ", send_user=" + send_user + ", revice_user=" + revice_user
-				+ ", created_date=" + created_date + ", content=" + content + ", is_read=" + is_read + "]";
+				+ ", created_date=" + created_date + ", content=" + content + ", is_read=" + is_read
+				+ ", send_user_name=" + send_user_name + "]";
 	}
 	
+	public String getSend_user_name() {
+		return send_user_name;
+	}
+	public void setSend_user_name(String send_user_name) {
+		this.send_user_name = send_user_name;
+	}
 	public int getNum() {
 		return num;
 	}

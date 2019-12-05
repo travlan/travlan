@@ -61,7 +61,11 @@ public class PostController {
 	}
 	
 	@PostMapping("/post_write")
-	public String post(PostDTO dto, HttpServletRequest request){
+	public String post(PostDTO dto, HttpServletRequest request, HttpSession session){
+		if((Integer)session.getAttribute("num") != dto.getMember_num()) {
+			System.out.println("취약점!!");
+			return "redirect:/";
+		}
 		if (post_mapper.create(dto) > 0) {
 			return "redirect:/";
 		} else {
@@ -77,6 +81,7 @@ public class PostController {
 		if(post.getMember_num() == sessionNum) {
 			return "/post_delete";
 		}else {
+			
 		return util.isLoginFilter(session, "/post_delete");
 		}
 	}
@@ -123,13 +128,13 @@ public class PostController {
 			model.addAttribute("region", post_mapper.getLocation(post.getRegion_num()));
 			return "/post_update";
 		}else {
-		return util.isLoginFilter(session, "/post_update");
+		return "error";
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping("/comment_write")
-	public String commentWrite(CommentDTO dto, HttpServletRequest request) {
+	public String commentWrite(HttpSession session, CommentDTO dto, HttpServletRequest request) {
 		
 		int score = 0;
 		for(int i = 1; i < 6 ; i++) {
@@ -137,16 +142,17 @@ public class PostController {
 				score = i;
 			}
 		}
-		
 		dto.setScore(score);
-		int flag = comment_mapper.create(dto);
-
-		if(flag > 0) {
+		
+		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && dto.getPost_num() != (Integer) request.getAttribute("num") ) {
+			return "error!";
+		}else if(comment_mapper.create(dto) > 0) {
 			return "true";
 		}else {
 			return "false";
 		}
 	}
+
 	
 	@ResponseBody
 	@RequestMapping("/utility/thumbnail_uploader")

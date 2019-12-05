@@ -26,8 +26,8 @@
 									<li><i class="fas fa-user-alt-slash"></i></li>
 								</c:when>
 								<c:otherwise>
-									<li><i class="far fa-edit"></i></li>
-									<li><i class="far fa-trash-alt"></i></li>
+									<li onclick="location.href='./post_update?num=${param.num}'"><i class="far fa-edit"></i></li>
+									<li onclick="location.href='./post_delete?num=${param.num}'"><i class="far fa-trash-alt"></i></li>
 								</c:otherwise>
 							</c:choose>
 							</ul>

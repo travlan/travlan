@@ -11,9 +11,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getUserNotes" parameterType="int" resultType="Member_NoteDTO">
-		SELECT send_user, created_date, content, is_read
-		FROM member_note
-		WHERE revice_user = #{num}
+		SELECT N.num, N.send_user, N.created_date, N.content, N.is_read, M.nickname AS send_user_name
+		FROM member_note N, member M
+		WHERE revice_user = #{num} AND N.send_user = M.num
 	</select>
 	
 	<insert id="sendNote" parameterType="Member_NoteDTO">
@@ -26,5 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM member_note
 		WHERE revice_user = #{member_num} AND num = #{num}
 	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM member_note
+		WHERE num = #{num};
+	</delete>
 	
 </mapper>

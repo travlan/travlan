@@ -57,6 +57,21 @@ public class Member_NoteController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping("/note/delete")
+	public String delete_note(HttpSession session, int note_num, int member_num){
+		
+		if((Integer) session.getAttribute("num") == member_num) {
+			if(mapper.delete(note_num) > 0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}else {
+			return "fail";
+		}
+	}
+	
 	@GetMapping("/note/read")
 	public String readMessage(HttpSession session) {
 		
