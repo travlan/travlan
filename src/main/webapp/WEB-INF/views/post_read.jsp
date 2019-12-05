@@ -124,9 +124,6 @@
         </div>
     </section>
 </div>
-		
-<script>
-</script>
 
 <!-- Modal -->
 <c:choose>

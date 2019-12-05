@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.model.mapper.Member_NoteMapper;
 import com.model.mapper.MemberMapper;
@@ -40,21 +43,22 @@ public class Member_NoteController {
 		return util.isLoginFilter(session, "/note/send");
 	}
 	
-	@PostMapping("/note/send")
-	public String post(HttpSession session, Member_NoteDTO dto, HttpServletRequest request){
-
-		dto.setSend_user((Integer)session.getAttribute("num"));
+	@ResponseBody
+	@RequestMapping("/note/sending")
+	public String post(HttpSession session, Member_NoteDTO dto){
+		
+		dto.setSend_user( (Integer) session.getAttribute("num"));
+		System.out.println("" + dto);
 		
 		if (mapper.sendNote(dto) > 0) {
-			return "/window/close";
+			return "sucess";
 		} else {
-			return "/window/close";
+			return "fail";
 		}
 	}
 	
 	@GetMapping("/note/read")
 	public String readMessage(HttpSession session) {
-		
 		
 		return util.isLoginFilter(session, "/note/read");
 	}

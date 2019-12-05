@@ -130,12 +130,14 @@ public class PostController {
 	@ResponseBody
 	@RequestMapping("/comment_write")
 	public String commentWrite(CommentDTO dto, HttpServletRequest request) {
+		
 		int score = 0;
 		for(int i = 1; i < 6 ; i++) {
 			if(request.getParameter("rate" + i) != null) {
 				score = i;
 			}
 		}
+		
 		dto.setScore(score);
 		int flag = comment_mapper.create(dto);
 
@@ -252,14 +254,14 @@ public class PostController {
 	public String post_list(HttpSession session, HttpServletRequest request, Model model) {
 		
 		int pagePost = 9;
-		int nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
-		int total = post_mapper.total();
-		int lastPage = (total-(total%pagePost))/pagePost;
+		double nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		double total = post_mapper.total();
+		int lastPage = (int) Math.ceil(total / pagePost);
 		int no = 0;
 		
 		if(nowPage > lastPage) { nowPage = lastPage; }
 		no += (nowPage - 1) * pagePost;
-		if(no > total) { no = total; }
+		if(no > total) { no = (int)total; }
 		
 		Map map = new HashMap();
 		
