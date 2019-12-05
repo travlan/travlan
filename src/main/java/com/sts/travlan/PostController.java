@@ -249,7 +249,7 @@ public class PostController {
 	}
 	
 	@RequestMapping("/")
-	public String post_list(HttpServletRequest request, Model model) {
+	public String post_list(HttpSession session, HttpServletRequest request, Model model) {
 		
 		int pagePost = 9;
 		int nowPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
@@ -273,6 +273,7 @@ public class PostController {
 		model.addAttribute("page", nowPage);
 		model.addAttribute("lastPage", lastPage);
 		request.setAttribute("comment_mapper", comment_mapper);
+		request.setAttribute("scrap_mapper", scrap_mapper);
 		
 		return "/home";
 	}

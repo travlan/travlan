@@ -82,4 +82,48 @@ public class Member_ScrapController {
 		return return_data;
 	}
 	
+	@ResponseBody
+	@PostMapping(value = "/scrapedPost", produces = "application/json;charset=utf-8")
+	public Map<String, Object> scrapedPost(int post_num, int member_num, HttpSession session) {
+		
+		Map scrap = new HashMap();
+		scrap.put("member_num", member_num);
+		scrap.put("post_num", post_num);
+		
+		Member_ScrapDTO dto = mapper.scrapedPost(scrap);
+		
+		Map<String, Object> return_data = new HashMap<String, Object>();
+		
+		if(dto != null) {
+			return_data.put("flag", "Y");
+			return_data.put("dto", dto);
+		} else {
+			return_data.put("flag", "N");
+		}
+		
+		return return_data;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/updateScrap", produces = "application/json;charset=utf-8")
+	public Map<String, Object> updateScrap(int post_num, String memo, HttpSession session) {
+		
+		Map map = new HashMap();
+		map.put("member_num", (Integer)session.getAttribute("num"));
+		map.put("post_num", post_num);
+		map.put("memo", memo);
+		
+		int isUpdate = mapper.updateScrap(map);
+		
+		Map<String, Object> return_data = new HashMap<String, Object>();
+		
+		if(isUpdate > 0) {
+			return_data.put("flag", "Y");
+		} else {
+			return_data.put("flag", "N");
+		}
+		
+		return return_data;
+	}
+	
 }

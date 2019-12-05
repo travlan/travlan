@@ -87,7 +87,7 @@
 			<c:choose>
 			<c:when test="${not empty comment}">
 			<c:forEach var="comment" items="${comment}" varStatus="i">
-				<div class="box p-4" id="commentBox${i.count}" style="display: none; border-bottom: 1px solid #ccc;">
+				<div class="box p-4" id="commentBox${i.count}" style="display: none; border-bottom: 1px solid #ccc; transition: all 1s; opacity: 0;">
 					<div class="start-${comment.score}"></div>
 					<h5 class="title"><strong>${comment.title}</strong></h5>
 					<p>${comment.content}</p>
@@ -97,7 +97,7 @@
 				<div style="cursor: pointer;" class="text-center font-weight-bold p-4" onclick="viewMoreComment()">💬 더 보기 (<span id="commentCount">0</span>/${fn:length(comment)})</div>
 			</c:when>
 			<c:otherwise>
-				<div class="text-center font-weight-bold p-4">댓글이 없습니다.</div>
+				<div class="text-center font-weight-bold p-4">💬 작성된 댓글이 없습니다!</div>
 			</c:otherwise>
 			</c:choose>
             </div>
@@ -191,37 +191,30 @@
 	var nextCButton = '<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">닫기</button>';
 	
 	function doScrap() {
-		if($('#memo').val() == "") {
-			$('#memo').focus();
-			alert("메모를 입력하세요");
-			return;
-		}
-		else {
-			$.ajax({
-				url: "scrap",
-				data: { 'post_num' : ${post.post_num}, 'memo' : $('#memo').val() },
-				type: "post",
-			}).done(function (data) {
-				if(data.flag == 'Y') {
-					$('#mainModal').html('');
-					$('#footerModal').html('');
-					$('#mainModal').append(nextSContext);
-					$('#footerModal').append(nextSButton);
-					$('#footerModal').append(nextCButton);
-					done = true;
-					$('#heart-icon').removeClass('active');
-					$('#heart-icon').html('<i class=\"far fa-heart\"></i>');
-					$('#heart-icon').attr('data-target', '#cancelModal');
-				} else {
-					$('#mainModal').html('');
-					$('#footerModal').html('');
-					$('#mainModal').append(nextFContext);
-					$('#footerModal').append(nextSButton);
-					$('#footerModal').append(nextCButton);
-					done = true;
-				}
-			});
-		}
+		$.ajax({
+			url: "scrap",
+			data: { 'post_num' : ${post.post_num}, 'memo' : $('#memo').val() },
+			type: "post",
+		}).done(function (data) {
+			if(data.flag == 'Y') {
+				$('#mainModal').html('');
+				$('#footerModal').html('');
+				$('#mainModal').append(nextSContext);
+				$('#footerModal').append(nextSButton);
+				$('#footerModal').append(nextCButton);
+				done = true;
+				$('#heart-icon').addClass('active');
+				$('#heart-icon').html('<i class=\"fas fa-heart\"></i>');
+				$('#heart-icon').attr('data-target', '#cancelModal');
+			} else {
+				$('#mainModal').html('');
+				$('#footerModal').html('');
+				$('#mainModal').append(nextFContext);
+				$('#footerModal').append(nextSButton);
+				$('#footerModal').append(nextCButton);
+				done = true;
+			}
+		});
 	}
 	
 	var sucessContext = '<div>스크랩 취소 성공</div>';
@@ -240,8 +233,8 @@
 				$('#footerModal').append(nextSButton);
 				$('#footerModal').append(nextCButton);
 				done = true;
-				$('#heart-icon').addClass('active');
-				$('#heart-icon').html('<i class=\"fas fa-heart\"></i>');
+				$('#heart-icon').removeClass('active');
+				$('#heart-icon').html('<i class=\"far fa-heart\"></i>');
 				$('#heart-icon').attr('data-target', '#exampleModal');
 			} else {
 				$('#mainModal').html('');
@@ -287,6 +280,7 @@
 		if(nextComment < totalComment) {
 			for(var i=nextComment; i < nextComment + 5; i++){
 				$('#commentBox' + i).css('display', 'block');
+				$('#commentBox' + i).css('opacity', '1');
 			}
 			nextComment += 5;
 			if (nextComment > totalComment) {

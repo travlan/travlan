@@ -235,27 +235,6 @@
 </section>
 
 <script>
-	$(document).ready(function() {
-		var type = '${idto.type}';
-		var typeArr = type.split('');
-
-		if (typeArr[0] == 'A') {
-			$("#type").append("<span class='type'>빡빡</span>");
-		} else {
-			$("#type").append("<span class='type'>느긋</span>");
-		}
-		if (typeArr[1] == 'A') {
-			$("#type").append("<span class='type'>주간</span>");
-		} else {
-			$("#type").append("<span class='type'>야간</span>");
-		}
-		if (typeArr[2] == 'A') {
-			$("#type").append("<span class='type'>활기</span>");
-		} else {
-			$("#type").append("<span class='type'>조용</span>");
-		}
-	});
-
 	function showInfobox() {
 		$('#infobox').css('display', 'block');
 		$('#infobox_btn').css('visibility', 'hidden');

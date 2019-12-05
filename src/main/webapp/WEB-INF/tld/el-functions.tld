@@ -19,5 +19,16 @@
             int count(int, com.model.mapper.CommentMapper) 
         </function-signature> 
     </function> 
+	
+	<function>  
+        <description>스크랩 하기</description> 
+        <name>checkScrap</name>
+        <function-class>
+            com.sts.travlan.Utility
+        </function-class> 
+        <function-signature>
+            int checkScrap(int, int, com.model.mapper.Member_ScrapMapper) 
+        </function-signature> 
+    </function> 
      
 </taglib>

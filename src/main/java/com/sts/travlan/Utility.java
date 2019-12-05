@@ -1,12 +1,24 @@
 package com.sts.travlan;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpSession;
 import com.model.mapper.CommentMapper;
+import com.model.mapper.Member_ScrapMapper;
 
 public class Utility {
+	
+	public static int checkScrap(int member_num, int post_num, Member_ScrapMapper scrap_mapper) {
+		Map map = new HashMap();
+		map.put("member_num", member_num);
+		map.put("post_num", post_num);
+		
+		return scrap_mapper.checkScrap(map);
+	}
 	
 	public static int count(int post_num, CommentMapper comment_mapper) {
 		return comment_mapper.total(post_num);

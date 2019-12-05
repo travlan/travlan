@@ -41,11 +41,11 @@
 					<div class="col-lg-4" data-aos="fade-up-right">
 						<div class="block-content mb-4">
 							<a href="post_read?num=${dto.post_num}">
-								<div class="post-thumb fill-image" style="width: 100%; height: 300px; background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
+								<div class="post-list-thumb fill-image" style="background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
 							</a>
 							<div class="p-4">
 								<div class="post-content font-myungjo">
-									<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
+									<h4 class="post-list-title"><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
 									<p><a class="immutable" href="profile?num=${dto.member_num}">${dto.nickname}</a></p>
 									<p>${dto.created_date}</p>
 									<ul class="post-type list-none">

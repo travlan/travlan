@@ -38,11 +38,11 @@
 				<div class="col-lg-4" data-aos="fade-up-right">
 					<div class="block-content mb-4">
 						<a href="post_read?num=${dto.post_num}">
-							<div class="post-thumb fill-image" style="width: 100%; height: 300px; background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
+							<div class="post-list-thumb fill-image" style="background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
 						</a>
 						<div class="p-4">
 							<div class="post-content font-myungjo">
-								<h4><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
+								<h4 class="post-list-title"><a class="immutable" href="post_read?num=${dto.post_num}">${dto.title}</a></h4>
 								<p><a class="immutable" href="profile?num=${dto.member_num}">${dto.nickname}</a></p>
 								<ul class="post-type list-none">
 									<li>
@@ -74,10 +74,20 @@
 									<li>${dto.region}</li>
 								</ul>
 								<c:set var="count" value="${util:count(dto.post_num, comment_mapper) }"/>
+								<c:set var="checkScrap" value="${util:checkScrap(sessionScope.num, dto.post_num, scrap_mapper)}"/>
 								<ul class="post-info list-none">
-									<li><i class="far fa-thumbs-up"></i> 25</li>
+									<li><i class="far fa-star"></i> 25</li>
 									<li><i class="far fa-comment"></i> ${count }</li>
-									<li><i class="far fa-heart"></i></li>
+									<c:if test="${dto.member_num != sessionScope.num}">
+										<c:choose>
+											<c:when test="${checkScrap == 0}">
+												<li onclick="doScrap()"><i class="far fa-heart"></i></li>
+											</c:when>
+											<c:otherwise>
+												<li id="heart-icon" class="active" onclick="cancelScrap()"><i class="fas fa-heart"></i></li>
+											</c:otherwise>
+										</c:choose>
+									</c:if>
 								</ul>
 							</div>
 						</div>
@@ -96,5 +106,4 @@
 	var paginatePath = '/travlan/?page=';
 	var lastPage = ${lastPage};
 	new InfiniteScroll(paginatePath, postWrapperId, lastPage);
-
 </script>

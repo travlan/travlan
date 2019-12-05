@@ -195,7 +195,6 @@
         });
 	}
 
-
 	function submitContents() {
 		editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 		
