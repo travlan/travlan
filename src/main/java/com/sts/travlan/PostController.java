@@ -144,10 +144,31 @@ public class PostController {
 			}
 		}
 		dto.setScore(score);
-		
+		System.out.println(dto);
 		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && dto.getPost_num() != (Integer) request.getAttribute("num") ) {
 			return "error!";
 		}else if(comment_mapper.create(dto) > 0) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("/comment_update")
+	public String commentUpdate(HttpSession session, CommentDTO dto, HttpServletRequest request) {
+		
+		int score = 0;
+		for(int i = 1; i < 6 ; i++) {
+			if(request.getParameter("rate" + i) != null) {
+				score = i;
+			}
+		}
+		dto.setScore(score);
+		System.out.println("Update : " + dto);
+		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && dto.getPost_num() != (Integer) request.getAttribute("num") ) {
+			return "error!";
+		}else if(comment_mapper.update(dto) > 0) {
 			return "true";
 		}else {
 			return "false";

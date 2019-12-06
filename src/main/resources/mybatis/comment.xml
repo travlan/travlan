@@ -58,4 +58,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE num = #{num}
 	</delete>
 	
+	<update id="update" parameterType="CommentDTO">
+		UPDATE comment
+		<set>
+			title = #{title}, content = #{content}, score = #{score}, updated_date = NOW()
+		</set>
+		WHERE num = #{num} AND post_num = #{post_num}
+	</update>
+	
 </mapper>
