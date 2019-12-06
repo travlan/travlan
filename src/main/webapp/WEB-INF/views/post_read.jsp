@@ -91,7 +91,11 @@
 					<div class="start-${comment.score}"></div>
 					<h5 class="title"><strong>${comment.title}</strong></h5>
 					<p>${comment.content}</p>
-					<p>${comment.member_num}</p>
+					<p>${comment.nickname}</p>
+					<c:if test="${sessionScope.num == comment.member_num}">
+					<button class="btn btn-dark" type="button" onclick="postUpdate(${comment.num});">수정</button>
+					<button class="btn btn-dark" type="button" onclick="deleteComment(${comment.num});">삭제</button>
+					</c:if>
 				</div>
 			</c:forEach>
 				<div style="cursor: pointer;" class="text-center font-weight-bold p-4" onclick="viewMoreComment()">💬 더 보기 (<span id="commentCount">0</span>/${fn:length(comment)})</div>
@@ -102,6 +106,7 @@
 			</c:choose>
             </div>
 
+			<c:if test="${sessionScope.num != null || sessionScope.num == post.member_num}">
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="form-group">
 					<form class="form-horizontal" id="commentform" name="commentform">
@@ -116,11 +121,12 @@
 					<input type="hidden" name="member_num" value="${sessionScope.num}">
 					<input type="hidden" name="post_num" value="${param.num}">
 					<input type="text" class="comment-form" id="title" name="title" placeholder="제목을 입력해주세요!">
-					<textarea class="comment-form" id="content" title="content" placeholder="후기를 남겨주세요!" rows="5"></textarea>
+					<textarea class="comment-form" id="content" name="content" placeholder="후기를 남겨주세요!" rows="5"></textarea>
 					<button class="btn btn-dark btn-block" type="button" onclick="postComment();">댓글 작성</button>
 					</form>
 			    </div>
             </div>
+            </c:if>
         </div>
     </section>
 </div>
@@ -186,7 +192,7 @@
 	var nextFContext = '<div>스크랩 실패</div>';
 	var nextSButton = '<button class=\"btn btn-secondary\" type=\"button\" onclick=\"location.href=\'scraplist\'\">스크랩 목록 가기</button>';
 	var nextCButton = '<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">닫기</button>';
-	
+
 	function doScrap() {
 		$.ajax({
 			url: "scrap",
@@ -270,9 +276,22 @@
         	location.reload();
         });
 	}
+
+	function deleteComment(num){
+		$.ajax({
+            url: "comment_delete",
+            data: {"num" : num},
+            type: 'POST'
+        }).done(function (data) {
+        	alert(data);
+        	location.reload();
+        });
+	}
+	
 	
 	var nextComment = 0;
 	var totalComment = ${fn:length(comment)};
+	
 	function viewMoreComment() {
 		if(nextComment < totalComment) {
 			for(var i=nextComment; i < nextComment + 5; i++){

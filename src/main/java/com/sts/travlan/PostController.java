@@ -97,10 +97,11 @@ public class PostController {
 		
 		PostDTO post = post_mapper.read(num);
 		MemberDTO author = member_mapper.getMember(post.getMember_num());
+		
 		List<CommentDTO> commentList = comment_mapper.list(num);
 		CommentDTO commenthigh = comment_mapper.highestRate(num);
 		CommentDTO commentlow = comment_mapper.lowestRate(num);
-		
+		System.out.println(commentList);
 		Map scrapMap = new HashMap();
 		
 		scrapMap.put("member_num", (Integer)session.getAttribute("num"));
@@ -147,6 +148,21 @@ public class PostController {
 		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && dto.getPost_num() != (Integer) request.getAttribute("num") ) {
 			return "error!";
 		}else if(comment_mapper.create(dto) > 0) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("/comment_delete")
+	public String commentDelete(HttpSession session, int num) {
+		Map map = new HashMap();
+		map.put("num", num);
+		map.put("member_num", (Integer)session.getAttribute("num"));
+		
+		if(comment_mapper.deleteVerifing(map) > 0) {
+			comment_mapper.delete(num);
 			return "true";
 		}else {
 			return "false";

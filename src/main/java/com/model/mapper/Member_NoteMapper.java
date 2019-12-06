@@ -11,4 +11,6 @@ public interface Member_NoteMapper{
 	public int sendNote(Member_NoteDTO dto);
 	public int delete(int num);
 	public Member_NoteDTO readNote(int num);
+	public int readCheck(int num);
+	public int unread(int num);
 }

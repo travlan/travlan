@@ -73,9 +73,17 @@ public class Member_NoteController {
 	}
 	
 	@GetMapping("/note/read")
-	public String readMessage(HttpSession session) {
+	public String readMessage(HttpSession session, Model model, int note_num) {
 		
-		return util.isLoginFilter(session, "/note/read");
+		Member_NoteDTO dto = mapper.readNote(note_num);
+		
+		if(dto.getRevice_user() != (Integer) session.getAttribute("num")) {
+			return "redirect:";
+		}else {
+			mapper.readCheck(note_num);
+			model.addAttribute("dto", dto);
+			return util.isLoginFilter(session, "/note/read");
+		}
 	}
 	
 	@GetMapping("/note")
