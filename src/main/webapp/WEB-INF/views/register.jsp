@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="login-dark">
-    <form method="post" action="register" onsubmit="return required(this)">
+    <form method="post" action="register">
 		<a class="font-classic text-title immutable" href="./">Travlan</a>
 		<h2 class="sr-only">Login Form</h2>
 		<div class="illustration">

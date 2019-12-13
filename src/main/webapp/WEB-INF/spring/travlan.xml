@@ -48,9 +48,14 @@
         <put-attribute name="body" value="/WEB-INF/views/login.jsp" /> 
     </definition>
     
+    <definition name="/naver_register" extends="single"> 
+        <put-attribute name="title" value="Login" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/callback.jsp" /> 
+    </definition>
+    
     <definition name="/register" extends="single"> 
         <put-attribute name="title" value="Register" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/register.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/naver_register.jsp" /> 
     </definition>
 	
 	<definition name="/forgot" extends="single"> 
@@ -105,7 +110,12 @@
    
     <definition name="/note/read" extends="window"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/window/read.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/window/close.jsp" /> 
+    </definition>
+    
+    <definition name="/report/receive" extends="window"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/window/report.jsp" /> 
     </definition>
     
 </tiles-definitions>

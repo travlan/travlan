@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpSession;
 import com.model.mapper.CommentMapper;
 import com.model.mapper.Member_ScrapMapper;
+import com.model.mapper.PostMapper;
 
 public class Utility {
 	
@@ -18,6 +19,14 @@ public class Utility {
 		map.put("post_num", post_num);
 		
 		return scrap_mapper.checkScrap(map);
+	}
+	
+	public static int mcount(int member_num, CommentMapper comment_mapper) {
+		return comment_mapper.mycomment(member_num);
+	}
+	
+	public static int pcount(int member_num, PostMapper post_mapper) {
+		return post_mapper.mypost(member_num);
 	}
 	
 	public static int count(int post_num, CommentMapper comment_mapper) {

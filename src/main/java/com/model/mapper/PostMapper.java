@@ -16,5 +16,6 @@ public interface PostMapper {
 	public int delete(int num);
 	public String getLocation(int num);
 	public List<PostDTO> list(Map map);
+	public int mypost(int member_num);
 	public int total();
 }

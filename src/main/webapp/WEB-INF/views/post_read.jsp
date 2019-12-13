@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
- <link rel="stylesheet" href="assets/css/read.css">
  <div class="page blog-post">
     <section class="clean-block clean-post dark">
         <div class="container">
@@ -14,16 +13,18 @@
 							<ul class="list-none">
 							<c:choose>
 								<c:when test="${post.member_num != sessionScope.num}">
-									<c:choose>
-										<c:when test="${checkScrap == 0}">
-											<li id="heart-icon" data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
-										</c:when>
-										<c:otherwise>
-											<li id="heart-icon" class="active" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-heart"></i></li>
-										</c:otherwise>
-									</c:choose>
-                    				<li onclick="sendMessage(${author.num})"><i class="far fa-comment-alt"></i></li>
-									<li><i class="fas fa-user-alt-slash"></i></li>
+									<c:if test="${not empty sessionScope.id }">
+										<c:choose>
+											<c:when test="${checkScrap == 0}">
+												<li id="heart-icon" data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
+											</c:when>
+											<c:otherwise>
+												<li id="heart-icon" class="active" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-heart"></i></li>
+											</c:otherwise>
+										</c:choose>
+										<li onclick="sendMessage(${author.num})"><i class="far fa-comment-alt"></i></li>
+										<li onclick="reporting(${author.num})"><i class="fas fa-user-alt-slash"></i></li>
+									</c:if>
 								</c:when>
 								<c:otherwise>
 									<li onclick="location.href='./post_update?num=${param.num}'"><i class="far fa-edit"></i></li>
@@ -144,8 +145,7 @@
 </div>
 
 <!-- Modal -->
-<c:choose>
-	<c:when test="${checkScrap == 0}">
+
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -155,7 +155,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div id="mainModal" class="modal-body">
+					<div id="examplemainModal" class="modal-body">
 						<p><img src="storage/photo_thumbnail/${post.thumbnail}" class="post-image"></p>
 						<div class="post-body">
 							<h3>${post.title}</h3>
@@ -163,16 +163,14 @@
 							<textarea id="memo" class="form-control" cols="10" rows="5" name="memo" style="resize: none;"></textarea>
 						</div>
 					</div>
-					<div id="footerModal" class="modal-footer">
+					<div id="examplefooterModal" class="modal-footer">
 						<button id="postScrap" type="button" class="btn btn-secondary" onclick="doScrap()">스크랩하기</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	</c:when>
-	
-	<c:otherwise>
+
 		<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -182,18 +180,17 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div id="mainModal" class="modal-body">
+					<div id="cancelmainModal" class="modal-body">
 						<span>스크랩을 취소하시겠습니까?</span>
 					</div>
-					<div id="footerModal" class="modal-footer">
+					<div id="cancelfooterModal" class="modal-footer">
 						<button id="postScrap" type="button" class="btn btn-secondary" onclick="cancelScrap()">확인</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	</c:otherwise>
-</c:choose>
+
 	
 <script>
 	$('#exampleModal').on('shown.bs.modal', function () {
@@ -212,21 +209,17 @@
 			type: "post",
 		}).done(function (data) {
 			if(data.flag == 'Y') {
-				$('#mainModal').html('');
-				$('#footerModal').html('');
-				$('#mainModal').append(nextSContext);
-				$('#footerModal').append(nextSButton);
-				$('#footerModal').append(nextCButton);
+				$('#exampleModal').modal('hide');
 				done = true;
 				$('#heart-icon').addClass('active');
 				$('#heart-icon').html('<i class=\"fas fa-heart\"></i>');
 				$('#heart-icon').attr('data-target', '#cancelModal');
 			} else {
-				$('#mainModal').html('');
-				$('#footerModal').html('');
-				$('#mainModal').append(nextFContext);
-				$('#footerModal').append(nextSButton);
-				$('#footerModal').append(nextCButton);
+				$('#examplemainModal').html('');
+				$('#examplefooterModal').html('');
+				$('#examplemainModal').append(nextFContext);
+				$('#examplefooterModal').append(nextSButton);
+				$('#examplefooterModal').append(nextCButton);
 				done = true;
 			}
 		});
@@ -242,21 +235,17 @@
 			type: "post",
 		}).done(function (data) {
 			if(data.flag == 'Y') {
-				$('#mainModal').html('');
-				$('#footerModal').html('');
-				$('#mainModal').append(sucessContext);
-				$('#footerModal').append(nextSButton);
-				$('#footerModal').append(nextCButton);
-				done = true;
+				$('#cancelModal').modal('hide');
 				$('#heart-icon').removeClass('active');
 				$('#heart-icon').html('<i class=\"far fa-heart\"></i>');
 				$('#heart-icon').attr('data-target', '#exampleModal');
+				done = true;
 			} else {
-				$('#mainModal').html('');
-				$('#footerModal').html('');
-				$('#mainModal').append(failContext);
-				$('#footerModal').append(nextSButton);
-				$('#footerModal').append(nextCButton);
+				$('#cancelmainModal').html('');
+				$('#cancelfooterModal').html('');
+				$('#cancelmainModal').append(failContext);
+				$('#cancelfooterModal').append(nextSButton);
+				$('#cancelfooterModal').append(nextCButton);
 				done = true;
 			}
 		});
@@ -352,5 +341,10 @@
 			}
 			$('#commentCount').text(nextComment - 1);
 		}
+	}
+	
+	function reporting(num) {
+		window.open('report/receive?user=' + num, '신고하기', 'width=580, height=280');
+		return false;
 	}
 </script>

@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.MemberMapper">
 	
+	<select id="getId" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM member
+		WHERE id = #{id}
+	</select>
+	
 	<update id="additionalchange" parameterType="Member_InfoDTO">
 		UPDATE member_info
 		<set>
