@@ -7,6 +7,7 @@ import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
 
 public interface MemberMapper {
+	public int getId(String id);
 	public int additionalchange(Member_InfoDTO dto);
 	public int nicknamechange(Map map);
 	public int create(MemberDTO dto);

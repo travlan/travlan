@@ -19,6 +19,28 @@
             int count(int, com.model.mapper.CommentMapper) 
         </function-signature> 
     </function> 
+    
+    <function>  
+        <description>게시글수 보여주기</description> 
+        <name>pcount</name>
+        <function-class>
+            com.sts.travlan.Utility
+        </function-class> 
+        <function-signature>
+            int pcount(int, com.model.mapper.PostMapper) 
+        </function-signature> 
+    </function>
+    
+    <function>  
+        <description>내 댓글수 보여주기</description> 
+        <name>mcount</name>
+        <function-class>
+            com.sts.travlan.Utility
+        </function-class> 
+        <function-signature>
+            int mcount(int, com.model.mapper.CommentMapper) 
+        </function-signature> 
+    </function>
 	
 	<function>  
         <description>스크랩 하기</description> 

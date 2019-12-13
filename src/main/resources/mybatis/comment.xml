@@ -23,6 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE post_num = #{post_num} AND c.member_num = m.num
 	</select>
 	
+	<select id="mycomment" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM comment
+		WHERE member_num = #{member_num}
+	</select>
+	
 	<select id="total" parameterType="int" resultType="int">
 		SELECT COUNT(*) 
 		FROM comment

@@ -46,22 +46,22 @@
 								<p><a class="immutable" href="profile?num=${dto.member_num}">${dto.nickname}</a></p>
 								<ul class="post-type list-none">
 									<li>
-									<c:choose>
-										<c:when test="${fn:substring(dto.type, 0, 1) == 'A'}">빡빡</c:when>
-										<c:when test="${fn:substring(dto.type, 0, 1) == 'B'}">느긋</c:when>
-									</c:choose>
+										<c:choose>
+											<c:when test="${fn:substring(dto.type, 0, 1) == 'A'}">빡빡</c:when>
+											<c:when test="${fn:substring(dto.type, 0, 1) == 'B'}">느긋</c:when>
+										</c:choose>
 									</li>
 									<li>
-									<c:choose>
-										<c:when test="${fn:substring(dto.type, 1, 2) == 'A'}">주간</c:when>
-										<c:when test="${fn:substring(dto.type, 1, 2) == 'B'}">야간</c:when>
-									</c:choose>
+										<c:choose>
+											<c:when test="${fn:substring(dto.type, 1, 2) == 'A'}">주간</c:when>
+											<c:when test="${fn:substring(dto.type, 1, 2) == 'B'}">야간</c:when>
+										</c:choose>
 									</li>
 									<li>
-									<c:choose>
-										<c:when test="${fn:substring(dto.type, 2, 3) == 'A'}">활기</c:when>
-										<c:when test="${fn:substring(dto.type, 2, 3) == 'B'}">조용</c:when>
-									</c:choose>
+										<c:choose>
+											<c:when test="${fn:substring(dto.type, 2, 3) == 'A'}">활기</c:when>
+											<c:when test="${fn:substring(dto.type, 2, 3) == 'B'}">조용</c:when>
+										</c:choose>
 									</li>
 									<li>
 									<c:choose>
@@ -78,15 +78,17 @@
 								<ul class="post-info list-none">
 									<li><i class="far fa-star"></i> 25</li>
 									<li><i class="far fa-comment"></i> ${count }</li>
-									<c:if test="${dto.member_num != sessionScope.num}">
-										<c:choose>
-											<c:when test="${checkScrap == 0}">
-												<li onclick="doScrap()"><i class="far fa-heart"></i></li>
-											</c:when>
-											<c:otherwise>
-												<li id="heart-icon" class="active" onclick="cancelScrap()"><i class="fas fa-heart"></i></li>
-											</c:otherwise>
-										</c:choose>
+									<c:if test="${not empty sessionScope.id}">
+										<c:if test="${dto.member_num != sessionScope.num}">
+											<c:choose>
+												<c:when test="${checkScrap == 0}">
+													<li id="heart-icon-${dto.post_num}" onclick="doScrap(${dto.post_num})"><i class="far fa-heart"></i></li>
+												</c:when>
+												<c:otherwise>
+													<li id="heart-icon-${dto.post_num}" class="active" onclick="cancelScrap(${dto.post_num})"><i class="fas fa-heart"></i></li>
+												</c:otherwise>
+											</c:choose>
+										</c:if>
 									</c:if>
 								</ul>
 							</div>
@@ -106,4 +108,49 @@
 	var paginatePath = '/travlan/?page=';
 	var lastPage = ${lastPage};
 	new InfiniteScroll(paginatePath, postWrapperId, lastPage);
+</script>
+<script>
+	function doScrap(post_num) {
+		$.ajax({
+			url: "scrap",
+			data: { 'post_num' : post_num },
+			type: "post",
+		}).done(function (data) {
+			if(data.flag == 'Y') {
+				$('#heart-icon-' + post_num).addClass('active');
+				$('#heart-icon-' + post_num).html('<i class=\"fas fa-heart\"></i>');
+				$('#heart-icon-' + post_num).removeAttr('onclick');
+				$('#heart-icon-' + post_num).attr('onclick', 'cancelScrap(' + post_num + ')');
+				done = true;
+			} else {
+				$('#heart-icon-' + post_num).addClass('active');
+				$('#heart-icon-' + post_num).html('<i class=\"fas fa-heart\"></i>');
+				$('#heart-icon-' + post_num).removeAttr('onclick');
+				$('#heart-icon-' + post_num).attr('onclick', 'cancelScrap(' + post_num + ')');
+				done = true;
+			}
+		});
+	}
+	
+	function cancelScrap(post_num) {
+		$.ajax({
+			url: "deleteScrap",
+			data: { 'post_num' : post_num },
+			type: "post",
+		}).done(function (data) {
+			if(data.flag == 'Y') {
+				$('#heart-icon-' + post_num).removeClass('active');
+				$('#heart-icon-' + post_num).html('<i class=\"far fa-heart\"></i>');
+				$('#heart-icon-' + post_num).removeAttr('onclick');
+				$('#heart-icon-' + post_num).attr('onclick', 'doScrap(' + post_num + ')');
+				done = true;
+			} else {
+				$('#heart-icon-' + post_num).removeClass('active');
+				$('#heart-icon-' + post_num).html('<i class=\"far fa-heart\"></i>');
+				$('#heart-icon-' + post_num).removeAttr('onclick');
+				$('#heart-icon-' + post_num).attr('onclick', 'doScrap(' + post_num + ')');
+				done = true;
+			}
+		});
+	}
 </script>

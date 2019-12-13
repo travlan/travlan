@@ -15,7 +15,7 @@
 			<c:otherwise>
 				<div id="card-wrapper" class="row mt-4">
 					<c:forEach var="dto" items="${list}">
-						<div class="col-lg-4" data-aos="fade-up-right">
+						<div id="scrapcard-${dto.post_num }" class="col-lg-4" data-aos="fade-up-right">
 							<div class="block-content mb-4">
 								<a href="post_read?num=${dto.post_num}">
 									<div class="post-thumb fill-image" style="width: 100%; height: 300px; background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
@@ -26,6 +26,7 @@
 										<p><a class="immutable" href="profile?num=${dto.member_num}">${dto.nickname}</a></p>
 										<p id="scrapmemo-${dto.post_num}">${dto.memo}</p>
 										<button class="btn btn-light" id="scrapmemo_btn-${dto.post_num}" type="button" onclick="scrapedPost(${dto.post_num})">수정</button>
+										<button class="btn btn-light" id="cancel scrap_btn-${dto.post_num} " type="button" onclick="deleteScrap(${dto.post_num})">삭제</button>
 										<textarea id="memo-${dto.post_num}" class="form-control" cols="10" rows="5" name="memo" style="resize: none; display: none;">${dto.memo }</textarea>
 										<button style="display:none;" class="btn btn-light" id="scrapmemoSave_btn-${dto.post_num}" type="button" onclick="updateScrap(${dto.post_num})">저장</button>
 										<button style="display:none;" class="btn btn-light" id="scrapmemoCancel_btn-${dto.post_num}" type="button" onclick="cancelScrap(${dto.post_num})">취소</button>
@@ -44,7 +45,7 @@
 	function scrapedPost(post_num) {
 		$.ajax({
 			url: "scrapedPost",
-			data: { 'post_num' : post_num },
+			data: { 'post_num' : post_num, 'member_num' : ${sessionScope.num} },
 			type: "post",
 		}).done(function (data) {
 			if(data.flag == 'Y') {
@@ -97,5 +98,21 @@
 		$('#memo-' + post_num).css('display', 'none');
 		$('#scrapmemoSave_btn-' + post_num).css('display', 'none');
 		$('#scrapmemoCancel_btn-' + post_num).css('display', 'none');
+	}
+	
+	function deleteScrap(post_num) {
+		$.ajax({
+			url: "deleteScrap",
+			data: { 'post_num' : post_num },
+			type: "post",
+		}).done(function (data) {
+			if(data.flag == 'Y') {
+				$('#scrapcard-' + post_num).remove();
+				done = true;
+			} else {
+				$('#scrapcard-' + post_num).remove();
+				done = true;
+			}
+		});
 	}
 </script>

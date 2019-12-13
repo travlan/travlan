@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT s.memo, s.created_date, m.nickname, p.thumbnail, p.title, p.post_num
 		FROM member_scrap AS s, member AS m, post AS p
 		WHERE s.member_num = #{member_num} AND p.member_num = m.num AND s.post_num = p.post_num
-		ORDER BY s.created_date DESC
+		ORDER BY s.num DESC
 	</select>
 	
 	<insert id="scrap" parameterType="Member_ScrapDTO">

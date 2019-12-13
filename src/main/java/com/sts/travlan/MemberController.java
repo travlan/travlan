@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.model.mapper.MemberMapper;
 import com.model.member.MemberDTO;
@@ -31,12 +32,12 @@ public class MemberController {
 	
 	@GetMapping("/login")
 	public String login() {
-
+		
 		return "/login";
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model) throws NoSuchAlgorithmException {
+	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model, RedirectAttributes redi) throws NoSuchAlgorithmException {
 		String encpw = util.encryptPassword(map.get("password"));
 		
 		Map<String, String> loginmap = new HashMap<String, String>();
@@ -50,9 +51,9 @@ public class MemberController {
 			session.setAttribute("id", map.get("id"));
 			session.setAttribute("num", dto.getNum());
 			session.setAttribute("nickname", dto.getNickname());
-				
+					
 			return "redirect:/";
-		}else {
+		} else {
 			model.addAttribute("msg", "failure");
 			return "/login";
 		}
@@ -109,7 +110,7 @@ public class MemberController {
 			return "";
 		}
 	}
-
+	
 	@ResponseBody
 	@GetMapping(value = "/idcheck", produces = "application/json;charset=utf-8")
 	public Map<String, Object> idcheck(String id) {
@@ -389,6 +390,28 @@ public class MemberController {
 		dto.setType(type);
 		
 		if(mapper.additionalchange(dto) > 0) {
+			return "redirect:/myinfo";
+		}else {
+			return "";
+		}
+	}
+	
+	
+	@GetMapping("/inputAdditionalInfo")
+	public String inputAdditionalInfo(){
+		
+		return "/inputAdditionalInfo";
+	}
+	
+	@PostMapping("/inputAdditionalInfo")
+	public String inputAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request){
+		String type = "";
+		type += request.getParameter("type1");
+		type += request.getParameter("type2");
+		type += request.getParameter("type3");
+		dto.setType(type);
+		
+		if(mapper.create_member_info(dto) > 0) {
 			return "redirect:/myinfo";
 		}else {
 			return "";

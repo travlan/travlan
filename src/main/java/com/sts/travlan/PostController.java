@@ -291,6 +291,7 @@ public class PostController {
 		model.addAttribute("author", author);
 		model.addAttribute("comment", comment);
 		request.setAttribute("comment_mapper", comment_mapper);
+		request.setAttribute("post_mapper", post_mapper);
 		
 		return "/profile";
 	}

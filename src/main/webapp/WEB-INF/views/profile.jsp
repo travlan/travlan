@@ -15,16 +15,19 @@
 			<div class="user-info-top">
                 <div class="user-info">
                     <h3>${author.nickname}</h3>
-                    <h5>${author.nickname}</h5>
+                    <h5>${author.email}</h5>
                 </div>
                 <ul class="user-action">
-                    <li><i class="far fa-comment-alt"></i></li>
-                    <li><i class="fas fa-user-alt-slash"></i></li>
+                    <c:if test="${sessionScope.num != author.num }">
+                    	<li onclick="reporting(${author.num})"><i class="fas fa-user-alt-slash"></i></li>
+                    </c:if>
                 </ul>
             </div>
+            <c:set var="pcount" value="${util:pcount(sessionScope.num, post_mapper) }"/>
+            <c:set var="mcount" value="${util:mcount(sessionScope.num, comment_mapper) }"/>
 			<ul class="user-info-tab">
-				<li id="post-btn" class="active"><a class="immutable" href="javascript:listpost()">글</a></li>
-				<li id="comment-btn"><a class="immutable" href="javascript:listcomment()">댓글</a></li>
+				<li id="post-btn" class="active"><a class="immutable" href="javascript:listpost()">글 </a><span>${pcount }</span></li>
+				<li id="comment-btn"><a class="immutable" href="javascript:listcomment()">댓글 </a><span>${mcount }</span></li>
 			</ul>
 		</div>
 		
@@ -81,7 +84,6 @@
 									<ul class="post-info list-none">
 										<li><i class="far fa-thumbs-up"></i> 25</li>
 										<li><i class="far fa-comment"></i> ${count }</li>
-										<li><i class="far fa-heart"></i></li>
 									</ul>
 								</div>
 							</div>
@@ -132,5 +134,10 @@
 		$('#listcommentshow').css('display', 'block');
 		$('#post-btn').removeClass('active');
 		$('#comment-btn').addClass('active');
+	}
+	
+	function reporting(num) {
+		window.open('report/receive?user=' + num, '신고하기', 'width=580, height=280');
+		return false;
 	}
 </script>

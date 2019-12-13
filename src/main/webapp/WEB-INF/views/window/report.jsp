@@ -1,3 +1,5 @@
+<%@ page contentType = "text/html;charset=utf-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,12 +20,13 @@
     </style>
 </head>
 <body>
-    <form>
+    <form method="post">
+    	<input type="hidden" name="receive_user" value="${receiveMember }">
         <label>신고 대상 : </label>
-        <input name="id" readonly value="배진오"/>
+        <input name="id" readonly value="${member.nickname }"/>
         <label>신고 사유 : </label>
         <textarea name="content"></textarea>
-        <input type="submit" value="전송">
+        <input type="submit" value="신고하기">
     </form>
 </body>
 </html>

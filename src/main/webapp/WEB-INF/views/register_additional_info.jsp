@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div class="login-dark">
-		<form method="post" action="register_additional_info">
+		<form method="post" action="register_additional_info" onsubmit="return required()">
 			<a class="font-classic text-title immutable" href="./">Travlan</a>
 			<div class="alert alert-success" role="alert">
 				${id} 님의 회원가입이 완료되었습니다!
@@ -62,7 +62,8 @@
 				<label>거주 지역</label>
 				<div class="form-group">
 					<select id="province" class="form-control" name="province">
-						<option value="서울" selected>서울특별시</option>
+						<option value="XX" selected>지역을 선택해주세요</option>
+						<option value="서울">서울특별시</option>
 						<option value="강원">강원도</option>
 						<option value="대전">대전광역시</option>
 						<option value="충남">충청남도</option>
@@ -92,6 +93,13 @@
 	<script src="https://static.blex.kr/assets/library/jquery.js"></script>
 	<script src="https://static.blex.kr/assets/library/bootstrap.js"></script>
 	<script>
+	function required() {
+		if($('#province option:selected').val() == 'XX') {
+			alert('지역을 선택하세요.');
+			return false;
+		}
+	}
+	
 	function infomation_show() {
 		$('#addtional').css('display', 'block');
 		$('#cancle').css('display', 'none');
