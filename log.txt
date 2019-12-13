@@ -1,0 +1,127 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for com.sts:travlan:war:1.0.0-BUILD-SNAPSHOT
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.thymeleaf.extras:thymeleaf-extras-tiles2:jar -> duplicate declaration of version 2.0.0 @ line 96, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] It is highly recommended to fix these problems because they threaten the stability of your build.
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] For this reason, future Maven versions might no longer support building such malformed projects.
+[[1;33mWARNING[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------------< [0;36mcom.sts:travlan[0;1m >---------------------------[m
+[[1;34mINFO[m] [1mBuilding Travlan 1.0.0-BUILD-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ war ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36mtravlan[0;1m ---[m
+[[1;34mINFO[m] Deleting /workspace/travlan/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mtravlan[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 4 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:2.5.1:compile[m [1m(default-compile)[m @ [36mtravlan[0;1m ---[m
+[[1;34mINFO[m] Compiling 15 source files to /workspace/travlan/target/classes
+[[1;33mWARNING[m] /workspace/travlan/src/main/java/com/model/mapper/PostMapper.java:[15,27] [rawtypes] found raw type: Map
+[[1;33mWARNING[m]   missing type arguments for generic class Map<K,V>
+  where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/MemberController.java:[265,2] [rawtypes] found raw type: Map
+[[1;33mWARNING[m]   missing type arguments for generic class Map<K,V>
+  where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/MemberController.java:[265,16] [rawtypes] found raw type: HashMap
+[[1;33mWARNING[m]   missing type arguments for generic class HashMap<K,V>
+  where K,V are type-variables:
+    K extends Object declared in class HashMap
+    V extends Object declared in class HashMap
+/workspace/travlan/src/main/java/com/sts/travlan/MemberController.java:[266,9] [unchecked] unchecked call to put(K,V) as a member of the raw type Map
+[[1;33mWARNING[m]   where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/MemberController.java:[267,9] [unchecked] unchecked call to put(K,V) as a member of the raw type Map
+[[1;33mWARNING[m]   where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/MemberController.java:[308,2] [rawtypes] found raw type: Map
+[[1;33mWARNING[m]   missing type arguments for generic class Map<K,V>
+  where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/MemberController.java:[308,16] [rawtypes] found raw type: HashMap
+[[1;33mWARNING[m]   missing type arguments for generic class HashMap<K,V>
+  where K,V are type-variables:
+    K extends Object declared in class HashMap
+    V extends Object declared in class HashMap
+/workspace/travlan/src/main/java/com/sts/travlan/MemberController.java:[309,9] [unchecked] unchecked call to put(K,V) as a member of the raw type Map
+[[1;33mWARNING[m]   where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/MemberController.java:[310,9] [unchecked] unchecked call to put(K,V) as a member of the raw type Map
+[[1;33mWARNING[m]   where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/model/mapper/MemberMapper.java:[12,18] [rawtypes] found raw type: Map
+[[1;33mWARNING[m]   missing type arguments for generic class Map<K,V>
+  where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/model/mapper/MemberMapper.java:[17,27] [rawtypes] found raw type: Map
+[[1;33mWARNING[m]   missing type arguments for generic class Map<K,V>
+  where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/model/mapper/MemberMapper.java:[19,25] [rawtypes] found raw type: Map
+[[1;33mWARNING[m]   missing type arguments for generic class Map<K,V>
+  where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/model/mapper/MemberMapper.java:[20,26] [rawtypes] found raw type: Map
+[[1;33mWARNING[m]   missing type arguments for generic class Map<K,V>
+  where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/PostController.java:[197,2] [rawtypes] found raw type: Map
+[[1;33mWARNING[m]   missing type arguments for generic class Map<K,V>
+  where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/PostController.java:[197,16] [rawtypes] found raw type: HashMap
+[[1;33mWARNING[m]   missing type arguments for generic class HashMap<K,V>
+  where K,V are type-variables:
+    K extends Object declared in class HashMap
+    V extends Object declared in class HashMap
+/workspace/travlan/src/main/java/com/sts/travlan/PostController.java:[198,9] [unchecked] unchecked call to put(K,V) as a member of the raw type Map
+[[1;33mWARNING[m]   where K,V are type-variables:
+    K extends Object declared in interface Map
+    V extends Object declared in interface Map
+/workspace/travlan/src/main/java/com/sts/travlan/PostController.java:[199,9] [unchecked] unchecked call to put(K,V) as a member of the raw type Map
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mtravlan[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:2.5.1:testCompile[m [1m(default-testCompile)[m @ [36mtravlan[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.12.4:test[m [1m(default-test)[m @ [36mtravlan[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-war-plugin:2.2:war[m [1m(default-war)[m @ [36mtravlan[0;1m ---[m
+[[1;34mINFO[m] Packaging webapp
+[[1;34mINFO[m] Assembling webapp [travlan] in [/workspace/travlan/target/travlan-1.0.0-BUILD-SNAPSHOT]
+[[1;34mINFO[m] Processing war project
+[[1;34mINFO[m] Copying webapp resources [/workspace/travlan/src/main/webapp]
+[[1;34mINFO[m] Webapp assembled in [402 msecs]
+[[1;34mINFO[m] Building war: /workspace/travlan/target/travlan-1.0.0-BUILD-SNAPSHOT.war
+[[1;34mINFO[m] WEB-INF/web.xml already added, skipping
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:2.4:install[m [1m(default-install)[m @ [36mtravlan[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/travlan/target/travlan-1.0.0-BUILD-SNAPSHOT.war to /root/.m2/repository/com/sts/travlan/1.0.0-BUILD-SNAPSHOT/travlan-1.0.0-BUILD-SNAPSHOT.war
+[[1;34mINFO[m] Installing /workspace/travlan/pom.xml to /root/.m2/repository/com/sts/travlan/1.0.0-BUILD-SNAPSHOT/travlan-1.0.0-BUILD-SNAPSHOT.pom
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  10.998 s
+[[1;34mINFO[m] Finished at: 2019-11-29T01:12:44Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m

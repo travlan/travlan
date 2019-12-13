@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.model.mapper.Member_ScrapMapper">
+	
+	<select id="scrapedPost" parameterType="Map" resultType="Member_ScrapDTO">
+		SELECT s.memo, s.created_date, m.nickname, p.thumbnail, p.title, p.post_num
+		FROM member_scrap AS s, member AS m, post AS p
+		WHERE s.member_num = #{member_num} AND s.post_num = #{post_num} AND p.member_num = m.num AND s.post_num = p.post_num
+	</select>
+	
+	<update id="updateScrap" parameterType="Map">
+		UPDATE member_scrap
+		SET memo = #{memo}
+		WHERE member_num = #{member_num} AND post_num = #{post_num}
+	</update>
+	
+	<delete id="deleteScrap" parameterType="Map">
+		DELETE FROM member_scrap
+		WHERE member_num = #{member_num} AND post_num = #{post_num}
+	</delete>
+	
+	<select id="checkScrap" parameterType="Map" resultType="int">
+		SELECT COUNT(post_num)
+		FROM member_scrap
+		WHERE member_num = #{member_num} AND post_num = #{post_num}
+	</select>
+	
+	<select id="list" parameterType="int" resultType="Member_ScrapDTO">
+		SELECT s.memo, s.created_date, m.nickname, p.thumbnail, p.title, p.post_num
+		FROM member_scrap AS s, member AS m, post AS p
+		WHERE s.member_num = #{member_num} AND p.member_num = m.num AND s.post_num = p.post_num
+		ORDER BY s.num DESC
+	</select>
+	
+	<insert id="scrap" parameterType="Member_ScrapDTO">
+		INSERT INTO member_scrap(member_num, post_num, memo, created_date)
+		VALUES(#{member_num}, #{post_num}, #{memo}, now())
+	</insert>
+	
+</mapper>

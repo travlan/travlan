@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.model.mapper.Member_NoteMapper">
+	
+	<select id="list" resultType="Member_NoteDTO">
+		SELECT send_user, revice_user, created_date, content, is_read
+		FROM member_note
+	</select>
+	
+	<select id="getUserNotes" parameterType="int" resultType="Member_NoteDTO">
+		SELECT N.num, N.send_user, N.created_date, N.content, N.is_read, M.nickname AS send_user_name
+		FROM member_note N, member M
+		WHERE revice_user = #{num} AND N.send_user = M.num
+	</select>
+	
+	<insert id="sendNote" parameterType="Member_NoteDTO">
+		INSERT member_note(send_user, revice_user, created_date, content, is_read)
+		VALUES(#{send_user}, #{revice_user}, SYSDATE(), #{content}, 'F');
+	</insert>
+	
+	<select id="readNote" parameterType="int" resultType="Member_NoteDTO">
+		SELECT N.num, N.send_user, N.revice_user, N.created_date, N.content, M.nickname AS send_user_name
+		FROM member_note N, member M
+		WHERE N.num = #{num} AND N.send_user = M.num 
+	</select>
+	
+	<update id="readCheck" parameterType="int">
+		UPDATE member_note
+		SET is_read = 'T'
+		WHERE num = #{num}
+	</update>
+	
+	<select id="unread" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM member_note
+		WHERE send_user = #{num} AND is_read = 'F';
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM member_note
+		WHERE num = #{num};
+	</delete>
+	
+</mapper>

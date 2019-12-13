@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE  tiles-definitions PUBLIC 
+    "-//Aapche Software Foundation//DTD Tiles Configuration 2.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+ 
+<tiles-definitions>     
+	<!-- topnav랑 footer 있는 페이지 -->
+	<definition name="main" template="/WEB-INF/views/template/main_template.jsp"> 
+        <put-attribute name="topnav" value="/WEB-INF/views/template/topnav.jsp" /> 
+        <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" /> 
+    </definition> 
+	
+	<definition name="window" template="/WEB-INF/views/template/window_template.jsp"> 
+    </definition>
+    
+    <!-- topnav랑 footer 없어야 되는 페이지 -->
+    <definition name="single" template="/WEB-INF/views/template/single_template.jsp"> 
+        <put-attribute name="style" value="/WEB-INF/views/template/style.jsp" />
+    </definition> 
+    
+    <definition name="/home" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp" /> 
+    </definition>
+    
+    <definition name="/post_write" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/post_write.jsp" /> 
+    </definition>
+    
+    <definition name="/post_delete" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/post_delete.jsp" /> 
+    </definition>
+    
+    <definition name="/post_update" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/post_update.jsp" /> 
+    </definition>
+    
+    <definition name="/post_read" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/post_read.jsp" /> 
+    </definition>
+    
+    <definition name="/login" extends="single"> 
+        <put-attribute name="title" value="Login" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/login.jsp" /> 
+    </definition>
+    
+    <definition name="/naver_register" extends="single"> 
+        <put-attribute name="title" value="Login" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/callback.jsp" /> 
+    </definition>
+    
+    <definition name="/register" extends="single"> 
+        <put-attribute name="title" value="Register" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/naver_register.jsp" /> 
+    </definition>
+	
+	<definition name="/forgot" extends="single"> 
+        <put-attribute name="title" value="Register" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/forgot.jsp" /> 
+    </definition>
+	
+	<definition name="/myinfo" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/myinfo.jsp" /> 
+    </definition>
+		
+	<definition name="/scraplist" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/scraplist.jsp" /> 
+    </definition>
+			
+	<definition name="/passwd_check" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/passwd_check.jsp" /> 
+    </definition>
+				
+	<definition name="/passwd_change" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/passwd_change.jsp" /> 
+    </definition>
+					
+	<definition name="/secession" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/secession.jsp" /> 
+    </definition>
+						
+	<definition name="/bye" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/bye.jsp" /> 
+    </definition>
+	
+	<definition name="/profile" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/profile.jsp" /> 
+    </definition>
+    
+    <definition name="/note" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/notelist.jsp" /> 
+    </definition>
+	
+	<definition name="/note/send" extends="window"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/window/note.jsp" /> 
+    </definition>
+   
+    <definition name="/note/read" extends="window"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/window/close.jsp" /> 
+    </definition>
+    
+    <definition name="/report/receive" extends="window"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/window/report.jsp" /> 
+    </definition>
+    
+</tiles-definitions>

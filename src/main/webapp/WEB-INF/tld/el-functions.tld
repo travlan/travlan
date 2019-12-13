@@ -1,0 +1,56 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+                        web-jsptaglibrary_2_0.xsd" 
+    version="2.0"> 
+     
+ 	<description>EL에서 함수실행</description> 
+    <tlib-version>1.0</tlib-version> 
+    <short-name>ELfunctions</short-name> 
+    <uri>/ELFunctions</uri> 
+     
+    <function>  
+        <description>댓글수 보여주기</description> 
+        <name>count</name>
+        <function-class>
+            com.sts.travlan.Utility
+        </function-class> 
+        <function-signature>
+            int count(int, com.model.mapper.CommentMapper) 
+        </function-signature> 
+    </function> 
+    
+    <function>  
+        <description>게시글수 보여주기</description> 
+        <name>pcount</name>
+        <function-class>
+            com.sts.travlan.Utility
+        </function-class> 
+        <function-signature>
+            int pcount(int, com.model.mapper.PostMapper) 
+        </function-signature> 
+    </function>
+    
+    <function>  
+        <description>내 댓글수 보여주기</description> 
+        <name>mcount</name>
+        <function-class>
+            com.sts.travlan.Utility
+        </function-class> 
+        <function-signature>
+            int mcount(int, com.model.mapper.CommentMapper) 
+        </function-signature> 
+    </function>
+	
+	<function>  
+        <description>스크랩 하기</description> 
+        <name>checkScrap</name>
+        <function-class>
+            com.sts.travlan.Utility
+        </function-class> 
+        <function-signature>
+            int checkScrap(int, int, com.model.mapper.Member_ScrapMapper) 
+        </function-signature> 
+    </function> 
+     
+</taglib>
