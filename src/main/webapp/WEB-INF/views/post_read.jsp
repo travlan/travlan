@@ -28,7 +28,7 @@
 								</c:when>
 								<c:otherwise>
 									<li onclick="location.href='./post_update?num=${param.num}'"><i class="far fa-edit"></i></li>
-									<li onclick="location.href='./post_delete?num=${param.num}'"><i class="far fa-trash-alt"></i></li>
+									<li data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i></li>
 								</c:otherwise>
 							</c:choose>
 							</ul>
@@ -193,7 +193,23 @@
 			</div>
 		</div>
 
-	
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">게시글 삭제</h5>
+					</div>
+					<div id="deletemainModal" class="modal-body">
+						<span>게시글을 삭제하시겟습니까?<br><br>삭제된 글과 댓글은 복구가 불가능합니다.</span>
+					</div>
+					<div id="deletefooterModal" class="modal-footer">
+						<button id="deletepost" type="button" class="btn btn-secondary" onclick="deletePost()">삭제</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 <script>
 	$('#exampleModal').on('shown.bs.modal', function () {
 		$("#memo").focus();
@@ -324,6 +340,17 @@
         }).done(function (data) {
         	alert(data);
         	location.reload();
+        });
+	}
+
+	function deletePost(num){
+		$.ajax({
+            url: "comment_delete",
+            data: {"num" : num},
+            type: 'POST'
+        }).done(function (data) {
+        	alert(data);
+        	history.back();
         });
 	}
 	

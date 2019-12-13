@@ -118,7 +118,7 @@
 				} else {
 					$('#myModal').show();
 					$('#modal-title').text("비밀번호 찾기");
-					$('#found').text("찾으시는 비밀번호는 " + data.result + "입니다.");
+					$('#found').text("변경된 비밀번호를 이메일로 보냈습니다.");
 					done = true;
 				}
 			});

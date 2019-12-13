@@ -53,6 +53,14 @@ public class PostController {
 	@Autowired
 	private CommentMapper comment_mapper;
 	
+	@GetMapping("/arlet")
+	public String arlet(Model model) {
+		if(model.containsAttribute("msg")) {
+			return "/arlet";
+		}else {
+			return "redirect:/";
+		}
+	}
 	
 	@GetMapping("/post_write")
 	public String post(HttpSession session) {
@@ -61,35 +69,29 @@ public class PostController {
 	}
 	
 	@PostMapping("/post_write")
-	public String post(PostDTO dto, HttpServletRequest request, HttpSession session){
+	public String post(PostDTO dto, HttpServletRequest request, HttpSession session, Model model){
 		if((Integer)session.getAttribute("num") != dto.getMember_num()) {
-			System.out.println("취약점!!");
-			return "redirect:/";
+			model.addAttribute("msg", "꼼수쓰지 마세요~");
+			
+			return "/arlet";
 		}
 		if (post_mapper.create(dto) > 0) {
 			return "redirect:/";
 		} else {
-			return "redirect:/";
+			model.addAttribute("msg", "글작성 실패!");
+			return "/arlet";
 		}
 	}
 	
-	@GetMapping("/post_delete")
-	public String delete(HttpSession session, int num, Model model) {
-		PostDTO post = post_mapper.read(num);
-		int sessionNum = (Integer)session.getAttribute("num") != null ? (Integer)session.getAttribute("num") : -1;
-		
-		if(post.getMember_num() == sessionNum) {
-			return "/post_delete";
+	@ResponseBody
+	@RequestMapping("/post_delete")
+	public String delete(HttpSession session, int num) {
+		if((Integer)session.getAttribute("num") != num) {
+			return "false";
 		}else {
 			
-		return util.isLoginFilter(session, "/post_delete");
+		return "";
 		}
-	}
-	
-	@PostMapping("/post_delete")
-	public String delete() {
-		
-		return "redirect:/";
 	}
 	
 	@GetMapping("/post_read")
@@ -166,7 +168,8 @@ public class PostController {
 		}
 		dto.setScore(score);
 		System.out.println("Update : " + dto);
-		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && dto.getPost_num() != (Integer) request.getAttribute("num") ) {
+		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && 
+				dto.getPost_num() != (Integer) request.getAttribute("num") ) {
 			return "error!";
 		}else if(comment_mapper.update(dto) > 0) {
 			return "true";
@@ -178,6 +181,8 @@ public class PostController {
 	@ResponseBody
 	@RequestMapping("/comment_delete")
 	public String commentDelete(HttpSession session, int num) {
+		
+		
 		Map map = new HashMap();
 		map.put("num", num);
 		map.put("member_num", (Integer)session.getAttribute("num"));
