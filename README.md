@@ -19,7 +19,8 @@
 
 #### 이산아
 
-<br>
+- 회원가입, 로그인, 글 작성, 글 읽기 백엔드 프로그래밍
+- Azure 서비스를 이용한 홈페이지 서버 구축, 'Jenkins'를 이용, CI/CD 구현
 
 ## 업데이트 내역
 
@@ -29,4 +30,4 @@
 
 - 김다현 – ekgus0801@naver.com
 - 배진오 – im@baejino.com – [BLOG](https://baejino.com)
-- 이산아 – 
+- 이산아 – hw12011@gmail.com
