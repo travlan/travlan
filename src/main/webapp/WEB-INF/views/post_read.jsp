@@ -84,7 +84,6 @@
 					</div>
 				</div>
             </div>
-			
 			<div class="block-content mt-4" data-aos="fade-up-right">
 			<c:choose>
 			<c:when test="${not empty comment}">
@@ -113,12 +112,14 @@
 				<div style="cursor: pointer;" class="text-center font-weight-bold p-4" onclick="viewMoreComment()">💬 더 보기 (<span id="commentCount">0</span>/${fn:length(comment)})</div>
 			</c:when>
 			<c:otherwise>
-				<div class="text-center font-weight-bold p-4">💬 작성된 댓글이 없습니다!</div>
+				<div class="text-center font-weight-bold p-4">💬 작성된 댓글이 없습니다!</div>'
+				
 			</c:otherwise>
 			</c:choose>
             </div>
 
-			<c:if test="${sessionScope.num != null or sessionScope.num != author.num}">
+			<c:if test="${sessionScope.num != null}">
+			<c:if test="${post.member_num != sessionScope.num}">
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="form-group">
 					<form class="form-horizontal" id="commentform" name="commentform">
@@ -138,6 +139,7 @@
 					</form>
 			    </div>
             </div>
+            </c:if>
             </c:if>
         </div>
     </section>
