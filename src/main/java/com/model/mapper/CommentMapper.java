@@ -13,4 +13,7 @@ public interface CommentMapper {
 	public int mycomment(int member_num);
 	public int total(int post_num);
 	public int create(CommentDTO dto);
+	public int deleteVerifing(Map map);
+	public int delete(int num);
+	public int update(CommentDTO dto);
 }

@@ -10,7 +10,7 @@
 	<div class="container">
 		<%@ include file="include/menutop.jsp" %>
 		
-		<div class="block-content mt-4" data-aos="fade-up-right">
+		<div class="block-content mt-4 p-4" data-aos="fade-up-right">
 			<form method="post" action="passwd_change">
 				<div class="form-group">
 					<label>비밀번호</label>

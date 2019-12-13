@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.model.mapper.MemberMapper;
+import com.model.mapper.Member_NoteMapper;
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
 import com.sts.travlan.Utility;
@@ -29,6 +30,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberMapper mapper;
+	@Autowired
+	private Member_NoteMapper note_mapper;
 	
 	@GetMapping("/login")
 	public String login() {

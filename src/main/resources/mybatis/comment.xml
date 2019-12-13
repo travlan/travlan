@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.model.mapper.CommentMapper">
 
 	<select id="commentlist" parameterType="int" resultType="CommentDTO">
-		SELECT c.title, c.content, c.score, c.post_num, c.created_date, p.thumbnail, p.title AS posttitle, m.nickname
+		SELECT c.num, c.member_num, c.post_num, c.title, c.content, c.score, m.nickname, c.created_date, c.updated_date
 		FROM comment AS c, post AS p, member AS m
 		WHERE c.member_num = #{num} AND c.post_num = p.post_num AND m.num = p.member_num
 		ORDER BY c.num DESC
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="list" parameterType="int" resultType="CommentDTO">
-		SELECT c.num, c.post_num, c.title, c.content, c.score, m.nickname AS member_num, c.created_date, c.updated_date
+		SELECT c.num, c.member_num, c.post_num, c.title, c.content, c.score, m.nickname, c.created_date, c.updated_date
 		FROM comment AS c, member AS m
 		WHERE post_num = #{post_num} AND c.member_num = m.num
 	</select>
@@ -53,5 +53,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO comment(post_num, title, content, score, member_num, created_date)
 		VALUES(#{post_num}, #{title}, #{content}, #{score}, #{member_num}, NOW());
 	</insert>
+	
+	<select id="deleteVerifing" parameterType="Map" resultType="int">
+		SELECT COUNT(*) FROM comment
+		WHERE num = #{num} AND member_num = #{member_num}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM comment
+		WHERE num = #{num}
+	</delete>
+	
+	<update id="update" parameterType="CommentDTO">
+		UPDATE comment
+		<set>
+			title = #{title}, content = #{content}, score = #{score}, updated_date = NOW()
+		</set>
+		WHERE num = #{num} AND post_num = #{post_num}
+	</update>
 	
 </mapper>

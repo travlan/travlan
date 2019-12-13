@@ -27,8 +27,8 @@
 									</c:if>
 								</c:when>
 								<c:otherwise>
-									<li><i class="far fa-edit"></i></li>
-									<li><i class="far fa-trash-alt"></i></li>
+									<li onclick="location.href='./post_update?num=${param.num}'"><i class="far fa-edit"></i></li>
+									<li onclick="location.href='./post_delete?num=${param.num}'"><i class="far fa-trash-alt"></i></li>
 								</c:otherwise>
 							</c:choose>
 							</ul>
@@ -47,6 +47,7 @@
 					<div class="col-lg-6 p-5">
 					<c:choose>
 					<c:when test="${commenthigh != null}">
+						<h4><strong>최고 평가 리뷰</strong></h4>
 						<dic class="start-${commenthigh.score}">
 						<div class="box">
 							<h5 class="name"><strong>${commenthigh.title}</strong></h5>
@@ -66,6 +67,7 @@
 					<div class="col-lg-6 p-5">
 					<c:choose>
 					<c:when test="${commentlow != null}">
+						<h4><strong>최악 평가 리뷰</strong></h4>
 						<dic class="start-${commentlow.score}">
 						<div class="box">
 							<h5 class="name"><strong>${commentlow.title}</strong></h5>
@@ -90,9 +92,23 @@
 			<c:forEach var="comment" items="${comment}" varStatus="i">
 				<div class="box p-4" id="commentBox${i.count}" style="display: none; border-bottom: 1px solid #ccc; transition: all 1s; opacity: 0;">
 					<div class="start-${comment.score}"></div>
-					<h5 class="title"><strong>${comment.title}</strong></h5>
-					<p>${comment.content}</p>
-					<p>${comment.member_num}</p>
+					<input type="hidden" id="comment-num${i.count}" value="${comment.num}">
+					<input type="hidden" id="comment-score${i.count}" value="${comment.score}">
+					<h5 class="title" id="comment-title${i.count}"><strong>${comment.title}</strong></h5>
+					<p id="comment-content${i.count}">${comment.content}</p>
+					<p>${comment.nickname}</p>
+					<c:choose>
+					<c:when test="${comment.updated_date == null}">
+					<p>${comment.created_date}</p>
+					</c:when>
+					<c:otherwise>
+					<p>(수정됨) ${comment.updated_date}</p>
+					</c:otherwise>
+					</c:choose>
+					<c:if test="${sessionScope.num == comment.member_num}">
+					<button class="btn btn-dark" type="button" onclick="updateCommentForm(${i.count});">수정</button>
+					<button class="btn btn-dark" type="button" onclick="deleteComment(${comment.num});">삭제</button>
+					</c:if>
 				</div>
 			</c:forEach>
 				<div style="cursor: pointer;" class="text-center font-weight-bold p-4" onclick="viewMoreComment()">💬 더 보기 (<span id="commentCount">0</span>/${fn:length(comment)})</div>
@@ -103,6 +119,7 @@
 			</c:choose>
             </div>
 
+			<c:if test="${sessionScope.num != null or sessionScope.num != author.num}">
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="form-group">
 					<form class="form-horizontal" id="commentform" name="commentform">
@@ -117,17 +134,15 @@
 					<input type="hidden" name="member_num" value="${sessionScope.num}">
 					<input type="hidden" name="post_num" value="${param.num}">
 					<input type="text" class="comment-form" id="title" name="title" placeholder="제목을 입력해주세요!">
-					<textarea class="comment-form" id="content" title="content" placeholder="후기를 남겨주세요!" rows="5"></textarea>
+					<textarea class="comment-form" id="content" name="content" placeholder="후기를 남겨주세요!" rows="5"></textarea>
 					<button class="btn btn-dark btn-block" type="button" onclick="postComment();">댓글 작성</button>
 					</form>
 			    </div>
             </div>
+            </c:if>
         </div>
     </section>
 </div>
-		
-<script>
-</script>
 
 <!-- Modal -->
 
@@ -186,7 +201,7 @@
 	var nextFContext = '<div>스크랩 실패</div>';
 	var nextSButton = '<button class=\"btn btn-secondary\" type=\"button\" onclick=\"location.href=\'scraplist\'\">스크랩 목록 가기</button>';
 	var nextCButton = '<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">닫기</button>';
-	
+
 	function doScrap() {
 		$.ajax({
 			url: "scrap",
@@ -262,9 +277,58 @@
         	location.reload();
         });
 	}
+
+	function updateCommentForm(boxnum){
+		var num = $("#comment-num" + boxnum).val();
+		var title = $("#comment-title" + boxnum).text();
+		var content = $("#comment-content" + boxnum).text();
+		
+		var updateform = '';
+		updateform += '<form class="form-horizontal" id="updateform" name="updateform">';
+		updateform += '<input id="check-star-1" class="select-star" name="rate1" type="checkbox" onclick="checkStar(1)"><label for="check-star-1"></label>';
+		updateform += '<input id="check-star-2" class="select-star" name="rate2" type="checkbox" onclick="checkStar(2)"><label for="check-star-2"></label>';
+		updateform += '<input id="check-star-3" class="select-star" name="rate3" type="checkbox" onclick="checkStar(3)"><label for="check-star-3"></label>';
+		updateform += '<input id="check-star-4" class="select-star" name="rate4" type="checkbox" onclick="checkStar(4)"><label for="check-star-4"></label>';
+		updateform += '<input id="check-star-5" class="select-star" name="rate5" type="checkbox" onclick="checkStar(5)"><label for="check-star-5"></label>';
+		updateform += '<input type="hidden" name="member_num" value="${sessionScope.num}">';
+		updateform += '<input type="hidden" name="post_num" value="${param.num}">';
+		updateform += '<input type="hidden" name="num" value="' + num + '">';
+		updateform += '<input type="text" class="comment-form" id="title" name="title" value="' + title + '">';
+		updateform += '<textarea class="comment-form" id="content" name="content"rows="5">' + content + '</textarea>';
+		
+		updateform += '<button class="btn btn-dark" type="button" onclick="updateComment();">수정</button>';
+		updateform += '<button class="btn btn-dark" type="button" onclick="location.reload();">취소</button>';
+		
+		$("#commentBox" + boxnum).html(updateform);
+	}
+
+	function updateComment(){
+		var formData = $("#updateform").serialize();
+		$.ajax({
+            url: "comment_update",
+            data: formData,
+            type: 'POST'
+        }).done(function (data) {
+        	alert(data);
+        	location.reload();
+        });
+	}
 	
-	var nextComment = 0;
-	var totalComment = ${fn:length(comment)};
+	function deleteComment(num){
+		$.ajax({
+            url: "comment_delete",
+            data: {"num" : num},
+            type: 'POST'
+        }).done(function (data) {
+        	alert(data);
+        	location.reload();
+        });
+	}
+	
+	
+	var nextComment = 1;
+	var totalComment = ${fn:length(comment)} + 1;
+	
 	function viewMoreComment() {
 		if(nextComment < totalComment) {
 			for(var i=nextComment; i < nextComment + 5; i++){
@@ -275,7 +339,7 @@
 			if (nextComment > totalComment) {
 				nextComment = totalComment;
 			}
-			$('#commentCount').text(nextComment);
+			$('#commentCount').text(nextComment - 1);
 		}
 	}
 	

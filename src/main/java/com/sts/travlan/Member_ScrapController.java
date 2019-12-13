@@ -45,7 +45,7 @@ public class Member_ScrapController {
 	public Map<String, Object> scrap(int post_num, String memo, HttpSession session) {
 		
 		Member_ScrapDTO dto = new Member_ScrapDTO();
-		
+
 		dto.setPost_num(post_num);
 		dto.setMember_num((Integer)session.getAttribute("num"));
 		dto.setMemo(memo);

@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<set>
 			member_num = 0
 		</set>
-		where member_num = #{member_num}
+		WHERE member_num = #{member_num}
 	</update>
 	
 	<select id="list" parameterType="Map" resultType="PostDTO">

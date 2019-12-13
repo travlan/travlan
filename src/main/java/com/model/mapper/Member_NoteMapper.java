@@ -9,5 +9,8 @@ public interface Member_NoteMapper{
 	public List<Member_NoteDTO> list(Map map);
 	public List<Member_NoteDTO> getUserNotes(int num);
 	public int sendNote(Member_NoteDTO dto);
+	public int delete(int num);
 	public Member_NoteDTO readNote(int num);
+	public int readCheck(int num);
+	public int unread(int num);
 }
