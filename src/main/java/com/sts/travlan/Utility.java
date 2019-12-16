@@ -59,11 +59,11 @@ public class Utility {
 		int randomNum = (int) ((Math.random() * 10000 + 1)) ;
 		String newPasswd = "travlan" + randomNum;
 		
-	    String setfrom = "admin";         
+	    String setfrom = "admin@travlan.tk";         
 	    String tomail  = email;
 	    String title   = "Travlan";
-	    String content = "안녕하세요! Travlan입니다." + id 
-	    		       + "님의 비밀번호는 " + newPasswd + "로 변경되었습니다."
+	    String content = "안녕하세요! Travlan입니다.\n\n" + id 
+	    		       + "님의 비밀번호는 " + newPasswd + "로 변경되었습니다.\n\n"
 	    		       + "꼭 로그인해서 비밀번호를 변경해주시길 바랍니다.";
 	    
 	    try {
