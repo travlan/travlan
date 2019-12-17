@@ -1,42 +1,207 @@
 package com.sts.travlan;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.model.mapper.MemberMapper;
 import com.model.mapper.Member_NoteMapper;
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
-import com.sts.travlan.Utility;
 
 @Controller
 public class MemberController {
 	Utility util = new Utility();
 	
+	private String apiResult = null;
+	
 	@Autowired
 	private MemberMapper mapper;
 	@Autowired
 	private Member_NoteMapper note_mapper;
+	@Autowired
+	private NaverController navercontroller;
 	
 	@GetMapping("/login")
-	public String login() {
+	public String login(HttpSession session, Model model) {
+		
+		String kakaoUrl = KakaoController.getAuthorizationUrl(session);
+		String naverUrl = navercontroller.getAuthorizationUrl(session);
+
+		model.addAttribute("kakao_url", kakaoUrl);
+		model.addAttribute("naver_url", naverUrl);
 		
 		return "/login";
+	}
+	
+	@RequestMapping(value = "/kakaologin", produces = "application/json", method = { RequestMethod.GET, RequestMethod.POST })
+	public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) throws Exception {
+		
+		/* 결과값을 node에 담아줌 */
+		JsonNode node = KakaoController.getAccessToken(code);
+		/* accessToken에 로그인한 사용자의 모든 정보가 들어있음 */
+		JsonNode accessToken = node.get("access_token");
+		JsonNode userInfo = KakaoController.getKakaoUserInfo(accessToken);
+		
+		String kemail = null;
+		String kname = null;
+		String kgender = null;
+		String kage = null;
+		
+		/* 유저 정보 카카오에서 가져오기 Get properties */
+		JsonNode properties = userInfo.path("properties");
+		JsonNode kakao_account = userInfo.path("kakao_account");
+		kemail = kakao_account.path("email").asText();
+		kname = properties.path("nickname").asText();
+		kgender = properties.path("gender").asText();
+		kage = kakao_account.findPath("age_range").asText();
+		
+		session.setAttribute("kemail", kemail);
+		session.setAttribute("kname", kname);
+		
+		System.out.println(kemail);
+		System.out.println(kname);
+		
+		MemberDTO dto = new MemberDTO();
+		
+		if(mapper.getEmail(kemail) > 0) {
+			Map idnpassword = mapper.getIdnPassword(kemail);
+			
+			String id = (String)idnpassword.get("id");
+			String password = (String)idnpassword.get("password");
+			
+			Map<String, String> loginmap = new HashMap<String, String>();
+			loginmap.put("id", id);
+			loginmap.put("password", password);
+			
+			int flag = mapper.login(loginmap);
+			dto = mapper.getMember(mapper.get_unique_number(id));
+			
+			if(flag > 0) {
+				session.setAttribute("id", dto.getId());
+				session.setAttribute("num", dto.getNum());
+				session.setAttribute("nickname", dto.getNickname());
+						
+				return "redirect:/";
+			} else {
+				model.addAttribute("msg", "failure");
+				return "/login";
+			}
+		} else {
+			dto.setEmail(kemail);
+			dto.setNickname(kname);
+			dto.setId(util.getRandomIdnPassword(5));
+			dto.setPassword(util.encryptPassword(util.getRandomIdnPassword(10)));
+			
+			if (mapper.create(dto) == 1) {
+				request.setAttribute("sys_msg", "회원가입 성공!");
+				request.setAttribute("id", dto.getId());
+				request.setAttribute("num",mapper.get_unique_number(dto.getId()));
+				return "register_additional_info";
+			} else {
+				request.setAttribute("sys_msg", "회원가입 실패!");
+				return "redirect:/";
+			}
+		}
+	}
+	
+	@RequestMapping(value = "/naverlogin", produces = "application/json;charset=utf-8", method = { RequestMethod.GET, RequestMethod.POST })
+	public String naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session, Model model, HttpServletRequest request) throws IOException, NoSuchAlgorithmException {
+		
+		OAuth2AccessToken oauthToken;
+		oauthToken = navercontroller.getAccessToken(session, code, state);
+		
+		/* 로그인한 사용자의 모든 정보가 JSON타입으로 저장되어 있음 */
+		apiResult = navercontroller.getUserProfile(oauthToken);
+		
+		/* 내가 원하는 정보만 JSON타입에서 String타입으로 바꿔 가져오기 위한 작업 */
+		JSONParser parser = new JSONParser();
+		Object obj = null;
+		
+		try {
+			obj = parser.parse(apiResult);
+		} catch(ParseException e) {
+			e.printStackTrace();
+		} catch (org.json.simple.parser.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JSONObject jsonobj = (JSONObject)obj;
+		JSONObject response = (JSONObject)jsonobj.get("response");
+		
+		String nname = (String)response.get("name");
+		String nemail = (String)response.get("email");
+		
+		session.setAttribute("nname", nname);
+		session.setAttribute("nemail", nemail);
+		
+		MemberDTO dto = new MemberDTO();
+		
+		if(mapper.getEmail(nemail) > 0) {
+			Map idnpassword = mapper.getIdnPassword(nemail);
+			
+			String id = (String)idnpassword.get("id");
+			String password = (String)idnpassword.get("password");
+			
+			System.out.println(id);
+			System.out.println(password);
+			
+			Map<String, String> loginmap = new HashMap<String, String>();
+			loginmap.put("id", id);
+			loginmap.put("password", password);
+			
+			int flag = mapper.login(loginmap);
+			dto = mapper.getMember(mapper.get_unique_number(id));
+			
+			if(flag > 0) {
+				session.setAttribute("id", dto.getId());
+				session.setAttribute("num", dto.getNum());
+				session.setAttribute("nickname", dto.getNickname());
+						
+				return "redirect:/";
+			} else {
+				model.addAttribute("msg", "failure");
+				return "/login";
+			}
+		} else {
+			dto.setEmail(nemail);
+			dto.setNickname(nname);
+			dto.setId(util.getRandomIdnPassword(5));
+			dto.setPassword(util.encryptPassword(util.getRandomIdnPassword(10)));
+			
+			if (mapper.create(dto) == 1) {
+				request.setAttribute("sys_msg", "회원가입 성공!");
+				request.setAttribute("id", dto.getId());
+				request.setAttribute("num",mapper.get_unique_number(dto.getId()));
+				return "register_additional_info";
+			} else {
+				request.setAttribute("sys_msg", "회원가입 실패!");
+				return "redirect:/";
+			}
+		}
 	}
 	
 	@PostMapping("/login")

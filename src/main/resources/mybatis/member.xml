@@ -5,10 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.MemberMapper">
 	
-	<select id="getId" parameterType="String" resultType="int">
+	<select id="getIdnPassword" parameterType="String" resultType="Map">
+		SELECT id, password
+		FROM member
+		WHERE email = #{email}
+	</select>
+	
+	<select id="getEmail" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM member
-		WHERE id = #{id}
+		WHERE email = #{email}
 	</select>
 	
 	<update id="additionalchange" parameterType="Member_InfoDTO">
