@@ -28,6 +28,19 @@
 	<script>
   		AOS.init();
 	</script>
+	<style>
+	.notify-list {
+		list-style: none;
+		padding-left: 0;
+	}
+	.notify-list li {
+		
+	}
+	.notify-list li > a {
+		color: #000;
+		text-decoration: none;
+	}
+	</style>
 	<script>
 		$(document).ready(function () {
 			$(window).scroll(function () {
@@ -41,6 +54,41 @@
 				}
 			});
 		});
+		
+		$.ajax({
+		    url: "user/notify",
+		    type: "get",
+		}).done(function(data) {
+			if(data.count > 0) {
+				$('#notify-count').text(data.count);
+				result = ''
+				data.content.forEach(function(element) {
+				 	result += notifyRender(element);
+				});
+				$('#notify-content').html(result);
+			}
+		});
+		
+		var notifyRender = function(element) {
+			return "\
+			<div class=\"\">\
+			  <div class=\"card-body\">\
+			    <blockquote class=\"mb-0\">\
+			      <p><a class=\"immutable\" href=\"post_read?num="+ element.post +"\" onclick=\"deleteNotify("+ element.num +")\">"+ element.detail +"</a></p>\
+			      <footer class=\"blockquote-footer\">"+ element.date +"</footer>\
+			    </blockquote>\
+			  </div>\
+			</div>\
+			"
+		}
+		
+		function deleteNotify(num) {
+			$.ajax({
+			    url: "user/notify/delete",
+			    type: "post",
+			    data: {"num": num},
+			});
+		}
 	</script>
 </body>
 </html>
