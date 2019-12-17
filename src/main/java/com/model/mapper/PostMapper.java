@@ -18,4 +18,5 @@ public interface PostMapper {
 	public List<PostDTO> list(Map map);
 	public int mypost(int member_num);
 	public int total();
+	public List<PostDTO> search(Map map);
 }
