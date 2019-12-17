@@ -27,11 +27,14 @@ public class Member_NotifyController {
 	@ResponseBody
 	@GetMapping(value = "/user/notify", produces = "application/json;charset=utf-8")
 	public Map<String, Object> getNotify(HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(session.getAttribute("num") == null) {
+			return map;
+		}
 		
 		List<Member_NotifyDTO> list = mapper.list((Integer)session.getAttribute("num"));
 		List<Map> content = new ArrayList();
-
-		Map<String, Object> map = new HashMap<String, Object>();
 		if(list.size() > 0) {
 			map.put("count", list.size());
 			for(int i=0; i<list.size(); i++) {

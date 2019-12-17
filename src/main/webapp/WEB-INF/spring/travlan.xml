@@ -98,6 +98,11 @@
         <put-attribute name="body" value="/WEB-INF/views/profile.jsp" /> 
     </definition>
     
+    <definition name="/search" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/search.jsp" /> 
+    </definition>
+    
     <definition name="/note" extends="main"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/notelist.jsp" /> 

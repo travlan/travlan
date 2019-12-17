@@ -12,6 +12,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY p.post_num ASC
 	</select>
 	
+	<select id="search" parameterType="Map" resultType="PostDTO">
+		SELECT p.member_num, p.post_num, p.thumbnail, p.title, p.season, p.`type`, p.created_date, m.nickname, l.region
+		FROM post AS p, member AS m, location AS l
+		WHERE
+			p.region_num = l.num AND
+			p.member_num = m.num
+		    <if test='type1 != "E"'>
+		    AND SUBSTRING(p.`type`, 1, 1) = #{type1}
+		    </if>
+		    <if test='type2 != "E"'>
+		    AND SUBSTRING(p.`type`, 2, 1) = #{type2}
+		    </if>
+		    <if test='type3 != "E"'>
+		    AND SUBSTRING(p.`type`, 3, 1) = #{type3}
+		    </if>
+		    <if test='value != "null"'>
+		    AND p.title LIKE CONCAT('%',#{value},'%')
+		    </if>
+		ORDER BY p.post_num ASC
+	</select>
+	
 	<insert id="create" parameterType="PostDTO">
 		INSERT INTO post(title, content, region_num, season, TIME, cost, TYPE, thumbnail, created_date, member_num)
 		VALUES(#{title}, #{content}, #{region_num}, #{season}, #{time}, #{cost}, #{type}, #{thumbnail}, NOW(), #{member_num})

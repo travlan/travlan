@@ -47,7 +47,7 @@
 	</c:choose>
 	<c:choose>
 		<c:when test="${empty list}">
-			<div class="block-content mt-4" data-aos="fade-up-right">
+			<div class="block-content mt-4 p-4" data-aos="fade-up-right">
 				게시글이 존재하지 않습니다.
         	</div>
 		</c:when>
@@ -124,29 +124,6 @@
 	</div>
 </section>
 
-<a href="#" data-toggle="modal" data-target="#searchModal">
-	<div class="wirte-btn">
-		<i class="fas fa-search"></i>
-	</div>
-</a>
-
-<!-- 
-		  <form>
-		      	<div class="input-group mb-3">
-			  		<input type="text" class="form-control" name="value" placeholder="검색어를 입력하세요!" aria-describedby="basic-addon2">
-			  		<div class="input-group-append">
-			    		<button class="btn btn-outline-secondary" type="button" onclick="searchForm()">검색</button>
-			  		</div>
-				</div>
-		        <input type="checkbox" name="type1" value="A" id="t1-1" class="search-check"><label for="t1-1">빡빡</label>
-		        <input type="checkbox" name="type1" value="B" id="t1-2" class="search-check"><label for="t1-2">느슨</label>
-		        <input type="checkbox" name="type2" value="A" id="t2-1" class="search-check"><label for="t2-1">주간</label>
-		        <input type="checkbox" name="type2" value="B" id="t2-2" class="search-check"><label for="t2-2">야간</label>
-		        <input type="checkbox" name="type3" value="A" id="t3-1" class="search-check"><label for="t3-1">활기</label>
-		        <input type="checkbox" name="type3" value="B" id="t3-2" class="search-check"><label for="t3-2">조용</label>
-	      </form>
-	       -->
-
 <script src="assets/js/infiscroll.js"></script>
 <script>
 	var postWrapperId = 'card-wrapper';
@@ -154,6 +131,7 @@
 	var lastPage = ${lastPage};
 	new InfiniteScroll(paginatePath, postWrapperId, lastPage);
 </script>
+
 <script>
 	function doScrap(post_num) {
 		$.ajax({
@@ -224,34 +202,6 @@ function getCookie(c_name)
 			return unescape(y);
 		}
 	}
-}
-
-if(getParameter('search') == 'on') {
-	$('#searchModal').modal('show');
-	if(getParameter('query') == 'on') {
-		search(getCookie('query'))
-	}
-}
-
-function searchForm() {
-	var form = $('form');
-	search(form.serialize());
-}
-
-function search(params) {
-	alert(params)
-	var stateObj = {foo : "bar"};
-	history.pushState(stateObj, "", "?search=on&query=on");
-	document.cookie = 'query=' + params;
-    $.ajax({
-        url: "./search",
-        data: params,
-        type: "POST",
-    }).done(function (data) {
-		alert("검색중...")
-    }).fail(function() {
-        alert("에러가 발생했습니다.");
-    });
 }
 
 var randomNumber = Math.floor(Math.random() * 5);

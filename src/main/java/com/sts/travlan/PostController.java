@@ -77,6 +77,56 @@ public class PostController {
 		}
 	}
 	
+	@GetMapping("/search")
+	public String search(HttpServletRequest request, HttpSession session, Model model) {
+		String value = request.getParameter("value") == "" ? "null" : request.getParameter("value");
+		Boolean type1A = request.getParameter("type1A") == null ? false : Boolean.parseBoolean(request.getParameter("type1A"));
+		Boolean type1B = request.getParameter("type1B") == null ? false : Boolean.parseBoolean(request.getParameter("type1B"));
+		Boolean type2A = request.getParameter("type2A") == null ? false : Boolean.parseBoolean(request.getParameter("type2A"));
+		Boolean type2B = request.getParameter("type2B") == null ? false : Boolean.parseBoolean(request.getParameter("type2B"));
+		Boolean type3A = request.getParameter("type3A") == null ? false : Boolean.parseBoolean(request.getParameter("type3A"));
+		Boolean type3B = request.getParameter("type3B") == null ? false : Boolean.parseBoolean(request.getParameter("type3B"));
+		
+		String type1 = "E";
+		if((type1A && type1B) || (!type1A && !type1B)) {
+			type1 = "E";
+		} else if(type1A) {
+			type1 = "A";
+		} else if(type1B) {
+			type1 = "B";
+		}
+		
+		String type2 = "E";
+		if((type2A && type2B) || (!type2A && !type2B)) {
+			type2 = "E";
+		} else if(type2A) {
+			type2 = "A";
+		} else if(type2B) {
+			type2 = "B";
+		}
+		
+		String type3 = "E";
+		if((type3A && type3B) || (!type3A && !type3B)) {
+			type3 = "E";
+		} else if(type3A) {
+			type3 = "A";
+		} else if(type3B) {
+			type3 = "B";
+		}
+		
+		Map map = new HashMap();
+		map.put("value", value);
+		map.put("type1", type1);
+		map.put("type2", type2);
+		map.put("type3", type3);
+		
+		List<PostDTO> list = post_mapper.search(map);
+		System.out.println(map);
+		System.out.println(list);
+		model.addAttribute("list", list);
+		return "/search";
+	}
+	
 	@GetMapping("/post_delete")
 	public String delete(HttpSession session, int num, Model model) {
 		PostDTO post = post_mapper.read(num);
