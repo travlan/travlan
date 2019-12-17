@@ -32,7 +32,7 @@
 					<label class="col-sm-10">${dto.email}</label>
 				</div>
 			</div>
-			<c:if test="${!ist_info }">
+			<c:if test="${!is_info }">
 				<button class="btn btn-light" id="infobox_btn" type="button" onclick="showInfobox()">추가정보를 입력하세요!</button>
 			</c:if>
 		</div>
