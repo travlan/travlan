@@ -31,101 +31,6 @@
 						 ${sessionScope.nickname}님만을 위한 <span id="recommend-title"></span>
 					</div>
 					<div id="insert-html" class="row"></div>
-					<script>
-						var randomNumber = Math.floor(Math.random() * 5);
-						var age = "${idto.age}";
-						var type = "${idto.type}";
-						var baseURL = "https://travlan-extends.run.goorm.io";
-						console.log(randomNumber);
-						
-						if(randomNumber == 0) {
-							$('#recommend-title').text('취향 저격 여행지!');
-							$.ajax({
-					            url:  baseURL + "/recommend/type",
-					            data: { "value" : type },
-					            type: "get",
-					        }).done(function (data) {
-					        	result = ''
-								data.posts.forEach(function(element) {
-								 	result += renderPost(element);
-								});
-							    $('#insert-html').html(result);
-					        });
-						}
-						else if(randomNumber == 1) {
-							$('#recommend-title').text(type[0]=='A'?'빡빡':'느슨' + '한 일정의 여행지!');
-							$.ajax({
-					            url:  baseURL + "/recommend/type/1",
-					            data: { "value" : type[0] },
-					            type: "get",
-					        }).done(function (data) {
-					        	result = ''
-								data.posts.forEach(function(element) {
-									result += renderPost(element);
-								});
-					        	$('#insert-html').html(result);
-					        });
-						}
-						else if(randomNumber == 2) {
-							$('#recommend-title').text(type[1]=='A'?'주간':'야간' + '이 끝내주는 여행지!');
-							$.ajax({
-					            url:  baseURL + "/recommend/type/2",
-					            data: { "value" : type[1] },
-					            type: "get",
-					        }).done(function (data) {
-					        	result = ''
-							 	data.posts.forEach(function(element) {
-							 		result += renderPost(element);
-							 	});
-					        	$('#insert-html').html(result);
-					        });
-						}
-						else if(randomNumber == 3) {
-							$('#recommend-title').text(type[2]=='A'?'활기찬':'조용한' + ' 분위기의 여행지!');
-							$.ajax({
-					            url:  baseURL + "/recommend/type/3",
-					            data: { "value" : type[2] },
-					            type: "get",
-					        }).done(function (data) {
-					        	result = ''
-						 		data.posts.forEach(function(element) {
-						 			result += renderPost(element);
-						 		});
-					        	$('#insert-html').html(result);
-					        });
-						}
-						else if(randomNumber == 4) {
-							$('#recommend-title').text(age + '대가 많이 가는 여행지!');
-							$.ajax({
-					            url:  baseURL + "/best/region",
-					            data: { "age" : age },
-					            type: "get",
-					        }).done(function (data) {
-					        	result = ''
-							 	data.result.forEach(function(element) {
-							 		result += "<h5 class=\"col-md-12\">"+ element[0] +"</h5>";
-							 	});
-						        $('#insert-html').html(result);
-					        });
-						}
-						
-						function renderPost(element) {
-							return "\
-							<div class=\"col-lg-4\" data-aos=\"fade-up-right\">\
-								<div class=\"block-content mb-4\">\
-									<a href=\"post_read?num="+ element.num +"\">\
-										<div class=\"post-list-thumb fill-image\" style=\"background-image: url(storage/photo_thumbnail/"+ element.image +");\"></div>\
-									</a>\
-									<div class=\"p-4\">\
-										<div class=\"post-content font-myungjo\">\
-											<h4 class=\"post-list-title\"><a class=\"immutable\" href=\"post_read?num="+ element.num +"\">"+ element.title +"</a></h4>\
-										</div>\
-									</div>\
-								</div>\
-							</div>\
-							"
-						}
-					</script>
 				</c:when>
 				<c:otherwise>
 					<div class="block-content mb-4 p-4 font-myungjo">
@@ -219,56 +124,14 @@
 	</div>
 </section>
 
-<style>
-.wirte-btn {
-    cursor: pointer;
-    position: fixed;
-    left: 23px;
-    bottom: 23px;
-    background: #000;
-    border-radius: 100%;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    color: #fff;
-    z-index: 10;
-}
-.wirte-btn i {
-    padding-top: 12px;
-    font-size: 24px;
-}
-input[class="search-check"] + label {
-	padding: 5px;
-	display: inline-block;
-	border: 1px solid #bcbcbc;
-	cursor: pointer;
-}
-input[class="search-check"]:checked + label {
-	background-color: #666666;
-	color: #fff;
-}
-input[class="search-check"] {
-	display: none;
-}
-</style>
-
 <a href="#" data-toggle="modal" data-target="#searchModal">
 	<div class="wirte-btn">
 		<i class="fas fa-search"></i>
 	</div>
 </a>
 
-<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="searchModalLabel"><i class="fas fa-search"></i> Search</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-	      <form>
+<!-- 
+		  <form>
 		      	<div class="input-group mb-3">
 			  		<input type="text" class="form-control" name="value" placeholder="검색어를 입력하세요!" aria-describedby="basic-addon2">
 			  		<div class="input-group-append">
@@ -282,13 +145,7 @@ input[class="search-check"] {
 		        <input type="checkbox" name="type3" value="A" id="t3-1" class="search-check"><label for="t3-1">활기</label>
 		        <input type="checkbox" name="type3" value="B" id="t3-2" class="search-check"><label for="t3-2">조용</label>
 	      </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+	       -->
 
 <script src="assets/js/infiscroll.js"></script>
 <script>
@@ -360,14 +217,13 @@ function getCookie(c_name)
 	var i,x,y,ARRcookies=document.cookie.split(";");
 	for (i=0;i<ARRcookies.length;i++)
 	{
-	  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-	  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-	  x=x.replace(/^\s+|\s+$/g,"");
-	  if (x==c_name)
-		{
-		return unescape(y);
+		x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+		y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+		x=x.replace(/^\s+|\s+$/g,"");
+		if (x==c_name) {
+			return unescape(y);
 		}
-	  }
+	}
 }
 
 if(getParameter('search') == 'on') {
@@ -388,7 +244,7 @@ function search(params) {
 	history.pushState(stateObj, "", "?search=on&query=on");
 	document.cookie = 'query=' + params;
     $.ajax({
-        url: "https://travlan-extends.run.goorm.io/search",
+        url: "./search",
         data: params,
         type: "POST",
     }).done(function (data) {
@@ -396,5 +252,99 @@ function search(params) {
     }).fail(function() {
         alert("에러가 발생했습니다.");
     });
+}
+
+var randomNumber = Math.floor(Math.random() * 5);
+var age = "${idto.age}";
+var type = "${idto.type}";
+var baseURL = "https://travlan-extends.run.goorm.io";
+console.log(randomNumber);
+
+if(randomNumber == 0) {
+	$('#recommend-title').text('취향 저격 여행지!');
+	$.ajax({
+        url:  baseURL + "/recommend/type",
+        data: { "value" : type },
+        type: "get",
+    }).done(function (data) {
+    	result = ''
+		data.posts.forEach(function(element) {
+		 	result += renderPost(element);
+		});
+	    $('#insert-html').html(result);
+    });
+}
+else if(randomNumber == 1) {
+	$('#recommend-title').text(type[0]=='A'?'빡빡':'느슨' + '한 일정의 여행지!');
+	$.ajax({
+        url:  baseURL + "/recommend/type/1",
+        data: { "value" : type[0] },
+        type: "get",
+    }).done(function (data) {
+    	result = ''
+		data.posts.forEach(function(element) {
+			result += renderPost(element);
+		});
+    	$('#insert-html').html(result);
+    });
+}
+else if(randomNumber == 2) {
+	$('#recommend-title').text(type[1]=='A'?'주간':'야간' + '이 끝내주는 여행지!');
+	$.ajax({
+        url:  baseURL + "/recommend/type/2",
+        data: { "value" : type[1] },
+        type: "get",
+    }).done(function (data) {
+    	result = ''
+	 	data.posts.forEach(function(element) {
+	 		result += renderPost(element);
+	 	});
+    	$('#insert-html').html(result);
+    });
+}
+else if(randomNumber == 3) {
+	$('#recommend-title').text(type[2]=='A'?'활기찬':'조용한' + ' 분위기의 여행지!');
+	$.ajax({
+        url:  baseURL + "/recommend/type/3",
+        data: { "value" : type[2] },
+        type: "get",
+    }).done(function (data) {
+    	result = ''
+ 		data.posts.forEach(function(element) {
+ 			result += renderPost(element);
+ 		});
+    	$('#insert-html').html(result);
+    });
+}
+else if(randomNumber == 4) {
+	$('#recommend-title').text(age + '대가 많이 가는 여행지!');
+	$.ajax({
+        url:  baseURL + "/best/region",
+        data: { "age" : age },
+        type: "get",
+    }).done(function (data) {
+    	result = ''
+	 	data.result.forEach(function(element) {
+	 		result += "<h5 class=\"col-md-12\">"+ element[0] +"</h5>";
+	 	});
+        $('#insert-html').html(result);
+    });
+}
+
+function renderPost(element) {
+	return "\
+	<div class=\"col-lg-4\" data-aos=\"fade-up-right\">\
+		<div class=\"block-content mb-4\">\
+			<a href=\"post_read?num="+ element.num +"\">\
+				<div class=\"post-list-thumb fill-image\" style=\"background-image: url(storage/photo_thumbnail/"+ element.image +");\"></div>\
+			</a>\
+			<div class=\"p-4\">\
+				<div class=\"post-content font-myungjo\">\
+					<h4 class=\"post-list-title\"><a class=\"immutable\" href=\"post_read?num="+ element.num +"\">"+ element.title +"</a></h4>\
+				</div>\
+			</div>\
+		</div>\
+	</div>\
+	"
 }
 </script>

@@ -33,10 +33,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.model.mapper.MemberMapper;
+import com.model.mapper.Member_NotifyMapper;
 import com.model.mapper.Member_ScrapMapper;
 import com.model.mapper.PostMapper;
 import com.model.mapper.CommentMapper;
 import com.model.member.MemberDTO;
+import com.model.member.Member_NotifyDTO;
 import com.model.post.PostDTO;
 import com.model.post.CommentDTO;
 
@@ -52,6 +54,8 @@ public class PostController {
 	private Member_ScrapMapper scrap_mapper;
 	@Autowired
 	private CommentMapper comment_mapper;
+	@Autowired
+	private Member_NotifyMapper notify_mapper;
 	
 	
 	@GetMapping("/post_write")
@@ -148,6 +152,12 @@ public class PostController {
 		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && dto.getPost_num() != (Integer) request.getAttribute("num") ) {
 			return "error!";
 		}else if(comment_mapper.create(dto) > 0) {
+			Member_NotifyDTO notify_dto = new Member_NotifyDTO();
+			PostDTO post_dto = post_mapper.read(dto.getPost_num());
+			notify_dto.setMember_num(post_dto.getMember_num());
+			notify_dto.setPost_num(post_dto.getPost_num());
+			notify_dto.setContent("'" + post_dto.getTitle() + "' 글에 댓글이 달렸습니다.");
+			notify_mapper.create(notify_dto);
 			return "true";
 		}else {
 			return "false";
