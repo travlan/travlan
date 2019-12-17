@@ -60,9 +60,13 @@ public class Member_ScrapController {
 		
 		Map<String, Object> return_data = new HashMap<String, Object>();
 		
+		if((Integer)session.getAttribute("num") == mapper.getPost(post_num)) {
+			return_data.put("flag", "N");
+		}
+		
 		if(mapper.scrap(dto) > 0) {
 			return_data.put("flag", "Y");
-			
+				
 			Member_NotifyDTO notify_dto = new Member_NotifyDTO();
 			PostDTO post_dto = post_mapper.read(dto.getPost_num());
 			notify_dto.setMember_num(post_dto.getMember_num());

@@ -146,10 +146,6 @@
 				$('#heart-icon-' + post_num).attr('onclick', 'cancelScrap(' + post_num + ')');
 				done = true;
 			} else {
-				$('#heart-icon-' + post_num).addClass('active');
-				$('#heart-icon-' + post_num).html('<i class=\"fas fa-heart\"></i>');
-				$('#heart-icon-' + post_num).removeAttr('onclick');
-				$('#heart-icon-' + post_num).attr('onclick', 'cancelScrap(' + post_num + ')');
 				done = true;
 			}
 		});

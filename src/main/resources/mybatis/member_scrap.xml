@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.Member_ScrapMapper">
 	
+	<select id="getPost" parameterType="int" resultType="int">
+		SELECT member_num
+		FROM member_scrap
+		WHERE post_num = #{post_num}
+	</select>
+	
 	<select id="scrapedPost" parameterType="Map" resultType="Member_ScrapDTO">
 		SELECT s.memo, s.created_date, m.nickname, p.thumbnail, p.title, p.post_num
 		FROM member_scrap AS s, member AS m, post AS p
