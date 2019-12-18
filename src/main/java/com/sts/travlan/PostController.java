@@ -33,15 +33,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.model.mapper.MemberMapper;
+import com.model.mapper.Member_NotifyMapper;
 import com.model.mapper.Member_ScrapMapper;
 import com.model.mapper.PostMapper;
 import com.model.mapper.CommentMapper;
 import com.model.member.MemberDTO;
+import com.model.member.Member_NotifyDTO;
 import com.model.post.PostDTO;
 import com.model.post.CommentDTO;
 
 @Controller
 public class PostController {
+  
 	Utility util = new Utility();
 	
 	@Autowired
@@ -52,6 +55,8 @@ public class PostController {
 	private Member_ScrapMapper scrap_mapper;
 	@Autowired
 	private CommentMapper comment_mapper;
+	@Autowired
+	private Member_NotifyMapper notify_mapper;
 	
 	@GetMapping("/arlet")
 	public String arlet(Model model) {
@@ -70,6 +75,14 @@ public class PostController {
 	
 	@PostMapping("/post_write")
 	public String post(PostDTO dto, HttpServletRequest request, HttpSession session, Model model){
+		
+		String type = "";
+		type += request.getParameter("type1");
+		type += request.getParameter("type2");
+		type += request.getParameter("type3");
+		dto.setType(type);
+		
+
 		if((Integer)session.getAttribute("num") != dto.getMember_num()) {
 			model.addAttribute("msg", "꼼수쓰지 마세요~");
 			
@@ -88,6 +101,64 @@ public class PostController {
 	public String delete(HttpSession session, int num) {
 		if((Integer)session.getAttribute("num") != num) {
 			return "false";
+
+	@GetMapping("/search")
+	public String search(HttpServletRequest request, HttpSession session, Model model) {
+		String value = request.getParameter("value") == "" ? "null" : request.getParameter("value");
+		Boolean type1A = request.getParameter("type1A") == null ? false : Boolean.parseBoolean(request.getParameter("type1A"));
+		Boolean type1B = request.getParameter("type1B") == null ? false : Boolean.parseBoolean(request.getParameter("type1B"));
+		Boolean type2A = request.getParameter("type2A") == null ? false : Boolean.parseBoolean(request.getParameter("type2A"));
+		Boolean type2B = request.getParameter("type2B") == null ? false : Boolean.parseBoolean(request.getParameter("type2B"));
+		Boolean type3A = request.getParameter("type3A") == null ? false : Boolean.parseBoolean(request.getParameter("type3A"));
+		Boolean type3B = request.getParameter("type3B") == null ? false : Boolean.parseBoolean(request.getParameter("type3B"));
+		
+		String type1 = "E";
+		if((type1A && type1B) || (!type1A && !type1B)) {
+			type1 = "E";
+		} else if(type1A) {
+			type1 = "A";
+		} else if(type1B) {
+			type1 = "B";
+		}
+		
+		String type2 = "E";
+		if((type2A && type2B) || (!type2A && !type2B)) {
+			type2 = "E";
+		} else if(type2A) {
+			type2 = "A";
+		} else if(type2B) {
+			type2 = "B";
+		}
+		
+		String type3 = "E";
+		if((type3A && type3B) || (!type3A && !type3B)) {
+			type3 = "E";
+		} else if(type3A) {
+			type3 = "A";
+		} else if(type3B) {
+			type3 = "B";
+		}
+		
+		Map map = new HashMap();
+		map.put("value", value);
+		map.put("type1", type1);
+		map.put("type2", type2);
+		map.put("type3", type3);
+		
+		List<PostDTO> list = post_mapper.search(map);
+		System.out.println(map);
+		System.out.println(list);
+		model.addAttribute("list", list);
+		return "/search";
+	}
+	
+	@GetMapping("/post_delete")
+	public String delete(HttpSession session, int num, Model model) {
+		PostDTO post = post_mapper.read(num);
+		int sessionNum = (Integer)session.getAttribute("num") != null ? (Integer)session.getAttribute("num") : -1;
+		
+		if(post.getMember_num() == sessionNum) {
+			return "/post_delete";
 		}else {
 			
 		return "";
@@ -150,6 +221,12 @@ public class PostController {
 		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && dto.getPost_num() != (Integer) request.getAttribute("num") ) {
 			return "error!";
 		}else if(comment_mapper.create(dto) > 0) {
+			Member_NotifyDTO notify_dto = new Member_NotifyDTO();
+			PostDTO post_dto = post_mapper.read(dto.getPost_num());
+			notify_dto.setMember_num(post_dto.getMember_num());
+			notify_dto.setPost_num(post_dto.getPost_num());
+			notify_dto.setContent("'" + post_dto.getTitle() + "' 글에 댓글이 달렸습니다.");
+			notify_mapper.create(notify_dto);
 			return "true";
 		}else {
 			return "false";

@@ -23,5 +23,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.sts.travlan" />
+	
+	<beans:bean id="NaverController" class="com.sts.travlan.NaverController"/>
 		
 </beans:beans>

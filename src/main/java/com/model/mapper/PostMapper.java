@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface PostMapper {
+	public int getPost(int post_num);
 	public List<PostDTO> postList(int num);
 	public int create(PostDTO dto);
 	public PostDTO read(int num);
@@ -18,4 +19,5 @@ public interface PostMapper {
 	public List<PostDTO> list(Map map);
 	public int mypost(int member_num);
 	public int total();
+	public List<PostDTO> search(Map map);
 }
