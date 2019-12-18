@@ -13,7 +13,7 @@
 							<ul class="list-none">
 							<c:choose>
 								<c:when test="${post.member_num != sessionScope.num}">
-									<c:if test="${not empty sessionScope.id }">
+									<c:if test="${not empty sessionScope.id}">
 										<c:choose>
 											<c:when test="${checkScrap == 0}">
 												<li id="heart-icon" data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
@@ -28,7 +28,7 @@
 								</c:when>
 								<c:otherwise>
 									<li onclick="location.href='./post_update?num=${param.num}'"><i class="far fa-edit"></i></li>
-									<li onclick="location.href='./post_delete?num=${param.num}'"><i class="far fa-trash-alt"></i></li>
+									<li data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i></li>
 								</c:otherwise>
 							</c:choose>
 							</ul>
@@ -113,13 +113,12 @@
 				<div style="cursor: pointer;" class="text-center font-weight-bold p-4" onclick="viewMoreComment()">💬 더 보기 (<span id="commentCount">0</span>/${fn:length(comment)})</div>
 			</c:when>
 			<c:otherwise>
-				<div class="text-center font-weight-bold p-4">💬 작성된 댓글이 없습니다!</div>'
-				
+				<div class="block-content mt-4 text-center font-weight-bold p-4">💬 작성된 댓글이 없습니다!</div>
 			</c:otherwise>
 			</c:choose>
             </div>
-
-			<c:if test="${sessionScope.num != null}">
+			<c:choose>
+			<c:when test="${sessionScope.num != null}">
 			<c:if test="${post.member_num != sessionScope.num}">
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="form-group">
@@ -141,7 +140,11 @@
 			    </div>
             </div>
             </c:if>
-            </c:if>
+            </c:when>
+            <c:otherwise>
+            <div style="cursor: pointer;" class="block-content mt-4 text-center font-weight-bold p-4" data-aos="fade-up-right" onclick="location.href='./login'">후기를 작성하려면 로그인 해주세요!</div>
+            </c:otherwise>
+            </c:choose>
         </div>
     </section>
 </div>
@@ -193,7 +196,23 @@
 			</div>
 		</div>
 
-	
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">게시글 삭제</h5>
+					</div>
+					<div id="deletemainModal" class="modal-body">
+						<span>게시글을 삭제하시겟습니까?<br><br>삭제된 글과 댓글은 복구가 불가능합니다.</span>
+					</div>
+					<div id="deletefooterModal" class="modal-footer">
+						<button id="deletepost" type="button" class="btn btn-secondary" onclick="deletePost()">삭제</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 <script>
 	$('#exampleModal').on('shown.bs.modal', function () {
 		$("#memo").focus();
@@ -326,6 +345,17 @@
         	location.reload();
         });
 	}
+
+	function deletePost(num){
+		$.ajax({
+            url: "comment_delete",
+            data: {"num" : num},
+            type: 'POST'
+        }).done(function (data) {
+        	alert(data);
+        	history.back();
+        });
+	}
 	
 	
 	var nextComment = 1;
@@ -349,4 +379,5 @@
 		window.open('report/receive?user=' + num, '신고하기', 'width=580, height=280');
 		return false;
 	}
+
 </script>

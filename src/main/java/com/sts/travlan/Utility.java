@@ -6,7 +6,13 @@ import java.util.Map;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
 import com.model.mapper.CommentMapper;
 import com.model.mapper.Member_ScrapMapper;
 import com.model.mapper.PostMapper;
@@ -65,6 +71,33 @@ public class Utility {
 		}else {
 			return "redirect:home";
 		}
+	}
+	
+	public String sendPwtoEmail(String email, String id, JavaMailSenderImpl mailSender) {
+		int randomNum = (int) ((Math.random() * 10000 + 1)) ;
+		String newPasswd = "travlan" + randomNum;
+		
+	    String setfrom = "admin@travlan.tk";         
+	    String tomail  = email;
+	    String title   = "Travlan";
+	    String content = "안녕하세요! Travlan입니다.\n\n" + id 
+	    		       + "님의 비밀번호는 " + newPasswd + "로 변경되었습니다.\n\n"
+	    		       + "꼭 로그인해서 비밀번호를 변경해주시길 바랍니다.";
+	    
+	    try {
+	      MimeMessage message = mailSender.createMimeMessage();
+	      MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+	      
+	      messageHelper.setFrom(setfrom);
+	      messageHelper.setTo(tomail);
+	      messageHelper.setSubject(title); 
+	      messageHelper.setText(content);
+	      mailSender.send(message);
+	    } catch(Exception e){
+	      System.out.println(e);
+	    }
+	    
+		return newPasswd;
 	}
 	
 	public String encryptPassword(String password) throws NoSuchAlgorithmException {

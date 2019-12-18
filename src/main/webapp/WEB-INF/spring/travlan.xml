@@ -48,6 +48,16 @@
         <put-attribute name="body" value="/WEB-INF/views/login.jsp" /> 
     </definition>
     
+    <definition name="/arlet" extends="single"> 
+        <put-attribute name="title" value="Login" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/arlet.jsp" /> 
+    </definition>
+    
+    <definition name="/naver_register" extends="single"> 
+        <put-attribute name="title" value="Login" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/callback.jsp" /> 
+    </definition>
+
     <definition name="/register" extends="single"> 
         <put-attribute name="title" value="Register" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/register.jsp" /> 

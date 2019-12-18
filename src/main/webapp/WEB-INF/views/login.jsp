@@ -9,6 +9,7 @@
 		<input type="hidden" name="originId" value=""/>
 		<input type="hidden" name="originEmail" value=""/>
 		<input type="hidden" name="originName" value=""/>
+		<input type="hidden" name="redi" value="${redi}"/>
         <a class="font-classic text-title immutable" href="./">Travlan</a>
         <h2 class="sr-only">Login Form</h2>
         <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>

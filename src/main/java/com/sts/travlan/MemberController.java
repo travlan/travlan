@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,11 +44,16 @@ public class MemberController {
 	@Autowired
 	private Member_NoteMapper note_mapper;
 	@Autowired
+
+	private JavaMailSenderImpl mailSender;
 	private NaverController navercontroller;
 	
 	@GetMapping("/login")
-	public String login(HttpSession session, Model model) {
-		
+	public String login(HttpServletRequest request, HttpSession session, Model model) {
+    
+		String redi = request.getHeader("referer").toString().substring(29);
+		request.setAttribute("redi", redi);
+    
 		String kakaoUrl = KakaoController.getAuthorizationUrl(session);
 		String naverUrl = navercontroller.getAuthorizationUrl(session);
 
@@ -206,22 +212,25 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model, RedirectAttributes redi) throws NoSuchAlgorithmException {
+	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
 		String encpw = util.encryptPassword(map.get("password"));
-		
 		Map<String, String> loginmap = new HashMap<String, String>();
+
 		loginmap.put("id", map.get("id"));
 		loginmap.put("password", encpw);
-		
 		int flag = mapper.login(loginmap);
-		MemberDTO dto = mapper.getMember(mapper.get_unique_number(map.get("id")));
 		
 		if(flag > 0) {
+			MemberDTO dto = mapper.getMember(mapper.get_unique_number(map.get("id")));
 			session.setAttribute("id", map.get("id"));
 			session.setAttribute("num", dto.getNum());
 			session.setAttribute("nickname", dto.getNickname());
-					
-			return "redirect:/";
+			
+			String redi = map.get("redi");
+			if(redi == "")
+				redi = "/";
+			
+			return "redirect:" + redi;
 		} else {
 			model.addAttribute("msg", "failure");
 			return "/login";
@@ -230,10 +239,9 @@ public class MemberController {
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletRequest request) {
-		
 		session.invalidate();
-		request.setAttribute("sys_msg", "로그아웃 되었습니다.");
-		return "redirect:/";
+		request.setAttribute("msg", "로그아웃 되었습니다.");
+		return "/arlet";
 	}
 	
 	@GetMapping("/register")
@@ -248,13 +256,13 @@ public class MemberController {
 		dto.setPassword(util.encryptPassword(pw));
 		
 		if (mapper.create(dto) == 1) {
-			request.setAttribute("sys_msg", "회원가입 성공!");
+			request.setAttribute("msg", "회원가입 성공!");
 			request.setAttribute("id", dto.getId());
 			request.setAttribute("num",mapper.get_unique_number(dto.getId()));
 			return "register_additional_info";
 		} else {
-			request.setAttribute("sys_msg", "회원가입 실패!");
-			return "redirect:/";
+			request.setAttribute("msg", "회원가입 실패!");
+			return "/arlet";
 		}
 		
 	}
@@ -289,7 +297,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag","N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
@@ -306,7 +314,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag", "N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
@@ -323,7 +331,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag","N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
@@ -356,22 +364,33 @@ public class MemberController {
 	
 	@ResponseBody
 	@GetMapping(value = "/find_passwd", produces = "application/json;charset=utf-8")
-	public Map<String, Object> find_passwd(String id, String email) {
+	public Map<String, Object> find_passwd(String id, String email) throws NoSuchAlgorithmException {
 		
 		Map<String, String> find = new HashMap<String, String>();
 		find.put("id", id);
 		find.put("email", email);
 		
-		String fpasswd = mapper.find_passwd(find);
+		String fpasswd = mapper.find_passwd(find);	// TODO 나중에 지우기!
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> resultmap = new HashMap<String, Object>();
 		if(fpasswd == null) {
-			map.put("result", "N");
+			resultmap.put("result", "N");
 		} else {
-			map.put("result", "Y");
+			Map<String, Object> map = new HashMap<String, Object>();
+			String newpasswd = util.sendPwtoEmail(email, id, mailSender);
+			
+			System.out.println(newpasswd);
+			map.put("id", id);
+			map.put("password", util.encryptPassword(newpasswd));
+			int flag = mapper.passwd_change(map);
+			if(flag > 0) {
+				resultmap.put("result", "Y");
+			}else {
+				resultmap.put("result", "N");
+			}
 		}
 		
-		return map;
+		return resultmap;
 	}
 	
 	
