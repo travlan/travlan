@@ -60,7 +60,7 @@ public class Member_ScrapController {
 		
 		Map<String, Object> return_data = new HashMap<String, Object>();
 		
-		if((Integer)session.getAttribute("num") == mapper.getPost(post_num)) {
+		if((Integer)session.getAttribute("num") == post_mapper.getPost(post_num)) {
 			return_data.put("flag", "N");
 		}
 		

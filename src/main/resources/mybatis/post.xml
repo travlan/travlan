@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.PostMapper">
 
+	<select id="getPost" parameterType="int" resultType="int">
+		SELECT member_num
+		FROM post
+		WHERE post_num = #{post_num}
+	</select>
+
 	<select id="postList" parameterType="int" resultType="PostDTO">
 		SELECT p.member_num, p.post_num, p.thumbnail, p.title, p.season, p.`type`, p.created_date, m.nickname, l.region
 		FROM post AS p, member AS m, location AS l
