@@ -104,7 +104,6 @@
 				<c:otherwise>
 					<c:forEach var="comment" items="${comment}">
 						<div class="post-list row aos-init aos-animate" data-aos="zoom-in">
-							<div class="post-thumb fill-img" style="background-image: url(storage/photo_thumbnail/${comment.thumbnail});"></div>
 							<div class="post-content font-myungjo">
 								<h4><a class="immutable" href="post_read?num=${comment.post_num}">${comment.posttitle}</a></h4>
 								<p><a class="immutable">${comment.nickname}</a></p>
