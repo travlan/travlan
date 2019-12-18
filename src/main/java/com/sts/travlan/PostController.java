@@ -101,7 +101,11 @@ public class PostController {
 	public String delete(HttpSession session, int num) {
 		if((Integer)session.getAttribute("num") != num) {
 			return "false";
-
+		}else {
+			return "true";
+		}
+	}
+	
 	@GetMapping("/search")
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
 		String value = request.getParameter("value") == "" ? "null" : request.getParameter("value");
