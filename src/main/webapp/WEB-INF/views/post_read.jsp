@@ -13,7 +13,7 @@
 							<ul class="list-none">
 							<c:choose>
 								<c:when test="${post.member_num != sessionScope.num}">
-									<c:if test="${not empty sessionScope.id }">
+									<c:if test="${not empty sessionScope.id}">
 										<c:choose>
 											<c:when test="${checkScrap == 0}">
 												<li id="heart-icon" data-toggle="modal" data-target="#exampleModal"><i class="far fa-heart"></i></li>
@@ -113,13 +113,12 @@
 				<div style="cursor: pointer;" class="text-center font-weight-bold p-4" onclick="viewMoreComment()">💬 더 보기 (<span id="commentCount">0</span>/${fn:length(comment)})</div>
 			</c:when>
 			<c:otherwise>
-				<div class="text-center font-weight-bold p-4">💬 작성된 댓글이 없습니다!</div>'
-				
+				<div class="block-content mt-4 text-center font-weight-bold p-4">💬 작성된 댓글이 없습니다!</div>
 			</c:otherwise>
 			</c:choose>
             </div>
-
-			<c:if test="${sessionScope.num != null}">
+			<c:choose>
+			<c:when test="${sessionScope.num != null}">
 			<c:if test="${post.member_num != sessionScope.num}">
 			<div class="block-content mt-4" data-aos="fade-up-right">
 				<div class="form-group">
@@ -141,7 +140,11 @@
 			    </div>
             </div>
             </c:if>
-            </c:if>
+            </c:when>
+            <c:otherwise>
+            <div style="cursor: pointer;" class="block-content mt-4 text-center font-weight-bold p-4" data-aos="fade-up-right" onclick="location.href='./login'">후기를 작성하려면 로그인 해주세요!</div>
+            </c:otherwise>
+            </c:choose>
         </div>
     </section>
 </div>
@@ -376,4 +379,5 @@
 		window.open('report/receive?user=' + num, '신고하기', 'width=580, height=280');
 		return false;
 	}
+
 </script>

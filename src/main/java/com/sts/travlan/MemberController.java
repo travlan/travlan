@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,19 +39,20 @@ public class MemberController {
 
 	
 	@GetMapping("/login")
-	public String login() {
+	public String login(HttpServletRequest request, HttpSession session) {
+		String redi = request.getHeader("referer").toString().substring(29);
+		request.setAttribute("redi", redi);
 		
 		return "/login";
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model, RedirectAttributes redi) throws NoSuchAlgorithmException {
+	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
 		String encpw = util.encryptPassword(map.get("password"));
-		
 		Map<String, String> loginmap = new HashMap<String, String>();
+
 		loginmap.put("id", map.get("id"));
 		loginmap.put("password", encpw);
-		
 		int flag = mapper.login(loginmap);
 		
 		if(flag > 0) {
@@ -58,8 +60,12 @@ public class MemberController {
 			session.setAttribute("id", map.get("id"));
 			session.setAttribute("num", dto.getNum());
 			session.setAttribute("nickname", dto.getNickname());
-					
-			return "redirect:/";
+			
+			String redi = map.get("redi");
+			if(redi == "")
+				redi = "/";
+			
+			return "redirect:" + redi;
 		} else {
 			model.addAttribute("msg", "failure");
 			return "/login";
@@ -126,7 +132,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag","N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
@@ -143,7 +149,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag", "N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
@@ -160,7 +166,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag", "N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
