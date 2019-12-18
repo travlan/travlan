@@ -66,6 +66,13 @@ public class PostController {
 	
 	@PostMapping("/post_write")
 	public String post(PostDTO dto, HttpServletRequest request, HttpSession session){
+		
+		String type = "";
+		type += request.getParameter("type1");
+		type += request.getParameter("type2");
+		type += request.getParameter("type3");
+		dto.setType(type);
+		
 		if((Integer)session.getAttribute("num") != dto.getMember_num()) {
 			System.out.println("취약점!!");
 			return "redirect:/";
