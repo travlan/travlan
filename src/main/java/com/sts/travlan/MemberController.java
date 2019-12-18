@@ -44,9 +44,9 @@ public class MemberController {
 	@Autowired
 	private Member_NoteMapper note_mapper;
 	@Autowired
-
-	private JavaMailSenderImpl mailSender;
 	private NaverController navercontroller;
+	
+	private JavaMailSenderImpl mailSender;
 	
 	@GetMapping("/login")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
