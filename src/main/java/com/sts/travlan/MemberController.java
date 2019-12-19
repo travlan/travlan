@@ -2,7 +2,6 @@ package com.sts.travlan;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.model.mapper.MemberMapper;
-import com.model.mapper.Member_NoteMapper;
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
 
@@ -41,8 +38,6 @@ public class MemberController {
 	
 	@Autowired
 	private MemberMapper mapper;
-	@Autowired
-	private Member_NoteMapper note_mapper;
 	@Autowired
 	private NaverController navercontroller;
 	
@@ -74,16 +69,12 @@ public class MemberController {
 		
 		String kemail = null;
 		String kname = null;
-		String kgender = null;
-		String kage = null;
 		
 		/* 유저 정보 카카오에서 가져오기 Get properties */
 		JsonNode properties = userInfo.path("properties");
 		JsonNode kakao_account = userInfo.path("kakao_account");
 		kemail = kakao_account.path("email").asText();
 		kname = properties.path("nickname").asText();
-		kgender = properties.path("gender").asText();
-		kage = kakao_account.findPath("age_range").asText();
 		
 		session.setAttribute("kemail", kemail);
 		session.setAttribute("kname", kname);
@@ -274,7 +265,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/register_additional_info")
-	public String register_additional_info(Member_InfoDTO dto, HttpServletRequest request){
+	public String register_additional_info(Member_InfoDTO dto, HttpServletRequest request, Model model){
 		String type = "";
 		type += request.getParameter("type1");
 		type += request.getParameter("type2");
@@ -284,7 +275,9 @@ public class MemberController {
 		if(mapper.create_member_info(dto) > 0) {
 			return "redirect:/";
 		}else {
-			return "";
+			model.addAttribute("msg", "추가정보 입력 실패!");
+			
+			return "/arlet";
 		}
 	}
 	
@@ -456,7 +449,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/passwd_check")
-	public String passwd_check(String password, HttpSession session) throws NoSuchAlgorithmException {
+	public String passwd_check(String password, HttpSession session, Model model) throws NoSuchAlgorithmException {
 		
 		Map map = new HashMap();
 		map.put("id", session.getAttribute("id"));
@@ -467,7 +460,8 @@ public class MemberController {
 		if(flag > 0) {
 			return "/passwd_change";
 		} else {
-			return "/babo";
+			model.addAttribute("msg", "패스워드 확인 실패!");
+			return "/arlet";
 		}
 	}
 	
@@ -499,7 +493,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/passwd_change")
-	public String passwd_change(String password, HttpSession session) throws NoSuchAlgorithmException {
+	public String passwd_change(String password, HttpSession session, Model model) throws NoSuchAlgorithmException {
 		
 		Map map = new HashMap();
 		map.put("id", session.getAttribute("id"));
@@ -510,7 +504,9 @@ public class MemberController {
 		if(flag > 0) {
 			return "redirect:logout";
 		} else {
-			return "/babo";
+			model.addAttribute("msg", "패스워드 변경 실패!");
+			
+			return "/arlet";
 		}
 	}
 	
@@ -521,14 +517,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("/secession")
-	public String secession(String id) {
+	public String secession(String id, Model model) {
 		
 		int flag = mapper.secession(id);
 		
 		if(flag > 0) {
 			return "/bye";
 		} else {
-			return "/babo";
+			model.addAttribute("msg", "회원 탈퇴 실패!");
+			
+			return "/arlet";
 		}
 	}
 	
@@ -570,7 +568,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/updateAdditionalInfo")
-	public String updateAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request){
+	public String updateAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request, Model model){
 		String type = "";
 		type += request.getParameter("type1");
 		type += request.getParameter("type2");
@@ -580,7 +578,9 @@ public class MemberController {
 		if(mapper.additionalchange(dto) > 0) {
 			return "redirect:/myinfo";
 		}else {
-			return "";
+			model.addAttribute("msg", "추가정보 수정 실패!");
+			
+			return "/arlet";
 		}
 	}
 	
@@ -592,7 +592,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/inputAdditionalInfo")
-	public String inputAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request){
+	public String inputAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request, Model model){
 		String type = "";
 		type += request.getParameter("type1");
 		type += request.getParameter("type2");
@@ -602,7 +602,9 @@ public class MemberController {
 		if(mapper.create_member_info(dto) > 0) {
 			return "redirect:/myinfo";
 		}else {
-			return "";
+			model.addAttribute("msg", "추가정보 입력 실패!");
+			
+			return "/arlet";
 		}
 	}
 	

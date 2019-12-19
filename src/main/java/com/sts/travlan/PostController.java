@@ -10,12 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -164,8 +158,9 @@ public class PostController {
 		if(post.getMember_num() == sessionNum) {
 			return "/post_delete";
 		}else {
+			model.addAttribute("msg", "게시글 삭제 페이지 로딩 실패!");
 			
-		return "";
+			return "/arlet";
 		}
 	}
 	
@@ -206,7 +201,9 @@ public class PostController {
 			model.addAttribute("region", post_mapper.getLocation(post.getRegion_num()));
 			return "/post_update";
 		}else {
-		return "error";
+			model.addAttribute("msg", "게시글 수정 페이지 로딩 실패!");
+			
+			return "/arlet";
 		}
 	}
 	
