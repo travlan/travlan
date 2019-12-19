@@ -62,6 +62,17 @@
         <function-signature>
             int checkScrap(int, int, com.model.mapper.Member_ScrapMapper) 
         </function-signature> 
+    </function>
+    
+    <function>
+    	<description>스크랩수 보여주기</description>
+    	<name>scount</name>
+    	<function-class>
+    		com.sts.travlan.Utility
+    	</function-class>
+    	<function-signature>
+    		int scount(int, com.model.mapper.Member_ScrapMapper)
+    	</function-signature>
     </function> 
      
 </taglib>

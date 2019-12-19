@@ -428,6 +428,7 @@ public class PostController {
 		model.addAttribute("comment", comment);
 		request.setAttribute("comment_mapper", comment_mapper);
 		request.setAttribute("post_mapper", post_mapper);
+		request.setAttribute("scrap_mapper", scrap_mapper);
 		
 		return "/profile";
 	}
