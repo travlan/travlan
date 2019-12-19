@@ -32,6 +32,7 @@ import com.model.mapper.Member_ScrapMapper;
 import com.model.mapper.PostMapper;
 import com.model.mapper.CommentMapper;
 import com.model.member.MemberDTO;
+import com.model.member.Member_InfoDTO;
 import com.model.member.Member_NotifyDTO;
 import com.model.post.PostDTO;
 import com.model.post.CommentDTO;
@@ -393,9 +394,16 @@ public class PostController {
 		
 		map.put("pagePost", pagePost);
 		map.put("no", no);
-		System.out.println("Paging : nowPage = " + nowPage + " no = " + no);
 		
 		List<PostDTO> list = post_mapper.list(map);
+		
+		boolean is_info = member_mapper.is_info((String)session.getAttribute("id")) > 0 ? true : false;
+		
+		if(is_info) {
+			Member_InfoDTO idto = member_mapper.getMemberInfo((Integer)session.getAttribute("num"));
+			model.addAttribute("idto", idto);
+		}
+		model.addAttribute("is_info", is_info);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("page", nowPage);
