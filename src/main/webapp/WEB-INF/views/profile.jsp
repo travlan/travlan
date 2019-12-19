@@ -23,8 +23,8 @@
                     </c:if>
                 </ul>
             </div>
-            <c:set var="pcount" value="${util:pcount(sessionScope.num, post_mapper) }"/>
-            <c:set var="mcount" value="${util:mcount(sessionScope.num, comment_mapper) }"/>
+            <c:set var="pcount" value="${util:pcount(author.num, post_mapper) }"/>
+            <c:set var="mcount" value="${util:mcount(author.num, comment_mapper) }"/>
 			<ul class="user-info-tab">
 				<li id="post-btn" class="active"><a class="immutable" href="javascript:listpost()">글 </a><span>${pcount }</span></li>
 				<li id="comment-btn"><a class="immutable" href="javascript:listcomment()">댓글 </a><span>${mcount }</span></li>
