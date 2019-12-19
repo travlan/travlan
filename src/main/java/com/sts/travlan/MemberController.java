@@ -508,7 +508,7 @@ public class MemberController {
 		int flag = mapper.passwd_change(map);
 		
 		if(flag > 0) {
-			return "redirect:myinfo";
+			return "redirect:logout";
 		} else {
 			return "/babo";
 		}

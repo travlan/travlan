@@ -11,7 +11,7 @@
 		<%@ include file="include/menutop.jsp" %>
 		
 		<div class="block-content mt-4 p-4" data-aos="fade-up-right">
-			<form method="post" action="passwd_change">
+			<form method="post" action="passwd_change" onsubmit="success()">
 				<div class="form-group">
 					<label>비밀번호</label>
 					<input class="form-control" id="password" type="password" name="password" placeholder="비밀번호" required/>
@@ -69,4 +69,8 @@
 			});
 		}
 	})
+	
+	function success() {
+		alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.");
+	}
 </script>
