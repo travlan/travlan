@@ -36,6 +36,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    <if test='value != "null"'>
 		    AND p.title LIKE CONCAT('%',#{value},'%')
 		    </if>
+		    <if test='season != "null"'>
+		    AND p.season = #{season}
+		    </if>
 		ORDER BY p.post_num ASC
 	</select>
 	

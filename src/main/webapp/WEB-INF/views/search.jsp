@@ -8,17 +8,27 @@
 		<div class="block-content mb-4 p-4">
 			<form method="get">
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" name="value" placeholder="검색어를 입력하세요!" aria-describedby="basic-addon2">
+					<input id="search-input" type="text" class="form-control" name="value" placeholder="검색어를 입력하세요!" aria-describedby="basic-addon2">
 					<div class="input-group-append">
 					    <button class="btn btn-outline-secondary" type="submit">검색</button>
 					</div>
 				</div>
-				<input type="checkbox" name="type1A" value="true" id="t1-1" class="search-check"><label for="t1-1">빡빡</label>
-				<input type="checkbox" name="type1B" value="true" id="t1-2" class="search-check"><label for="t1-2">느슨</label>
-				<input type="checkbox" name="type2A" value="true" id="t2-1" class="search-check"><label for="t2-1">주간</label>
-				<input type="checkbox" name="type2B" value="true" id="t2-2" class="search-check"><label for="t2-2">야간</label>
-				<input type="checkbox" name="type3A" value="true" id="t3-1" class="search-check"><label for="t3-1">활기</label>
-				<input type="checkbox" name="type3B" value="true" id="t3-2" class="search-check"><label for="t3-2">조용</label>
+				<div class="row">
+					<div class="col-md-6">
+						<input type="checkbox" name="type1A" value="true" id="t1-1" class="search-check"><label for="t1-1">빡빡</label>
+						<input type="checkbox" name="type1B" value="true" id="t1-2" class="search-check"><label for="t1-2">느슨</label>
+						<input type="checkbox" name="type2A" value="true" id="t2-1" class="search-check"><label for="t2-1">주간</label>
+						<input type="checkbox" name="type2B" value="true" id="t2-2" class="search-check"><label for="t2-2">야간</label>
+						<input type="checkbox" name="type3A" value="true" id="t3-1" class="search-check"><label for="t3-1">활기</label>
+						<input type="checkbox" name="type3B" value="true" id="t3-2" class="search-check"><label for="t3-2">조용</label>
+					</div>
+					<div class="col-md-6">
+						<input type="radio" name="season" value="S" id="s1" class="search-check"><label for="s1">봄</label>
+						<input type="radio" name="season" value="U" id="s2" class="search-check"><label for="s2">여름</label>
+						<input type="radio" name="season" value="F" id="s3" class="search-check"><label for="s3">가을</label>
+						<input type="radio" name="season" value="W" id="s4" class="search-check"><label for="s4">겨울</label>
+					</div>
+				</div>
 			</form>
 		</div>
 		<c:choose>
@@ -78,3 +88,37 @@
 	</c:choose>
 	</div>
 </div>
+
+<script>
+$('#search-input').val(getParameter('value'));
+if(getParameter('type1A')) {
+	$('#t1-1').prop("checked", true);
+}
+if(getParameter('type1B')) {
+	$('#t1-2').prop("checked", true);
+}
+if(getParameter('type2A')) {
+	$('#t2-1').prop("checked", true);
+}
+if(getParameter('type2B')) {
+	$('#t2-2').prop("checked", true);
+}
+if(getParameter('type3A')) {
+	$('#t3-1').prop("checked", true);
+}
+if(getParameter('type3B')) {
+	$('#t3-2').prop("checked", true);
+}
+if(getParameter('season') == 'S') {
+	$('#s1').prop("checked", true);
+}
+if(getParameter('season') == 'U') {
+	$('#s2').prop("checked", true);
+}
+if(getParameter('season') == 'F') {
+	$('#s3').prop("checked", true);
+}
+if(getParameter('season') == 'W') {
+	$('#s4').prop("checked", true);
+}
+</script>

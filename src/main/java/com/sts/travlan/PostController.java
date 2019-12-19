@@ -109,6 +109,7 @@ public class PostController {
 		Boolean type2B = request.getParameter("type2B") == null ? false : Boolean.parseBoolean(request.getParameter("type2B"));
 		Boolean type3A = request.getParameter("type3A") == null ? false : Boolean.parseBoolean(request.getParameter("type3A"));
 		Boolean type3B = request.getParameter("type3B") == null ? false : Boolean.parseBoolean(request.getParameter("type3B"));
+		String season = request.getParameter("season") == null ? "null" : request.getParameter("season");
 		
 		String type1 = "E";
 		if((type1A && type1B) || (!type1A && !type1B)) {
@@ -142,10 +143,9 @@ public class PostController {
 		map.put("type1", type1);
 		map.put("type2", type2);
 		map.put("type3", type3);
+		map.put("season", season);
 		
 		List<PostDTO> list = post_mapper.search(map);
-		System.out.println(map);
-		System.out.println(list);
 		model.addAttribute("list", list);
 		return "/search";
 	}

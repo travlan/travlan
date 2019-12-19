@@ -272,6 +272,10 @@ ul.user-action li {
 	transition: padding 0.3s;
 }
 
+.box .name {
+	word-break: break-all;
+}
+
 input[class="search-check"]+label {
 	padding: 5px;
 	display: inline-block;
