@@ -6,6 +6,7 @@ import java.util.Map;
 import com.model.member.Member_ScrapDTO;
 
 public interface Member_ScrapMapper{
+	public int countScrap(int post_num);
 	public Member_ScrapDTO scrapedPost(Map map);
 	public int updateScrap(Map map);
 	public int deleteScrap(Map map);

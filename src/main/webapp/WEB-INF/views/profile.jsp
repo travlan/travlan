@@ -81,8 +81,9 @@
 										<li>${dto.region}</li>
 									</ul>
 									<c:set var="count" value="${util:count(dto.post_num, comment_mapper) }"/>
+									<c:set var="scount" value="${util:scount(dto.post_num, scrap_mapper) }"/>
 									<ul class="post-info list-none">
-										<li><i class="far fa-thumbs-up"></i> 25</li>
+										<li><i class="far fa-heart"></i> ${scount }</li>
 										<li><i class="far fa-comment"></i> ${count }</li>
 									</ul>
 								</div>
