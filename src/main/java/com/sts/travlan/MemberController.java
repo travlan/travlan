@@ -40,7 +40,7 @@ public class MemberController {
 	private MemberMapper mapper;
 	@Autowired
 	private NaverController navercontroller;
-	
+	@Autowired
 	private JavaMailSenderImpl mailSender;
 	
 	@GetMapping("/login")

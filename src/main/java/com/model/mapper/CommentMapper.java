@@ -16,4 +16,5 @@ public interface CommentMapper {
 	public int deleteVerifing(Map map);
 	public int delete(int num);
 	public int update(CommentDTO dto);
+	public int totalRate(int post_num);
 }
