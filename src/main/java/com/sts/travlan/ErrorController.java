@@ -11,15 +11,23 @@ public class ErrorController {
 	
 	@RequestMapping("/error500")
 	public String error500(HttpServletRequest request, Model model) {
-		model.addAttribute("msg", "500에러!!");
+		model.addAttribute("msg", "500");
 		
 		return "/arlet";
 	}
 	
 	@RequestMapping("/error404")
 	public String error404(HttpServletRequest request, Model model) {
-		model.addAttribute("msg", "404에러!!");
+		model.addAttribute("msg", "404");
 		
 		return "/arlet";
 	}
+	
+	@RequestMapping("/error400")
+	public String error400(HttpServletRequest request, Model model) {
+		model.addAttribute("msg", "400");
+		
+		return "/arlet";
+	}
+
 }

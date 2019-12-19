@@ -32,6 +32,17 @@
     </function>
     
     <function>  
+        <description>총 별 개수</description> 
+        <name>totalr</name>
+        <function-class>
+            com.sts.travlan.Utility
+        </function-class> 
+        <function-signature>
+            int totalr(int, com.model.mapper.CommentMapper) 
+        </function-signature> 
+    </function>
+    
+    <function>  
         <description>내 댓글수 보여주기</description> 
         <name>mcount</name>
         <function-class>

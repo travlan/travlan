@@ -9,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -37,6 +36,7 @@ public class Utility {
 		return sb.toString();
 	}
 	
+	
 	public static int checkScrap(int member_num, int post_num, Member_ScrapMapper scrap_mapper) {
 		Map map = new HashMap();
 		map.put("member_num", member_num);
@@ -56,6 +56,11 @@ public class Utility {
 	public static int count(int post_num, CommentMapper comment_mapper) {
 		return comment_mapper.total(post_num);
 	}
+	
+	public static int totalr(int post_num, CommentMapper comment_mapper) {
+		return comment_mapper.totalRate(post_num);
+	}
+	
 	
 	public String isLoginFilter(HttpSession session, String uri) {
 	if ((String)session.getAttribute("id") == null) {

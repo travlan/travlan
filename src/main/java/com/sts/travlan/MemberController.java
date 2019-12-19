@@ -45,7 +45,7 @@ public class MemberController {
 	private Member_NoteMapper note_mapper;
 	@Autowired
 	private NaverController navercontroller;
-	
+	@Autowired
 	private JavaMailSenderImpl mailSender;
 	
 	@GetMapping("/login")

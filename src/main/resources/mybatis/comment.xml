@@ -54,6 +54,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE num = #{num} AND member_num = #{member_num}
 	</select>
 	
+	<select id="totalRate" parameterType="int" resultType="int">
+		SELECT COALESCE(SUM(score), 0) FROM comment
+		WHERE post_num = #{post_num}
+	</select>
+	
 	<delete id="delete" parameterType="int">
 		DELETE FROM comment
 		WHERE num = #{num}
