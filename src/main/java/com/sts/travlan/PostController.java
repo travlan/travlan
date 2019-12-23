@@ -208,6 +208,25 @@ public class PostController {
 		}
 	}
 	
+	@PostMapping("/post_update")
+	public String update(Model model, HttpSession session, HttpServletRequest request, PostDTO dto) {
+		String type = "";
+		type += request.getParameter("type1");
+		type += request.getParameter("type2");
+		type += request.getParameter("type3");
+		dto.setType(type);
+		
+		if((Integer)session.getAttribute("num") != dto.getMember_num()) {
+			model.addAttribute("msg", "꼼수쓰지 마세요~");
+			return "/arlet";
+		}else if(post_mapper.update(dto) > 0) {
+			return "redirect:/post_read?num=" + dto.getPost_num();
+		}else {
+			model.addAttribute("msg", "글 수정 실패!");
+			return "/arlet";
+		}
+	}
+	
 	@ResponseBody
 	@RequestMapping("/comment_write")
 	public String commentWrite(HttpSession session, CommentDTO dto, HttpServletRequest request) {

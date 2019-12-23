@@ -4,7 +4,6 @@
     <div class="container pt-5">
         <form class="form-horizontal" action="post_write" method="post" enctype="multipart/form-data" id="post_write">
 			<input type="hidden" name="member_num" value="${sessionScope.num}">
-			<input type="hidden" name="type" value="ABA">
 			<input type="hidden" id="thumbnail" name="thumbnail" value="default.jpg">
 			<div class="row">
 				<div class="col-md-9">
