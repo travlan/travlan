@@ -398,8 +398,8 @@ public class PostController {
 			
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			sFileInfo += "&sFileName=" + filename;
-			sFileInfo += "&sFileURL=" + "../../travlan/storage/photo_upload/" + today_folder + "/" + realFileNm;
-			
+			sFileInfo += "&sFileURL=" + "../../travlan_dev/storage/photo_upload/" + today_folder + "/" + realFileNm;
+			// ../travlan/storage ~ 부분을 릴리즈 할때는 ROOT로 바꿔주세요
 			PrintWriter print = response.getWriter();
 
 			print.print(sFileInfo);
