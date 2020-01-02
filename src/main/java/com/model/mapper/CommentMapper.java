@@ -6,6 +6,7 @@ import java.util.Map;
 import com.model.post.CommentDTO;
 
 public interface CommentMapper {
+	public int allDelete(int post_num);
 	public List<CommentDTO> commentlist(int num);
 	public List<CommentDTO> list(int num);
 	public CommentDTO highestRate(int post_num);

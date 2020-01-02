@@ -206,7 +206,7 @@
 						<span>게시글을 삭제하시겟습니까?<br><br>삭제된 글과 댓글은 복구가 불가능합니다.</span>
 					</div>
 					<div id="deletefooterModal" class="modal-footer">
-						<button id="deletepost" type="button" class="btn btn-secondary" onclick="deletePost()">삭제</button>
+						<button id="deletepost" type="button" class="btn btn-secondary" onclick="deletePost(${post.post_num})">삭제</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
@@ -341,19 +341,17 @@
             data: {"num" : num},
             type: 'POST'
         }).done(function (data) {
-        	alert(data);
         	location.reload();
         });
 	}
 
-	function deletePost(num){
+	function deletePost(post_num){
 		$.ajax({
-            url: "comment_delete",
-            data: {"num" : num},
+            url: "post_delete",
+            data: {"post_num" : post_num},
             type: 'POST'
         }).done(function (data) {
-        	alert(data);
-        	history.back();
+        	location.href = "/travlan";
         });
 	}
 	
