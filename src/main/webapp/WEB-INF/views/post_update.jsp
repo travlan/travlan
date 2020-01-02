@@ -7,7 +7,7 @@
         <form class="form-horizontal" action="post_update" method="post" enctype="multipart/form-data" id="post_update">
 			<input type="hidden" name="member_num" value="${sessionScope.num}">
 			<input type="hidden" name="post_num" value="${post.post_num}">
-			<input type="hidden" id="thumbnail" name="thumbnail" value="default.jpg">
+			<input type="hidden" id="thumbnail" name="thumbnail" value="${post.thumbnail}">
 			<div class="row">
 				<div class="col-md-9">
 					<div class="form-group">
@@ -200,18 +200,19 @@
 	    	type: 'POST'
 		}).done(function (data) {
 			$("#thumbnail").val(data);
-			$("#post_write").submit();
+			$("#post_update").submit();
 		});
 	}
 	
 	
 	function submitContents() {
-	editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 	
-	if($("#thumbnail").val() != '${post.thumbnail}'){
-		thumbnailUpload();
-	} else {
-		$("#post_update").submit();
+		if($("#thumbnail").val() != '${post.thumbnail}'){
+			thumbnailUpload();
+		}else{
+			$("#post_update").submit();
 		}
 	}
+	
 </script>

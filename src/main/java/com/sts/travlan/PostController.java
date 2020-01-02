@@ -315,7 +315,7 @@ public class PostController {
 		
 	    Iterator<String> itr =  multipartRequest.getFileNames();
 		SimpleDateFormat formatter_folder = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat formatter = new SimpleDateFormat("HH-mm-ss-SSS");
+		SimpleDateFormat formatter = new SimpleDateFormat("HHmmss");
 		String today_folder = formatter_folder.format(new java.util.Date());
 		String today = formatter.format(new java.util.Date());
 		// 파일 경로설정
@@ -331,9 +331,8 @@ public class PostController {
 		
 		while (itr.hasNext()) {
 	        MultipartFile mpf = multipartRequest.getFile(itr.next());
-	        
-	        String originalFilename = "TN_" + today;
-	        String fileFullPath = filePath + File.separator + originalFilename;
+	        String originalFilename = "TN_" + today + "_" + mpf.getOriginalFilename();
+	        String fileFullPath = filePath + File.separator + originalFilename ;
 	        try {
 	            mpf.transferTo(new File(fileFullPath));
 	            returnFilename = originalFilename;
