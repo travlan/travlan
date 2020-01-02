@@ -19,6 +19,14 @@
 	</properties>
     
 	<dependencies>
+		<!-- 인터페이스없이 transaction 사용시 에러 예방 -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 		<!-- JSON 데이터를 처리하기 위한 자바 라이브러리 -->
 		<dependency>
     		<groupId>com.googlecode.json-simple</groupId>
@@ -154,7 +162,7 @@
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
+			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>	
 		

@@ -22,8 +22,8 @@
         <div class="form-group"><button class="btn btn-primary btn-block" type="button" onclick="location.href='register'">회원가입</button></div>
         <hr>
         <div id="kakao_id_login">
-        	<a href="${naver_url }"><img width="300" src="assets/image/네이버 아이디로 로그인_완성형_Green.PNG"/></a>
-        	<a href="${kakao_url }"><img width="300" src="assets/image/kakao_account_login_btn_medium_narrow.png"/></a>
+        	<a href="${naver_url }"><img width="370" src="assets/image/네이버 아이디로 로그인_완성형_Green.PNG"/></a>
+        	<a href="${kakao_url }"><img width="370" src="assets/image/kakao_account_login_btn_medium_narrow.png"/></a>
         </div>
 		<a class="forgot" href="${pageContext.request.contextPath}/forgot">아이디 혹은 비밀번호를 잊으셨나요?</a>
     </form>

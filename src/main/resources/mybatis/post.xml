@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.PostMapper">
 
+	<select id="checkPost" parameterType="Map" resultType="int">
+		SELECT COUNT(post_num)
+		FROM post
+		WHERE member_num = #{member_num} AND post_num = #{post_num}
+	</select>
+	
 	<select id="getPost" parameterType="int" resultType="int">
 		SELECT member_num
 		FROM post

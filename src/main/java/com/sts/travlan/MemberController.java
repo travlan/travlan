@@ -414,9 +414,9 @@ public class MemberController {
 	}
 	
 	@GetMapping("/passwd_check")
-	public String passwd_check() {
+	public String passwd_check(HttpSession session) {
 		
-		return "/passwd_check";
+		return util.isLoginFilter(session, "/passwd_check");
 	}
 	
 	@ResponseBody
@@ -511,9 +511,9 @@ public class MemberController {
 	}
 	
 	@GetMapping("/secession")
-	public String secession() {
+	public String secession(HttpSession session) {
 		
-		return "/secession";
+		return util.isLoginFilter(session, "/secession");
 	}
 	
 	@PostMapping("/secession")

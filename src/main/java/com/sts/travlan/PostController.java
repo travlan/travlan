@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -52,6 +53,8 @@ public class PostController {
 	private CommentMapper comment_mapper;
 	@Autowired
 	private Member_NotifyMapper notify_mapper;
+	@Autowired
+	private TravlanService service;
 	
 	@GetMapping("/arlet")
 	public String arlet(Model model) {
@@ -93,12 +96,24 @@ public class PostController {
 	
 	@ResponseBody
 	@RequestMapping("/post_delete")
-	public String delete(HttpSession session, int num) {
-		if((Integer)session.getAttribute("num") != num) {
-			return "false";
-		}else {
-			return "true";
+	public String delete(HttpSession session, int post_num) {
+		try {
+			service.postdelete(post_num);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		Map map = new HashMap();
+		map.put("member_num", session.getAttribute("num"));
+		map.put("post_num", post_num);
+		
+		if(post_mapper.checkPost(map) == 0) {
+			return "true";
+		} else {
+			return "false";
+		}
+		
 	}
 	
 	@GetMapping("/search")
@@ -151,19 +166,19 @@ public class PostController {
 		return "/search";
 	}
 	
-	@GetMapping("/post_delete")
-	public String delete(HttpSession session, int num, Model model) {
-		PostDTO post = post_mapper.read(num);
-		int sessionNum = (Integer)session.getAttribute("num") != null ? (Integer)session.getAttribute("num") : -1;
-		
-		if(post.getMember_num() == sessionNum) {
-			return "/post_delete";
-		}else {
-			model.addAttribute("msg", "게시글 삭제 페이지 로딩 실패!");
-			
-			return "/arlet";
-		}
-	}
+//	@GetMapping("/post_delete")
+//	public String delete(HttpSession session, int num, Model model) {
+//		PostDTO post = post_mapper.read(num);
+//		int sessionNum = (Integer)session.getAttribute("num") != null ? (Integer)session.getAttribute("num") : -1;
+//		
+//		if(post.getMember_num() == sessionNum) {
+//			return "/post_delete";
+//		}else {
+//			model.addAttribute("msg", "게시글 삭제 페이지 로딩 실패!");
+//			
+//			return "/arlet";
+//		}
+//	}
 	
 	@GetMapping("/post_read")
 	public String post_read(int num, Model model, HttpSession session, HttpServletRequest request) {
