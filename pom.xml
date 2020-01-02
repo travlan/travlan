@@ -244,7 +244,7 @@
 		</dependency>        
 	</dependencies>
     <build>
-	<finalName>Travlan_Dev</finalName>
+	<finalName>travlan_dev</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
