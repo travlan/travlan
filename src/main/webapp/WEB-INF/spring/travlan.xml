@@ -120,7 +120,7 @@
    
     <definition name="/note/read" extends="window"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/window/close.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/window/read.jsp" /> 
     </definition>
     
     <definition name="/report/receive" extends="window"> 
