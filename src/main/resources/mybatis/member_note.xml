@@ -5,6 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.Member_NoteMapper">
 	
+	<delete id="noteDelete" parameterType="int">
+		DELETE FROM member_note
+		WHERE send_user = #{send_user} OR revice_user = #{send_user}
+	</delete>
+	
 	<select id="list" resultType="Member_NoteDTO">
 		SELECT send_user, revice_user, created_date, content, is_read
 		FROM member_note

@@ -5,6 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.Member_ScrapMapper">
 	
+	<delete id="scrapDelete" parameterType="int">
+		DELETE FROM member_scrap
+		WHERE member_num = #{member_num}
+	</delete>
+	
 	<select id="countScrap" parameterType="int" resultType="int">
 		SELECT COUNT(post_num)
 		FROM member_scrap

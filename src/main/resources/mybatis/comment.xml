@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.CommentMapper">
 
+	<update id="commentUpdate" parameterType="int">
+		UPDATE comment
+		SET member_num = 1
+		WHERE member_num = #{member_num}
+	</update>
+	
 	<delete id="allDelete" parameterType="int">
 		DELETE FROM comment
 		WHERE post_num = #{post_num}
