@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.PostMapper">
 
+	<update id="postUpdate" parameterType="int">
+		UPDATE post
+		SET member_num = 1
+		WHERE member_num = #{member_num}
+	</update>
+	
 	<select id="checkPost" parameterType="Map" resultType="int">
 		SELECT COUNT(post_num)
 		FROM post
@@ -72,14 +78,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				time = #{time}, cost = #{cost}, TYPE = #{type}, thumbnail = #{thumbnail}, updated_date = NOW()
 		</set>
 		WHERE post_num = #{post_num}
-	</update>
-	
-	<update id="secessionPost" parameterType="int">
-		UPDATE post
-		<set>
-			member_num = 0
-		</set>
-		WHERE member_num = #{member_num}
 	</update>
 	
 	<select id="list" parameterType="Map" resultType="PostDTO">

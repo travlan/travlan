@@ -42,6 +42,8 @@ public class MemberController {
 	private NaverController navercontroller;
 	@Autowired
 	private JavaMailSenderImpl mailSender;
+	@Autowired
+	private TravlanService service;
 	
 	@GetMapping("/login")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
@@ -517,17 +519,20 @@ public class MemberController {
 	}
 	
 	@PostMapping("/secession")
-	public String secession(String id, Model model) {
+	public String secession(HttpSession session, Model model) {
 		
-		int flag = mapper.secession(id);
-		
-		if(flag > 0) {
-			return "/bye";
-		} else {
-			model.addAttribute("msg", "회원 탈퇴 실패!");
-			
-			return "/arlet";
+		try {
+			service.secessiondelete((int)session.getAttribute("num"));
+			service.secessionupdate((int)session.getAttribute("num"));
+			service.secession((int)session.getAttribute("num"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		session.invalidate();
+			
+		return "/bye";
 	}
 	
 	@GetMapping("/bye")
