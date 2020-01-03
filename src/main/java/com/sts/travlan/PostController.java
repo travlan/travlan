@@ -330,6 +330,9 @@ public class PostController {
 		
 		if (!file.exists()) {
 			file.mkdirs();
+	        file.setReadable(true, false);
+	        file.setWritable(false, false);
+	        file.setWritable(true, true);
 		}
 		
 		while (itr.hasNext()) {
@@ -373,6 +376,9 @@ public class PostController {
 			
 			if (!file.exists()) {
 				file.mkdirs();
+		        file.setReadable(true, false);
+		        file.setWritable(false, false);
+		        file.setWritable(true, true);
 			}
 
 			String realFileNm = "";
