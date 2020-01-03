@@ -341,7 +341,7 @@ public class PostController {
 	            returnFilename = originalFilename;
 	            System.out.println("Upload Success!! " + fileFullPath);
 	            
-	            String cmd = "chmod 755 -R /data/storage";
+	            String cmd = "chmod 755 -R /usr/local/tomcat/data/storage";
 	            Runtime runtime = Runtime.getRuntime();
 	            Process process = runtime.exec(cmd);
 	            process.waitFor();
@@ -400,7 +400,7 @@ public class PostController {
 				is.close();
 			}
 			
-			String cmd = "chmod 755 -R /data/storage";
+			String cmd = "chmod 755 -R /usr/local/tomcat/data";
             Runtime runtime = Runtime.getRuntime();
             Process process = runtime.exec(cmd);
             process.waitFor();
