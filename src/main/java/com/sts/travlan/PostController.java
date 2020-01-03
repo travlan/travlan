@@ -340,7 +340,7 @@ public class PostController {
 	            mpf.transferTo(new File(fileFullPath));
 	            returnFilename = originalFilename;
 	            System.out.println("Upload Success!! " + fileFullPath);
-	            Runtime.getRuntime().exec("chmod 755 -R /data/storage");
+	            Runtime.getRuntime().exec("touch /test/asd.txt");
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
