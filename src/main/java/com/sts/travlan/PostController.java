@@ -340,7 +340,12 @@ public class PostController {
 	            mpf.transferTo(new File(fileFullPath));
 	            returnFilename = originalFilename;
 	            System.out.println("Upload Success!! " + fileFullPath);
-	            Runtime.getRuntime().exec("touch /test/asd.txt");
+	            
+	            String cmd = "chmod 755 -R /data/storage";
+	            Runtime runtime = Runtime.getRuntime();
+	            Process process = runtime.exec(cmd);
+	            process.waitFor();
+	           
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
@@ -395,7 +400,11 @@ public class PostController {
 				is.close();
 			}
 			
-			Runtime.getRuntime().exec("chmod 755 -R /data/storage");
+			String cmd = "chmod 755 -R /data/storage";
+            Runtime runtime = Runtime.getRuntime();
+            Process process = runtime.exec(cmd);
+            process.waitFor();
+		
 			os.flush();
 			os.close();
 			///////////////// 서버에 파일쓰기 /////////////////
