@@ -40,7 +40,8 @@ import com.model.post.CommentDTO;
 
 @Controller
 public class PostController {
-  
+	final String dftFilePath = File.separator + "usr" + File.separator + "local" + File.separator + "tomcat" + File.separator + "data" + File.separator;
+	
 	Utility util = new Utility();
 	
 	@Autowired
@@ -318,8 +319,10 @@ public class PostController {
 		SimpleDateFormat formatter = new SimpleDateFormat("HHmmss");
 		String today_folder = formatter_folder.format(new java.util.Date());
 		String today = formatter.format(new java.util.Date());
-		// 파일 경로설정
-		String dftFilePath = multipartRequest.getSession().getServletContext().getRealPath("/");
+		// 파일 경로설정 (로컬에서 작업하려면 위에거 사용해주셈)
+		// String dftFilePath = multipartRequest.getSession().getServletContext().getRealPath("/");
+		// String dftFilePath = File.separator + "usr" + File.separator + "local" + File.separator + "tomcat" + File.separator + "data" + File.separator;
+		
 		String filePath = dftFilePath + "storage" + File.separator + "photo_thumbnail" + File.separator + today_folder;
 		
 		File file = new File(filePath);
@@ -352,7 +355,7 @@ public class PostController {
 			String sFileInfo = "";
 			
 			SimpleDateFormat formatter_folder = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat formatter = new SimpleDateFormat("HH-mm-ss-SSS");
+			SimpleDateFormat formatter = new SimpleDateFormat("HHmmss");
 			String today_folder = formatter_folder.format(new java.util.Date());
 			String today = formatter.format(new java.util.Date());
 			
@@ -361,9 +364,9 @@ public class PostController {
 		
 			String filename_ext = filename.substring(filename.lastIndexOf(".") + 1);
 			filename_ext = filename_ext.toLowerCase();
-			
-			// 파일 경로설정
-			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+			// 파일 경로설정 (로컬에서 작업하려면 위에거 사용해주셈)
+			// String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+			// String dftFilePath = File.separator + "data" + File.separator;
 			String filePath = dftFilePath + "storage" + File.separator + "photo_upload" + File.separator + today_folder + File.separator;
 			
 			File file = new File(filePath);
@@ -398,7 +401,7 @@ public class PostController {
 			
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			sFileInfo += "&sFileName=" + filename;
-			sFileInfo += "&sFileURL=" + "../../travlan_dev/storage/photo_upload/" + today_folder + "/" + realFileNm;
+			sFileInfo += "&sFileURL=" + "../../data/storage/photo_upload/" + today_folder + "/" + realFileNm;
 			// ../travlan/storage ~ 부분을 릴리즈 할때는 ROOT로 바꿔주세요
 			PrintWriter print = response.getWriter();
 

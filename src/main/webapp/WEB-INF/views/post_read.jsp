@@ -6,7 +6,7 @@
     <section class="clean-block clean-post dark">
         <div class="container">
             <div class="block-content">
-                <div class="post-image" style="background-image:url(storage/photo_thumbnail/${post.thumbnail});">
+                <div class="post-image" style="background-image:url(../../data/storage/photo_thumbnail/${post.thumbnail});">
 					<div class="dark-mask">
 						<h3 class="post-title font-myungjo">${post.title}</h3>
 						<div class="post-action">
