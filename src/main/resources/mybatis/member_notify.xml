@@ -5,6 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.Member_NotifyMapper">
 	
+	<delete id="postnotify" parameterType="int">
+		DELETE FROM member_notify
+		WHERE post_num = #{post_num}
+	</delete>
+	
 	<delete id="notifyDelete" parameterType="int">
 		DELETE FROM member_notify
 		WHERE member_num = #{member_num}

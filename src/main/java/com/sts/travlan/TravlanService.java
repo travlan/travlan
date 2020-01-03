@@ -30,6 +30,8 @@ public class TravlanService {
 	private ReportMapper report_mapper;
 	
 	public void postdelete(int post_num) throws Exception {
+		notify_mapper.postnotify(post_num);
+		scrap_mapper.postscrap(post_num);
 		comment_mapper.allDelete(post_num);
 		post_mapper.delete(post_num);
 	}
