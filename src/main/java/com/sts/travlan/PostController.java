@@ -330,9 +330,6 @@ public class PostController {
 		
 		if (!file.exists()) {
 			file.mkdirs();
-	        file.setReadable(true, false);
-	        file.setWritable(false, false);
-	        file.setWritable(true, true);
 		}
 		
 		while (itr.hasNext()) {
@@ -343,7 +340,7 @@ public class PostController {
 	            mpf.transferTo(new File(fileFullPath));
 	            returnFilename = originalFilename;
 	            System.out.println("Upload Success!! " + fileFullPath);
-	            
+	            Runtime.getRuntime().exec("chmod 755 -R /data/storage");
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
@@ -376,9 +373,6 @@ public class PostController {
 			
 			if (!file.exists()) {
 				file.mkdirs();
-		        file.setReadable(true, false);
-		        file.setWritable(false, false);
-		        file.setWritable(true, true);
 			}
 
 			String realFileNm = "";
@@ -389,6 +383,8 @@ public class PostController {
 			///////////////// 서버에 파일쓰기 /////////////////
 			InputStream is = request.getInputStream();
 			OutputStream os = new FileOutputStream(rlFileNm);
+			
+
 			int numRead;
 			byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
 			while ((numRead = is.read(b, 0, b.length)) != -1) {
@@ -398,7 +394,8 @@ public class PostController {
 			if (is != null) {
 				is.close();
 			}
-
+			
+			Runtime.getRuntime().exec("chmod 755 -R /data/storage");
 			os.flush();
 			os.close();
 			///////////////// 서버에 파일쓰기 /////////////////
@@ -407,7 +404,7 @@ public class PostController {
 			
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			sFileInfo += "&sFileName=" + filename;
-			sFileInfo += "&sFileURL=" + "../../data/storage/photo_upload/" + today_folder + "/" + realFileNm;
+			sFileInfo += "&sFileURL=" + "/image/photo_upload/" + today_folder + "/" + realFileNm;
 			// ../travlan/storage ~ 부분을 릴리즈 할때는 ROOT로 바꿔주세요
 			PrintWriter print = response.getWriter();
 
