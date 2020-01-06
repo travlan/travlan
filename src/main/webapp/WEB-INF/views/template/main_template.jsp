@@ -72,10 +72,23 @@
 			}
 		});
 		
+		function deleteNotifyAll() {
+			$.ajax({
+				url: "user/notify/delete/all",
+				type: "post",
+			}).done(function(data) {
+				$('#notify-count').html('');
+				$('#notify-content').html('');
+			});	
+		}
+		
 		var notifyRender = function(element) {
 			return "\
-			<div class=\"\">\
+			<div id=\"notify-ele-"+ element.num +"\">\
 			  <div class=\"card-body\">\
+			  	<button onclick=\"deleteNotify("+ element.num +")\" type=\"button\" class=\"close\">\
+	          		<span>×</span>\
+	        	</button>\
 			    <blockquote class=\"mb-0\">\
 			      <p><a class=\"immutable\" href=\"post_read?num="+ element.post +"\" onclick=\"deleteNotify("+ element.num +")\">"+ element.detail +"</a></p>\
 			      <footer class=\"blockquote-footer\">"+ element.date +"</footer>\
@@ -90,6 +103,8 @@
 			    url: "user/notify/delete",
 			    type: "post",
 			    data: {"num": num},
+			}).done(function(data) {
+				$('#notify-ele-' + num).remove();
 			});
 		}
 	</script>

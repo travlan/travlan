@@ -59,4 +59,11 @@ public class Member_NotifyController {
 		
 		mapper.delete(num);
 	}
+	
+	@ResponseBody
+	@PostMapping("/user/notify/delete/all")
+	public void deleteNotifyAll(HttpSession session) {
+		
+		mapper.deleteAll((Integer)session.getAttribute("num"));
+	}
 }
