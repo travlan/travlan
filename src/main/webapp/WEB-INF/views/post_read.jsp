@@ -351,7 +351,7 @@
             data: {"post_num" : post_num},
             type: 'POST'
         }).done(function (data) {
-        	location.href = "/travlan";
+        	location.href = "./arlet";
         });
 	}
 	

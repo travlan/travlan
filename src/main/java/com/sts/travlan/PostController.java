@@ -97,11 +97,10 @@ public class PostController {
 	
 	@ResponseBody
 	@RequestMapping("/post_delete")
-	public String delete(HttpSession session, int post_num) {
+	public String delete(HttpSession session, Model model, int post_num) {
 		try {
 			service.postdelete(post_num);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -110,8 +109,10 @@ public class PostController {
 		map.put("post_num", post_num);
 		
 		if(post_mapper.checkPost(map) == 0) {
+			model.addAttribute("msg", "글 삭제 성공");
 			return "true";
 		} else {
+			model.addAttribute("msg", "글 삭제 실패");
 			return "false";
 		}
 		
@@ -286,9 +287,9 @@ public class PostController {
 				dto.getPost_num() != (Integer) request.getAttribute("num") ) {
 			return "error!";
 		}else if(comment_mapper.update(dto) > 0) {
-			return "true";
+			return "댓글 수정 완료";
 		}else {
-			return "false";
+			return "댓글 수정 실패";
 		}
 	}
 	
@@ -303,9 +304,9 @@ public class PostController {
 		
 		if(comment_mapper.deleteVerifing(map) > 0) {
 			comment_mapper.delete(num);
-			return "true";
+			return "댓글 삭제 완료";
 		}else {
-			return "false";
+			return "댓글 삭제 실패";
 		}
 	}
 
@@ -436,7 +437,12 @@ public class PostController {
 		
 		if(nowPage > lastPage) { nowPage = lastPage; }
 		no += (nowPage - 1) * pagePost;
-		if(no > total) { no = (int)total; }
+		if(no > total) 
+		{ 
+			no = (int)total; 
+		}else if(no < 0) {
+			no = 0;
+		}
 		
 		Map map = new HashMap();
 		

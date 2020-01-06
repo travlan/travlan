@@ -48,9 +48,9 @@ public class Member_NoteController {
 		System.out.println("" + dto);
 		
 		if (mapper.sendNote(dto) > 0) {
-			return "sucess";
+			return "쪽지 전송 성공";
 		} else {
-			return "fail";
+			return "쪽지 전송 실패";
 		}
 	}
 	
@@ -60,12 +60,12 @@ public class Member_NoteController {
 		
 		if((Integer) session.getAttribute("num") == member_num) {
 			if(mapper.delete(note_num) > 0) {
-				return "success";
+				return "쪽지 삭제 성공";
 			}else {
-				return "fail";
+				return "쪽지 삭제 실패";
 			}
 		}else {
-			return "fail";
+			return "쪽지 삭제 실패";
 		}
 	}
 	

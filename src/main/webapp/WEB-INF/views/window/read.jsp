@@ -9,4 +9,5 @@
 <div class="form-group">
     	<textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="5" readonly>${dto.content}</textarea>
 </div>
-<button type="button" onclick="close()" class="btn btn-dark btn-block">닫기</button>
+<button type="button" onclick="window.close()" class="btn btn-dark btn-block">닫기</button>
+
