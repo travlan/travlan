@@ -11,9 +11,7 @@
 	<div class="form-group">
     	<textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="5"></textarea>
   	</div>
-	<button type="button" onclick="postNote();" class="btn btn-dark btn-block">
-		전송
-	</button>
+	<button type="button" onclick="postNote();" class="btn btn-dark btn-block">전송</button>
 </form>
 
 
