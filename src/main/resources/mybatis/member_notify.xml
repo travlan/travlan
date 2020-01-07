@@ -37,4 +37,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE num = #{num}
 	</delete>
 	
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM member_notify
+		WHERE member_num = #{member_num}
+	</delete>
+	
 </mapper>
