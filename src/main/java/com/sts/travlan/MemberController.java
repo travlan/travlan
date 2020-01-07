@@ -531,15 +531,17 @@ public class MemberController {
 		}
 		
 		session.invalidate();
-			
-		return "/bye";
+		
+		String text = "<a class=\"font-classic text-title immutable\" href=\"./\">Travlan</a><br><br>"
+				    + "<p>지금까지 Travlan을 이용해주셔서 감사합니다.</p>"
+				    + "<p>다음에 좋은 기회로 다시 만났으면 좋겠습니다.</p>"
+				    + "<p>언제나 즐거운 여행하세요.</p><br>";
+		
+		model.addAttribute("msg", text);
+		
+		return "/arlet";
 	}
 	
-	@GetMapping("/bye")
-	public String bye(HttpSession session) {
-		
-		return util.isLoginFilter(session, "/bye");
-	}
 	
 	@ResponseBody
 	@GetMapping(value = "/nicknamechange", produces="application/json;charset=utf-8")
