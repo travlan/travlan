@@ -11,21 +11,24 @@ public class ErrorController {
 	
 	@RequestMapping("/error500")
 	public String error500(HttpServletRequest request, Model model) {
-		model.addAttribute("msg", "500");
+		String msg = "<img src='/image/assets/500.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+		model.addAttribute("msg", msg);
 		
 		return "/arlet";
 	}
 	
 	@RequestMapping("/error404")
 	public String error404(HttpServletRequest request, Model model) {
-		model.addAttribute("msg", "404");
+		String msg = "<img src='/image/assets/404.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+		model.addAttribute("msg", msg);
 		
 		return "/arlet";
 	}
 	
 	@RequestMapping("/error400")
 	public String error400(HttpServletRequest request, Model model) {
-		model.addAttribute("msg", "400");
+		String msg = "<img src='/image/assets/400.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+		model.addAttribute("msg", msg);
 		
 		return "/arlet";
 	}

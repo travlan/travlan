@@ -49,7 +49,7 @@
     </definition>
     
     <definition name="/arlet" extends="single"> 
-        <put-attribute name="title" value="Login" ></put-attribute> 
+        <put-attribute name="title" value="Alert" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/arlet.jsp" /> 
     </definition>
     
@@ -91,11 +91,6 @@
 	<definition name="/secession" extends="main"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/secession.jsp" /> 
-    </definition>
-						
-	<definition name="/bye" extends="main"> 
-        <put-attribute name="title" value="Travlan" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/bye.jsp" /> 
     </definition>
 	
 	<definition name="/profile" extends="main"> 

@@ -118,12 +118,13 @@
         		<div class="modal-footer">
           			<button type="button" class="btn btn-primary" onclick="submitContents()">제출</button>
         		</div>
-        		
       		</div>
     	</div>
 	</div>
+	
 </section>
 <script type="text/javascript" src="smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
+
 <script type="text/javascript">
 	//썸네일 업로드를 위한 data정보
 	var reader = new FileReader;
@@ -188,12 +189,21 @@
 	}
 
 	function submitContents() {
-		editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-		
-		if($("#thumbnail").val() != "default.jpg"){
-			thumbnailUpload();
-		} else {
-			$("#post_write").submit();
+		if($("#title").val.length == 0){
+			alert("제목을 입력해주세요!");
+			return false;
+		}
+		else if($("#province").val() == 'XX'){
+			alert("지역을 선택해주세요!");
+			return false;
+			}else{
+				editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+				if($("#thumbnail").val() != "default.jpg"){
+					thumbnailUpload();
+				} else {
+					$("#post_write").submit();
+				}
+			return true;
 		}
 	}
 </script>
