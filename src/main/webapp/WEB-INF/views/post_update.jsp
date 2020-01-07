@@ -204,15 +204,23 @@
 		});
 	}
 	
-	
 	function submitContents() {
-		editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-	
-		if($("#thumbnail").val() != '${post.thumbnail}'){
-			thumbnailUpload();
-		}else{
-			$("#post_update").submit();
+		if($("#title").val.length == 0){
+			alert("제목을 입력해주세요!");
+			return false;
+		}
+		else if($("#province").val() == 'XX'){
+			alert("지역을 선택해주세요!");
+			return false;
+			}else{
+				editor_obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+				if($("#thumbnail").val() != '${post.thumbnail}'){
+					thumbnailUpload();
+				} else {
+					$("#post_update").submit();
+				}
+			return true;
 		}
 	}
-	
+		
 </script>

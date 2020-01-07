@@ -94,8 +94,8 @@
 	<script src="https://static.blex.kr/assets/library/bootstrap.js"></script>
 	<script>
 	function required() {
-		if($('#province option:selected').val() == 'XX') {
-			alert('지역을 선택하세요.');
+		if($("#province").val() == 'XX'){
+			alert("지역을 선택해주세요!");
 			return false;
 		}
 	}

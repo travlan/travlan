@@ -106,8 +106,9 @@ public class MemberController {
 						
 				return "redirect:/";
 			} else {
-				model.addAttribute("msg", "failure");
-				return "/login";
+				String msg = "<img src='/image/error00.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+				model.addAttribute("msg", msg);
+				return "/arlet";
 			}
 		} else {
 			dto.setEmail(kemail);
@@ -225,15 +226,20 @@ public class MemberController {
 			
 			return "redirect:" + redi;
 		} else {
-			model.addAttribute("msg", "failure");
-			return "/login";
+			String msg = "<img src='/image/assets/error05.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
+			return "/arlet";
 		}
 	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletRequest request) {
 		session.invalidate();
-		request.setAttribute("msg", "로그아웃 되었습니다.");
+		
+		String msg = "<a class=\"font-classic text-title immutable\" href=\"./\">Travlan</a><br><br>"
+				   + "<p>로그아웃 되었습니다.</p><br>";
+		
+		request.setAttribute("msg", msg);
 		return "/arlet";
 	}
 	
@@ -254,7 +260,8 @@ public class MemberController {
 			request.setAttribute("num",mapper.get_unique_number(dto.getId()));
 			return "register_additional_info";
 		} else {
-			request.setAttribute("msg", "회원가입 실패!");
+			String msg = "<img src='/image/assets/error00.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			request.setAttribute("msg", msg);
 			return "/arlet";
 		}
 		
@@ -277,7 +284,8 @@ public class MemberController {
 		if(mapper.create_member_info(dto) > 0) {
 			return "redirect:/";
 		}else {
-			model.addAttribute("msg", "추가정보 입력 실패!");
+			String msg = "<img src='/image/assets/error01.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
 			
 			return "/arlet";
 		}
@@ -462,7 +470,8 @@ public class MemberController {
 		if(flag > 0) {
 			return "/passwd_change";
 		} else {
-			model.addAttribute("msg", "패스워드 확인 실패!");
+			String msg = "<img src='/image/assets/error03.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
 			return "/arlet";
 		}
 	}
@@ -506,7 +515,8 @@ public class MemberController {
 		if(flag > 0) {
 			return "redirect:logout";
 		} else {
-			model.addAttribute("msg", "패스워드 변경 실패!");
+			String msg = "<img src='/image/assets/error04.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
 			
 			return "/arlet";
 		}
@@ -526,18 +536,17 @@ public class MemberController {
 			service.secessionupdate((int)session.getAttribute("num"));
 			service.secession((int)session.getAttribute("num"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		session.invalidate();
 		
-		String text = "<a class=\"font-classic text-title immutable\" href=\"./\">Travlan</a><br><br>"
-				    + "<p>지금까지 Travlan을 이용해주셔서 감사합니다.</p>"
-				    + "<p>다음에 좋은 기회로 다시 만났으면 좋겠습니다.</p>"
-				    + "<p>언제나 즐거운 여행하세요.</p><br>";
+		String msg = "<a class=\"font-classic text-title immutable\" href=\"./\">Travlan</a><br><br>"
+				   + "<p>지금까지 Travlan을 이용해주셔서 감사합니다.</p>"
+				   + "<p>다음에 좋은 기회로 다시 만났으면 좋겠습니다.</p>"
+				   + "<p>언제나 즐거운 여행하세요.</p><br>";
 		
-		model.addAttribute("msg", text);
+		model.addAttribute("msg", msg);
 		
 		return "/arlet";
 	}
@@ -585,7 +594,8 @@ public class MemberController {
 		if(mapper.additionalchange(dto) > 0) {
 			return "redirect:/myinfo";
 		}else {
-			model.addAttribute("msg", "추가정보 수정 실패!");
+			String msg = "<img src='/image/assets/error02.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
 			
 			return "/arlet";
 		}
@@ -609,7 +619,8 @@ public class MemberController {
 		if(mapper.create_member_info(dto) > 0) {
 			return "redirect:/myinfo";
 		}else {
-			model.addAttribute("msg", "추가정보 입력 실패!");
+			String msg = "<img src='/image/assets/error01.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
 			
 			return "/arlet";
 		}

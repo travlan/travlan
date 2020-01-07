@@ -83,8 +83,8 @@ public class PostController {
 		
 
 		if((Integer)session.getAttribute("num") != dto.getMember_num()) {
-			model.addAttribute("msg", "꼼수쓰지 마세요~");
-			
+			String msg = "<img src='/image/error06.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
 			return "/arlet";
 		}
 		if (post_mapper.create(dto) > 0) {
@@ -234,7 +234,8 @@ public class PostController {
 		dto.setType(type);
 		
 		if((Integer)session.getAttribute("num") != dto.getMember_num()) {
-			model.addAttribute("msg", "꼼수쓰지 마세요~");
+			String msg = "<img src='/image/error00.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
 			return "/arlet";
 		}else if(post_mapper.update(dto) > 0) {
 			return "redirect:/post_read?num=" + dto.getPost_num();

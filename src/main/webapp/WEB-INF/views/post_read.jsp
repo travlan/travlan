@@ -161,7 +161,7 @@
 						</button>
 					</div>
 					<div id="examplemainModal" class="modal-body">
-						<p><img src="storage/photo_thumbnail/${post.thumbnail}" class="post-image"></p>
+						<p><img src="/image/photo_thumbnail/${post.thumbnail}" class="post-image"></p>
 						<div class="post-body">
 							<h3>${post.title}</h3>
 							<span>${author.nickname}</span>
