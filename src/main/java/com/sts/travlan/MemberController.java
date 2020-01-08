@@ -48,7 +48,7 @@ public class MemberController {
 	@GetMapping("/login")
 	public String login(HttpServletRequest request, HttpSession session, Model model) {
     
-		String redi = request.getHeader("referer").toString().substring(29);
+		String redi = request.getHeader("referer").toString().substring(30);
 		request.setAttribute("redi", redi);
     
 		String kakaoUrl = KakaoController.getAuthorizationUrl(session);
