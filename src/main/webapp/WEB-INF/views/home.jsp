@@ -77,8 +77,8 @@
 								<c:set var="totalr" value="${util:totalr(dto.post_num, comment_mapper)}"/>
 								<c:set var="checkScrap" value="${util:checkScrap(sessionScope.num, dto.post_num, scrap_mapper)}"/>
 								<ul class="post-info list-none">
-									<li><i class="far fa-star"></i>${totalr}</li>
-									<li><i class="far fa-comment"></i>${count}</li>
+									<li><i class="far fa-star"></i> ${totalr}</li>
+									<li><i class="far fa-comment"></i> ${count}</li>
 									<c:if test="${not empty sessionScope.id}">
 										<c:if test="${dto.member_num != sessionScope.num}">
 											<c:choose>
