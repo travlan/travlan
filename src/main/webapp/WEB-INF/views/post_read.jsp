@@ -214,6 +214,7 @@
 		</div>
 		
 <script>
+
 	$('#exampleModal').on('shown.bs.modal', function () {
 		$("#memo").focus();
 	});
@@ -286,18 +287,6 @@
 			$('#' + starID + i).prop('checked', true);
 		}
 	}
-	
-	function postComment(){
-		var formData = $("#commentform").serialize();
-		$.ajax({
-            url: "comment_write",
-            data: formData,
-            type: 'POST'
-        }).done(function (data) {
-        	alert(data);
-        	location.reload();
-        });
-	}
 
 	function updateCommentForm(boxnum){
 		var num = $("#comment-num" + boxnum).val();
@@ -323,6 +312,22 @@
 		$("#commentBox" + boxnum).html(updateform);
 	}
 
+	function postComment(){
+		var formData = $("#commentform").serialize();
+		$.ajax({
+            url: "comment_write",
+            data: formData,
+            type: 'POST'
+        }).done(function (data) {
+        	if(data == "true"){
+                alert("댓글이 작성되었습니다!");
+            }else{
+            	alert("댓글 작성을 실패했습니다!");
+                }
+        	location.reload();
+        });
+	}
+	
 	function updateComment(){
 		var formData = $("#updateform").serialize();
 		$.ajax({
@@ -330,7 +335,11 @@
             data: formData,
             type: 'POST'
         }).done(function (data) {
-        	alert(data);
+        	if(data == "true"){
+                alert("댓글이 수정되었습니다!");
+            }else{
+            	alert("댓글 수정을 실패했습니다!");
+                }
         	location.reload();
         });
 	}
@@ -341,6 +350,11 @@
             data: {"num" : num},
             type: 'POST'
         }).done(function (data) {
+            if(data == "true"){
+                alert("댓글이 삭제되었습니다!");
+            }else{
+            	alert("댓글 삭제를 실패했습니다!");
+                }
         	location.reload();
         });
 	}

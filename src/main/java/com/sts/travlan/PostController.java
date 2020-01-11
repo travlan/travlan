@@ -97,7 +97,7 @@ public class PostController {
 	
 	@ResponseBody
 	@RequestMapping("/post_delete")
-	public String delete(HttpSession session, Model model, int post_num) {
+	public boolean delete(HttpSession session, Model model, int post_num) {
 		try {
 			service.postdelete(post_num);
 		} catch (Exception e) {
@@ -109,11 +109,9 @@ public class PostController {
 		map.put("post_num", post_num);
 		
 		if(post_mapper.checkPost(map) == 0) {
-			model.addAttribute("msg", "글 삭제 성공");
-			return "true";
+			return true;
 		} else {
-			model.addAttribute("msg", "글 삭제 실패");
-			return "false";
+			return false;
 		}
 		
 	}
@@ -168,20 +166,6 @@ public class PostController {
 		return "/search";
 	}
 	
-//	@GetMapping("/post_delete")
-//	public String delete(HttpSession session, int num, Model model) {
-//		PostDTO post = post_mapper.read(num);
-//		int sessionNum = (Integer)session.getAttribute("num") != null ? (Integer)session.getAttribute("num") : -1;
-//		
-//		if(post.getMember_num() == sessionNum) {
-//			return "/post_delete";
-//		}else {
-//			model.addAttribute("msg", "게시글 삭제 페이지 로딩 실패!");
-//			
-//			return "/arlet";
-//		}
-//	}
-	
 	@GetMapping("/post_read")
 	public String post_read(int num, Model model, HttpSession session, HttpServletRequest request) {
 		
@@ -220,7 +204,6 @@ public class PostController {
 			return "/post_update";
 		}else {
 			model.addAttribute("msg", "게시글 수정 페이지 로딩 실패!");
-			
 			return "/arlet";
 		}
 	}
@@ -258,7 +241,7 @@ public class PostController {
 		dto.setScore(score);
 		System.out.println(dto);
 		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && dto.getPost_num() != (Integer) request.getAttribute("num") ) {
-			return "error!";
+			return "false";
 		}else if(comment_mapper.create(dto) > 0) {
 			Member_NotifyDTO notify_dto = new Member_NotifyDTO();
 			PostDTO post_dto = post_mapper.read(dto.getPost_num());
@@ -286,11 +269,11 @@ public class PostController {
 		System.out.println("Update : " + dto);
 		if(Integer.parseInt(dto.getMember_num()) != (Integer)session.getAttribute("num") && 
 				dto.getPost_num() != (Integer) request.getAttribute("num") ) {
-			return "error!";
+			return "false";
 		}else if(comment_mapper.update(dto) > 0) {
-			return "댓글 수정 완료";
+			return "true";
 		}else {
-			return "댓글 수정 실패";
+			return "true";
 		}
 	}
 	
@@ -305,9 +288,9 @@ public class PostController {
 		
 		if(comment_mapper.deleteVerifing(map) > 0) {
 			comment_mapper.delete(num);
-			return "댓글 삭제 완료";
+			return "true";
 		}else {
-			return "댓글 삭제 실패";
+			return "false";
 		}
 	}
 
