@@ -23,5 +23,11 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.sts.travlan" />
+	
+	<beans:bean id="NaverController" class="com.sts.travlan.NaverController"/>
 		
+	<context:component-scan base-package="com.sts.travlan" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.RestController"/>
+	</context:component-scan>
 </beans:beans>

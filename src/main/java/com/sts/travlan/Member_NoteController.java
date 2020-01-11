@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,7 +16,6 @@ import com.model.mapper.Member_NoteMapper;
 import com.model.mapper.MemberMapper;
 import com.model.member.Member_NoteDTO;
 import com.model.member.MemberDTO;
-import com.model.post.PostDTO;
 import com.sts.travlan.Utility;
 
 @Controller
@@ -51,9 +48,9 @@ public class Member_NoteController {
 		System.out.println("" + dto);
 		
 		if (mapper.sendNote(dto) > 0) {
-			return "sucess";
+			return "쪽지 전송 성공";
 		} else {
-			return "fail";
+			return "쪽지 전송 실패";
 		}
 	}
 	
@@ -63,12 +60,12 @@ public class Member_NoteController {
 		
 		if((Integer) session.getAttribute("num") == member_num) {
 			if(mapper.delete(note_num) > 0) {
-				return "success";
+				return "쪽지 삭제 성공";
 			}else {
-				return "fail";
+				return "쪽지 삭제 실패";
 			}
 		}else {
-			return "fail";
+			return "쪽지 삭제 실패";
 		}
 	}
 	

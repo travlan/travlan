@@ -23,12 +23,7 @@
 						<li class="nav-item" role="presentation"><a class="nav-link" href="myinfo">내정보</a></li>
 						<li class="nav-item" role="presentation">
 						<li class="nav-item" role="presentation">
-							<div class="dropdown">
-								<a class="nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">알림</a>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">Action</a>
-								</div>
-							</div>
+								<a class="nav-link" data-toggle="modal" data-target="#infoModal">알림 <span id="notify-count" class="badge badge-light"></span></a>
 						</li>
 						<li class="nav-item" role="presentation"><a class="nav-link" href="post_write">글쓰기</a></li>
 					</c:otherwise>
@@ -37,3 +32,22 @@
 		</div>
 	</div>
 </nav>
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLabel"><i class="fas fa-info-circle"></i> Notify</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="notify-content" class="modal-body">
+      		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="deleteNotifyAll()">Clean</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.model.mapper.Member_NotifyMapper">
+	
+	<delete id="postnotify" parameterType="int">
+		DELETE FROM member_notify
+		WHERE post_num = #{post_num}
+	</delete>
+	
+	<delete id="notifyDelete" parameterType="int">
+		DELETE FROM member_notify
+		WHERE member_num = #{member_num}
+	</delete>
+	
+	<select id="list" resultType="Member_NotifyDTO">
+		SELECT num, post_num, content, created_date
+		FROM member_notify
+		WHERE member_num = #{member_num}
+	</select>
+	
+	<insert id="create" parameterType="Member_NotifyDTO">
+		INSERT member_notify(member_num, post_num, content, created_date, is_read)
+		VALUES(#{member_num}, #{post_num}, #{content}, now(), 'F')
+	</insert>
+	
+	<update id="read" parameterType="int">
+		UPDATE member_notify
+		SET is_read = 'T'
+		WHERE num = #{num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM member_notify
+		WHERE num = #{num}
+	</delete>
+	
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM member_notify
+		WHERE member_num = #{member_num}
+	</delete>
+	
+</mapper>

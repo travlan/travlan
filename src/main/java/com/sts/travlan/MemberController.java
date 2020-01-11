@@ -1,73 +1,246 @@
 package com.sts.travlan;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.model.mapper.MemberMapper;
-import com.model.mapper.Member_NoteMapper;
 import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
-import com.sts.travlan.Utility;
 
 @Controller
 public class MemberController {
 	Utility util = new Utility();
 	
+	private String apiResult = null;
+	
 	@Autowired
 	private MemberMapper mapper;
 	@Autowired
-	private Member_NoteMapper note_mapper;
+	private NaverController navercontroller;
+	@Autowired
+	private JavaMailSenderImpl mailSender;
+	@Autowired
+	private TravlanService service;
 	
 	@GetMapping("/login")
-	public String login() {
+	public String login(HttpServletRequest request, HttpSession session, Model model) {
+    
+		String redi = request.getHeader("referer").toString().substring(30);
+		request.setAttribute("redi", redi);
+    
+		String kakaoUrl = KakaoController.getAuthorizationUrl(session);
+		String naverUrl = navercontroller.getAuthorizationUrl(session);
+
+		model.addAttribute("kakao_url", kakaoUrl);
+		model.addAttribute("naver_url", naverUrl);
 		
 		return "/login";
 	}
 	
-	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model, RedirectAttributes redi) throws NoSuchAlgorithmException {
-		String encpw = util.encryptPassword(map.get("password"));
+	@RequestMapping(value = "/kakaologin", produces = "application/json", method = { RequestMethod.GET, RequestMethod.POST })
+	public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) throws Exception {
 		
+		/* 결과값을 node에 담아줌 */
+		JsonNode node = KakaoController.getAccessToken(code);
+		/* accessToken에 로그인한 사용자의 모든 정보가 들어있음 */
+		JsonNode accessToken = node.get("access_token");
+		JsonNode userInfo = KakaoController.getKakaoUserInfo(accessToken);
+		
+		String kemail = null;
+		String kname = null;
+		
+		/* 유저 정보 카카오에서 가져오기 Get properties */
+		JsonNode properties = userInfo.path("properties");
+		JsonNode kakao_account = userInfo.path("kakao_account");
+		kemail = kakao_account.path("email").asText();
+		kname = properties.path("nickname").asText();
+		
+		session.setAttribute("kemail", kemail);
+		session.setAttribute("kname", kname);
+		
+		System.out.println(kemail);
+		System.out.println(kname);
+		
+		MemberDTO dto = new MemberDTO();
+		
+		if(mapper.getEmail(kemail) > 0) {
+			Map idnpassword = mapper.getIdnPassword(kemail);
+			
+			String id = (String)idnpassword.get("id");
+			String password = (String)idnpassword.get("password");
+			
+			Map<String, String> loginmap = new HashMap<String, String>();
+			loginmap.put("id", id);
+			loginmap.put("password", password);
+			
+			int flag = mapper.login(loginmap);
+			dto = mapper.getMember(mapper.get_unique_number(id));
+			
+			if(flag > 0) {
+				session.setAttribute("id", dto.getId());
+				session.setAttribute("num", dto.getNum());
+				session.setAttribute("nickname", dto.getNickname());
+						
+				return "redirect:/";
+			} else {
+				String msg = "<img src='/image/error00.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+				model.addAttribute("msg", msg);
+				return "/arlet";
+			}
+		} else {
+			dto.setEmail(kemail);
+			dto.setNickname(kname);
+			dto.setId(util.getRandomIdnPassword(5));
+			dto.setPassword(util.encryptPassword(util.getRandomIdnPassword(10)));
+			
+			if (mapper.create(dto) == 1) {
+				request.setAttribute("sys_msg", "회원가입 성공!");
+				request.setAttribute("id", dto.getId());
+				request.setAttribute("num",mapper.get_unique_number(dto.getId()));
+				return "register_additional_info";
+			} else {
+				request.setAttribute("sys_msg", "회원가입 실패!");
+				return "redirect:/";
+			}
+		}
+	}
+	
+	@RequestMapping(value = "/naverlogin", produces = "application/json;charset=utf-8", method = { RequestMethod.GET, RequestMethod.POST })
+	public String naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session, Model model, HttpServletRequest request) throws IOException, NoSuchAlgorithmException {
+		
+		OAuth2AccessToken oauthToken;
+		oauthToken = navercontroller.getAccessToken(session, code, state);
+		
+		/* 로그인한 사용자의 모든 정보가 JSON타입으로 저장되어 있음 */
+		apiResult = navercontroller.getUserProfile(oauthToken);
+		
+		/* 내가 원하는 정보만 JSON타입에서 String타입으로 바꿔 가져오기 위한 작업 */
+		JSONParser parser = new JSONParser();
+		Object obj = null;
+		
+		try {
+			obj = parser.parse(apiResult);
+		} catch(ParseException e) {
+			e.printStackTrace();
+		} catch (org.json.simple.parser.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JSONObject jsonobj = (JSONObject)obj;
+		JSONObject response = (JSONObject)jsonobj.get("response");
+		
+		String nname = (String)response.get("name");
+		String nemail = (String)response.get("email");
+		
+		session.setAttribute("nname", nname);
+		session.setAttribute("nemail", nemail);
+		
+		MemberDTO dto = new MemberDTO();
+		
+		if(mapper.getEmail(nemail) > 0) {
+			Map idnpassword = mapper.getIdnPassword(nemail);
+			
+			String id = (String)idnpassword.get("id");
+			String password = (String)idnpassword.get("password");
+			
+			System.out.println(id);
+			System.out.println(password);
+			
+			Map<String, String> loginmap = new HashMap<String, String>();
+			loginmap.put("id", id);
+			loginmap.put("password", password);
+			
+			int flag = mapper.login(loginmap);
+			dto = mapper.getMember(mapper.get_unique_number(id));
+			
+			if(flag > 0) {
+				session.setAttribute("id", dto.getId());
+				session.setAttribute("num", dto.getNum());
+				session.setAttribute("nickname", dto.getNickname());
+						
+				return "redirect:/";
+			} else {
+				model.addAttribute("msg", "failure");
+				return "/login";
+			}
+		} else {
+			dto.setEmail(nemail);
+			dto.setNickname(nname);
+			dto.setId(util.getRandomIdnPassword(5));
+			dto.setPassword(util.encryptPassword(util.getRandomIdnPassword(10)));
+			
+			if (mapper.create(dto) == 1) {
+				request.setAttribute("sys_msg", "회원가입 성공!");
+				request.setAttribute("id", dto.getId());
+				request.setAttribute("num",mapper.get_unique_number(dto.getId()));
+				return "register_additional_info";
+			} else {
+				request.setAttribute("sys_msg", "회원가입 실패!");
+				return "redirect:/";
+			}
+		}
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestParam Map<String, String> map, HttpSession session, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
+		String encpw = util.encryptPassword(map.get("password"));
 		Map<String, String> loginmap = new HashMap<String, String>();
+
 		loginmap.put("id", map.get("id"));
 		loginmap.put("password", encpw);
-		
 		int flag = mapper.login(loginmap);
-		MemberDTO dto = mapper.getMember(mapper.get_unique_number(map.get("id")));
 		
 		if(flag > 0) {
+			MemberDTO dto = mapper.getMember(mapper.get_unique_number(map.get("id")));
 			session.setAttribute("id", map.get("id"));
 			session.setAttribute("num", dto.getNum());
 			session.setAttribute("nickname", dto.getNickname());
-					
-			return "redirect:/";
+			
+			String redi = map.get("redi");
+			if(redi == "")
+				redi = "/";
+			
+			return "redirect:" + redi;
 		} else {
-			model.addAttribute("msg", "failure");
-			return "/login";
+			String msg = "<img src='/image/assets/error05.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
+			return "/arlet";
 		}
 	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletRequest request) {
-		
 		session.invalidate();
-		request.setAttribute("sys_msg", "로그아웃 되었습니다.");
-		return "redirect:/";
+		
+		String msg = "<a class=\"font-classic text-title immutable\" href=\"./\">Travlan</a><br><br>"
+				   + "<p>로그아웃 되었습니다.</p><br>";
+		
+		request.setAttribute("msg", msg);
+		return "/arlet";
 	}
 	
 	@GetMapping("/register")
@@ -82,13 +255,14 @@ public class MemberController {
 		dto.setPassword(util.encryptPassword(pw));
 		
 		if (mapper.create(dto) == 1) {
-			request.setAttribute("sys_msg", "회원가입 성공!");
+			request.setAttribute("msg", "회원가입 성공!");
 			request.setAttribute("id", dto.getId());
 			request.setAttribute("num",mapper.get_unique_number(dto.getId()));
 			return "register_additional_info";
 		} else {
-			request.setAttribute("sys_msg", "회원가입 실패!");
-			return "redirect:/";
+			String msg = "<img src='/image/assets/error00.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			request.setAttribute("msg", msg);
+			return "/arlet";
 		}
 		
 	}
@@ -100,7 +274,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/register_additional_info")
-	public String register_additional_info(Member_InfoDTO dto, HttpServletRequest request){
+	public String register_additional_info(Member_InfoDTO dto, HttpServletRequest request, Model model){
 		String type = "";
 		type += request.getParameter("type1");
 		type += request.getParameter("type2");
@@ -110,7 +284,10 @@ public class MemberController {
 		if(mapper.create_member_info(dto) > 0) {
 			return "redirect:/";
 		}else {
-			return "";
+			String msg = "<img src='/image/assets/error01.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
+			
+			return "/arlet";
 		}
 	}
 	
@@ -123,7 +300,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag","N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
@@ -140,7 +317,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag", "N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
@@ -157,7 +334,7 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		if (flag > 0) {
-			map.put("flag","N");;
+			map.put("flag", "N");
 		} else {
 			map.put("flag", "Y");
 		}
@@ -190,22 +367,33 @@ public class MemberController {
 	
 	@ResponseBody
 	@GetMapping(value = "/find_passwd", produces = "application/json;charset=utf-8")
-	public Map<String, Object> find_passwd(String id, String email) {
+	public Map<String, Object> find_passwd(String id, String email) throws NoSuchAlgorithmException {
 		
 		Map<String, String> find = new HashMap<String, String>();
 		find.put("id", id);
 		find.put("email", email);
 		
-		String fpasswd = mapper.find_passwd(find);
+		String fpasswd = mapper.find_passwd(find);	// TODO 나중에 지우기!
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> resultmap = new HashMap<String, Object>();
 		if(fpasswd == null) {
-			map.put("result", "N");
+			resultmap.put("result", "N");
 		} else {
-			map.put("result", "Y");
+			Map<String, Object> map = new HashMap<String, Object>();
+			String newpasswd = util.sendPwtoEmail(email, id, mailSender);
+			
+			System.out.println(newpasswd);
+			map.put("id", id);
+			map.put("password", util.encryptPassword(newpasswd));
+			int flag = mapper.passwd_change(map);
+			if(flag > 0) {
+				resultmap.put("result", "Y");
+			}else {
+				resultmap.put("result", "N");
+			}
 		}
 		
-		return map;
+		return resultmap;
 	}
 	
 	
@@ -236,9 +424,9 @@ public class MemberController {
 	}
 	
 	@GetMapping("/passwd_check")
-	public String passwd_check() {
+	public String passwd_check(HttpSession session) {
 		
-		return "/passwd_check";
+		return util.isLoginFilter(session, "/passwd_check");
 	}
 	
 	@ResponseBody
@@ -271,7 +459,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/passwd_check")
-	public String passwd_check(String password, HttpSession session) throws NoSuchAlgorithmException {
+	public String passwd_check(String password, HttpSession session, Model model) throws NoSuchAlgorithmException {
 		
 		Map map = new HashMap();
 		map.put("id", session.getAttribute("id"));
@@ -282,7 +470,9 @@ public class MemberController {
 		if(flag > 0) {
 			return "/passwd_change";
 		} else {
-			return "/babo";
+			String msg = "<img src='/image/assets/error03.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
+			return "/arlet";
 		}
 	}
 	
@@ -314,7 +504,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/passwd_change")
-	public String passwd_change(String password, HttpSession session) throws NoSuchAlgorithmException {
+	public String passwd_change(String password, HttpSession session, Model model) throws NoSuchAlgorithmException {
 		
 		Map map = new HashMap();
 		map.put("id", session.getAttribute("id"));
@@ -323,35 +513,44 @@ public class MemberController {
 		int flag = mapper.passwd_change(map);
 		
 		if(flag > 0) {
-			return "redirect:myinfo";
+			return "redirect:logout";
 		} else {
-			return "/babo";
+			String msg = "<img src='/image/assets/error04.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
+			
+			return "/arlet";
 		}
 	}
 	
 	@GetMapping("/secession")
-	public String secession() {
+	public String secession(HttpSession session) {
 		
-		return "/secession";
+		return util.isLoginFilter(session, "/secession");
 	}
 	
 	@PostMapping("/secession")
-	public String secession(String id) {
+	public String secession(HttpSession session, Model model) {
 		
-		int flag = mapper.secession(id);
-		
-		if(flag > 0) {
-			return "/bye";
-		} else {
-			return "/babo";
+		try {
+			service.secessiondelete((int)session.getAttribute("num"));
+			service.secessionupdate((int)session.getAttribute("num"));
+			service.secession((int)session.getAttribute("num"));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
+		session.invalidate();
+		
+		String msg = "<a class=\"font-classic text-title immutable\" href=\"./\">Travlan</a><br><br>"
+				   + "<p>지금까지 Travlan을 이용해주셔서 감사합니다.</p>"
+				   + "<p>다음에 좋은 기회로 다시 만났으면 좋겠습니다.</p>"
+				   + "<p>언제나 즐거운 여행하세요.</p><br>";
+		
+		model.addAttribute("msg", msg);
+		
+		return "/arlet";
 	}
 	
-	@GetMapping("/bye")
-	public String bye(HttpSession session) {
-		
-		return util.isLoginFilter(session, "/bye");
-	}
 	
 	@ResponseBody
 	@GetMapping(value = "/nicknamechange", produces="application/json;charset=utf-8")
@@ -385,7 +584,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/updateAdditionalInfo")
-	public String updateAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request){
+	public String updateAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request, Model model){
 		String type = "";
 		type += request.getParameter("type1");
 		type += request.getParameter("type2");
@@ -395,7 +594,10 @@ public class MemberController {
 		if(mapper.additionalchange(dto) > 0) {
 			return "redirect:/myinfo";
 		}else {
-			return "";
+			String msg = "<img src='/image/assets/error02.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
+			
+			return "/arlet";
 		}
 	}
 	
@@ -407,7 +609,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/inputAdditionalInfo")
-	public String inputAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request){
+	public String inputAdditionalInfo(Member_InfoDTO dto, HttpServletRequest request, Model model){
 		String type = "";
 		type += request.getParameter("type1");
 		type += request.getParameter("type2");
@@ -417,7 +619,10 @@ public class MemberController {
 		if(mapper.create_member_info(dto) > 0) {
 			return "redirect:/myinfo";
 		}else {
-			return "";
+			String msg = "<img src='/image/assets/error01.png' style='max-width: 100%; height: auto; margin-bottom: 20px'><br><br>";
+			model.addAttribute("msg", msg);
+			
+			return "/arlet";
 		}
 	}
 	

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.model.mapper.Member_NotifyMapper;
 import com.model.mapper.Member_ScrapMapper;
+import com.model.mapper.PostMapper;
+import com.model.member.Member_NotifyDTO;
 import com.model.member.Member_ScrapDTO;
+import com.model.post.PostDTO;
 import com.sts.travlan.Utility;
 
 @Controller
@@ -29,6 +28,10 @@ public class Member_ScrapController {
 	
 	@Autowired
 	private Member_ScrapMapper mapper;
+	@Autowired
+	private PostMapper post_mapper;
+	@Autowired
+	private Member_NotifyMapper notify_mapper;
 	
 	@GetMapping("/scraplist")
 	public String scraplist(HttpSession session, Model model) {
@@ -52,8 +55,19 @@ public class Member_ScrapController {
 		
 		Map<String, Object> return_data = new HashMap<String, Object>();
 		
+		if((Integer)session.getAttribute("num") == post_mapper.getPost(post_num)) {
+			return_data.put("flag", "N");
+		}
+		
 		if(mapper.scrap(dto) > 0) {
 			return_data.put("flag", "Y");
+				
+			Member_NotifyDTO notify_dto = new Member_NotifyDTO();
+			PostDTO post_dto = post_mapper.read(dto.getPost_num());
+			notify_dto.setMember_num(post_dto.getMember_num());
+			notify_dto.setPost_num(post_dto.getPost_num());
+			notify_dto.setContent("누군가 '" + post_dto.getTitle() + "' 글을 좋아합니다.");
+			notify_mapper.create(notify_dto);
 		} else {
 			return_data.put("flag", "N");
 		}

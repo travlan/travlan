@@ -7,7 +7,10 @@ import com.model.member.MemberDTO;
 import com.model.member.Member_InfoDTO;
 
 public interface MemberMapper {
-	public int getId(String id);
+	public int checkMember(int num);
+	public int infoDelete(int num);
+	public Map getIdnPassword(String email);
+	public int getEmail(String email);
 	public int additionalchange(Member_InfoDTO dto);
 	public int nicknamechange(Map map);
 	public int create(MemberDTO dto);
@@ -25,5 +28,5 @@ public interface MemberMapper {
 	public List<Map<String, Object>> getRegion(String province);
 	public MemberDTO getMember(int num);
 	public Member_InfoDTO getMemberInfo(int num);
-	public int secession(String id);
+	public int secession(int num);
 }

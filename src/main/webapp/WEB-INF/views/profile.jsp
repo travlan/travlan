@@ -23,8 +23,8 @@
                     </c:if>
                 </ul>
             </div>
-            <c:set var="pcount" value="${util:pcount(sessionScope.num, post_mapper) }"/>
-            <c:set var="mcount" value="${util:mcount(sessionScope.num, comment_mapper) }"/>
+            <c:set var="pcount" value="${util:pcount(author.num, post_mapper) }"/>
+            <c:set var="mcount" value="${util:mcount(author.num, comment_mapper) }"/>
 			<ul class="user-info-tab">
 				<li id="post-btn" class="active"><a class="immutable" href="javascript:listpost()">글 </a><span>${pcount }</span></li>
 				<li id="comment-btn"><a class="immutable" href="javascript:listcomment()">댓글 </a><span>${mcount }</span></li>
@@ -81,8 +81,9 @@
 										<li>${dto.region}</li>
 									</ul>
 									<c:set var="count" value="${util:count(dto.post_num, comment_mapper) }"/>
+									<c:set var="scount" value="${util:scount(dto.post_num, scrap_mapper) }"/>
 									<ul class="post-info list-none">
-										<li><i class="far fa-thumbs-up"></i> 25</li>
+										<li><i class="far fa-heart"></i> ${scount }</li>
 										<li><i class="far fa-comment"></i> ${count }</li>
 									</ul>
 								</div>
@@ -104,7 +105,6 @@
 				<c:otherwise>
 					<c:forEach var="comment" items="${comment}">
 						<div class="post-list row aos-init aos-animate" data-aos="zoom-in">
-							<div class="post-thumb fill-img" style="background-image: url(storage/photo_thumbnail/${comment.thumbnail});"></div>
 							<div class="post-content font-myungjo">
 								<h4><a class="immutable" href="post_read?num=${comment.post_num}">${comment.posttitle}</a></h4>
 								<p><a class="immutable">${comment.nickname}</a></p>

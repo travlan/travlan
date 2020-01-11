@@ -18,7 +18,7 @@
 						<div id="scrapcard-${dto.post_num }" class="col-lg-4" data-aos="fade-up-right">
 							<div class="block-content mb-4">
 								<a href="post_read?num=${dto.post_num}">
-									<div class="post-thumb fill-image" style="width: 100%; height: 300px; background-image: url(storage/photo_thumbnail/${dto.thumbnail});"></div>
+									<div class="post-thumb fill-image" style="width: 100%; height: 300px; background-image: url(/image/photo_thumbnail/${dto.thumbnail});"></div>
 								</a>
 								<div class="p-4">
 									<div class="post-content font-myungjo">

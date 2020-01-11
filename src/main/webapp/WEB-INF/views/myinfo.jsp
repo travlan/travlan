@@ -9,9 +9,10 @@
 		<div class="block-content mt-4 p-4" data-aos="fade-up-right">
 			<div class="form-group row">
 				<strong for="staticEmail" class="col-sm-2 col-form-label">아이디</strong>
-				<div class="col-sm-10">
-					<label class="col-sm-10">${sessionScope.id}</label>
+				<div class="col-sm-4">
+					<label class="col-sm-4">${sessionScope.id}</label>
 				</div>
+				<button type="button" class="btn btn-light" data-toggle="popover" data-trigger="hover" data-content="네이버나 카카오로 회원가입한 경우에는, 아이디와 비밀번호가 임의로 발급됩니다.">?</button>
 			</div>
 			<div class="form-group row">
 				<strong for="staticEmail" class="col-sm-2 col-form-label">닉네임</strong>
@@ -32,7 +33,7 @@
 					<label class="col-sm-10">${dto.email}</label>
 				</div>
 			</div>
-			<c:if test="${!ist_info }">
+			<c:if test="${!is_info }">
 				<button class="btn btn-light" id="infobox_btn" type="button" onclick="showInfobox()">추가정보를 입력하세요!</button>
 			</c:if>
 		</div>
@@ -243,6 +244,17 @@
 	</div>
 </section>
 
+<style>
+	.popover{
+    	width:400px;
+    	height:100px;    
+	}
+</style>
+<script>
+	$(document).ready(function() {
+		$('[data-toggle="popover"]').popover();
+	});
+</script>
 <script>
 	function required() {
 		if($('#province option:selected').val() == 'XX') {

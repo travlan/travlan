@@ -14,9 +14,12 @@
 	<link rel="stylesheet" href="assets/css/main.v2.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+	<script src="assets/js/main.js"></script>
 	<script src="assets/js/jquery.js"></script>
 	<script src="assets/js/bootstrap.js"></script>
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<tiles:insertAttribute name="topnav" />
@@ -28,6 +31,19 @@
 	<script>
   		AOS.init();
 	</script>
+	<style>
+	.notify-list {
+		list-style: none;
+		padding-left: 0;
+	}
+	.notify-list li {
+		
+	}
+	.notify-list li > a {
+		color: #000;
+		text-decoration: none;
+	}
+	</style>
 	<script>
 		$(document).ready(function () {
 			$(window).scroll(function () {
@@ -41,6 +57,56 @@
 				}
 			});
 		});
+		
+		$.ajax({
+		    url: "user/notify",
+		    type: "get",
+		}).done(function(data) {
+			if(data.count > 0) {
+				$('#notify-count').text(data.count);
+				result = ''
+				data.content.forEach(function(element) {
+				 	result += notifyRender(element);
+				});
+				$('#notify-content').html(result);
+			}
+		});
+		
+		function deleteNotifyAll() {
+			$.ajax({
+				url: "user/notify/delete/all",
+				type: "post",
+			}).done(function(data) {
+				$('#notify-count').html('');
+				$('#notify-content').html('');
+			});	
+		}
+		
+		var notifyRender = function(element) {
+			return "\
+			<div id=\"notify-ele-"+ element.num +"\">\
+			  <div class=\"card-body\">\
+			  	<button onclick=\"deleteNotify("+ element.num +")\" type=\"button\" class=\"close\">\
+	          		<span>×</span>\
+	        	</button>\
+			    <blockquote class=\"mb-0\">\
+			      <p><a class=\"immutable\" href=\"post_read?num="+ element.post +"\" onclick=\"deleteNotify("+ element.num +")\">"+ element.detail +"</a></p>\
+			      <footer class=\"blockquote-footer\">"+ element.date +"</footer>\
+			    </blockquote>\
+			  </div>\
+			</div>\
+			"
+		}
+		
+		function deleteNotify(num) {
+			$.ajax({
+			    url: "user/notify/delete",
+			    type: "post",
+			    data: {"num": num},
+			}).done(function(data) {
+				$('#notify-ele-' + num).remove();
+			});
+		}
 	</script>
 </body>
 </html>

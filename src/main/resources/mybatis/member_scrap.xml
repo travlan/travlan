@@ -5,6 +5,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.Member_ScrapMapper">
 	
+	<delete id="postscrap" parameterType="int">
+		DELETE FROM member_scrap
+		WHERE post_num = #{post_num}
+	</delete>
+	
+	<delete id="scrapDelete" parameterType="int">
+		DELETE FROM member_scrap
+		WHERE member_num = #{member_num}
+	</delete>
+	
+	<select id="countScrap" parameterType="int" resultType="int">
+		SELECT COUNT(post_num)
+		FROM member_scrap
+		WHERE post_num = #{post_num}
+	</select>
+	
 	<select id="scrapedPost" parameterType="Map" resultType="Member_ScrapDTO">
 		SELECT s.memo, s.created_date, m.nickname, p.thumbnail, p.title, p.post_num
 		FROM member_scrap AS s, member AS m, post AS p

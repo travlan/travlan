@@ -5,6 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.model.mapper.ReportMapper">
 	
+	<delete id="reportDelete" parameterType="int">
+		DELETE FROM report
+		WHERE send_user = #{send_user} OR receive_user = #{send_user}
+	</delete>
+	
 	<select id="reportlist" parameterType="int" resultType="ReportDTO">
 		SELECT *
 		FROM report

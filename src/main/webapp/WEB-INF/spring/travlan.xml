@@ -48,14 +48,19 @@
         <put-attribute name="body" value="/WEB-INF/views/login.jsp" /> 
     </definition>
     
+    <definition name="/arlet" extends="single"> 
+        <put-attribute name="title" value="Alert" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/arlet.jsp" /> 
+    </definition>
+    
     <definition name="/naver_register" extends="single"> 
         <put-attribute name="title" value="Login" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/callback.jsp" /> 
     </definition>
-    
+
     <definition name="/register" extends="single"> 
         <put-attribute name="title" value="Register" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/naver_register.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/register.jsp" /> 
     </definition>
 	
 	<definition name="/forgot" extends="single"> 
@@ -87,15 +92,15 @@
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/secession.jsp" /> 
     </definition>
-						
-	<definition name="/bye" extends="main"> 
-        <put-attribute name="title" value="Travlan" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/bye.jsp" /> 
-    </definition>
 	
 	<definition name="/profile" extends="main"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/profile.jsp" /> 
+    </definition>
+    
+    <definition name="/search" extends="main"> 
+        <put-attribute name="title" value="Travlan" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/search.jsp" /> 
     </definition>
     
     <definition name="/note" extends="main"> 
@@ -110,7 +115,7 @@
    
     <definition name="/note/read" extends="window"> 
         <put-attribute name="title" value="Travlan" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/window/close.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/window/read.jsp" /> 
     </definition>
     
     <definition name="/report/receive" extends="window"> 
