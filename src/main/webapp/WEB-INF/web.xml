@@ -47,10 +47,12 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!--  
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error500</location>
 	</error-page>
+	-->
 	
 	<error-page>
 		<error-code>400</error-code>
