@@ -24,7 +24,7 @@ public class NaverController {
 	 */
 	private final static String CLIENT_ID = "1cDUN92_cxYMa42bsbLW";
 	private final static String CLIENT_SECRET = "cmfCv0aenX";
-	private final static String REDIRECT_URI = "http://localhost:8000/travlan/naverlogin";
+	private final static String REDIRECT_URI = "http://travlan.tk/naverlogin";
 	private final static String SESSION_STATE = "oauth_state";
 	
 	/* 네이버 아이디로 인증 URL 생성 Method */

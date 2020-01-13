@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class KakaoController {
 	private final static String K_CLIENT_ID = "eff58cc9678d60cc4fd7c79fa817dc20";
-	private final static String K_REDIRECT_URI = "http://travlan.tk:8000/travlan_dev/kakaologin";
+	private final static String K_REDIRECT_URI = "http://travlan.tk/kakaologin";
 	
 	public static String getAuthorizationUrl(HttpSession session) {
 		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" + "client_id=" + K_CLIENT_ID + 
@@ -36,7 +36,7 @@ public class KakaoController {
 		
 		postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
 		postParams.add(new BasicNameValuePair("client_id", "eff58cc9678d60cc4fd7c79fa817dc20"));
-		postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8000/travlan/kakaologin"));
+		postParams.add(new BasicNameValuePair("redirect_uri", "http://travlan.tk/kakaologin"));
 		postParams.add(new BasicNameValuePair("code", autorize_code));
 		
 		final HttpClient client = HttpClientBuilder.create().build();
