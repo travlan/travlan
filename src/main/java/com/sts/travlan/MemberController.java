@@ -153,7 +153,7 @@ public class MemberController {
 		JSONObject jsonobj = (JSONObject)obj;
 		JSONObject response = (JSONObject)jsonobj.get("response");
 		
-		String nname = (String)response.get("name");
+		String nname = (String)response.get("nickname");
 		String nemail = (String)response.get("email");
 		
 		session.setAttribute("nname", nname);
